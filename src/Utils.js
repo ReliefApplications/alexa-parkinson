@@ -1,4 +1,4 @@
-const data = require('../../data.json');
+const data = require('../data.json');
 
 const spanishDay = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
 const spanishTime = ['mañana', 'mediodía', 'noche'];
