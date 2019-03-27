@@ -1,7 +1,7 @@
 var express = require('express');
 var alexa = require('alexa-app');
 
-var PORT = process.env.PORT || 12113;
+var PORT = process.env.PORT || 12114;
 var app = express();
 
 // You choose here what will be the endpoint for Alexa. If empty it will be the root: '/'

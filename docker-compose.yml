@@ -5,7 +5,7 @@ services:
     image: alexa-parkinson
     build: .
     ports:
-        - '12113:12113'
+        - '12114:12114'
     volumes:
         - './:/usr/dockers/devapp/'
     entrypoint: Docker/docker-entrypoint.sh
