@@ -58,4 +58,4 @@ RUN npm -g config set user $USER
 RUN ls -la
 RUN bash Docker/check-project.sh $PROJECT_NAME
 
-EXPOSE 12114
+EXPOSE 12115
