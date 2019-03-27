@@ -5,7 +5,7 @@ var PORT = process.env.PORT || 12118;
 var app = express();
 
 // You choose here what will be the endpoint for Alexa. If empty it will be the root: '/'
-var alexaApp = new alexa.app();
+var alexaApp = new alexa.app('/');
 alexaApp.express({
     expressApp: app,
     //router: express.Router(),
