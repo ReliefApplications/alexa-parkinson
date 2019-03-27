@@ -1,0 +1,224 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "parkinson",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "MedicationCalendar",
+                    "slots": [
+                        {
+                            "name": "medicine",
+                            "type": "MEDICINE"
+                        },
+                        {
+                            "name": "day",
+                            "type": "DAYOFWEEK"
+                        },
+                        {
+                            "name": "time",
+                            "type": "TIMEOFDAY",
+                            "samples": [
+                                "{time}",
+                                "por el {time}",
+                                "al {time}",
+                                "en la {time}",
+                                "por la {time}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "que {medicine} debo tomar {day} por la {time} ",
+                        "que {medicine} debo tomar {day} al {time}",
+                        "que {medicine} debo tomar {day}",
+                        "que {medicine} tomo {day} por la {time}",
+                        "que {medicine} tomo {day} al {time}",
+                        "que {medicine} tomo {day}",
+                        "que {medicine} tengo que tomar {day} por la {time}",
+                        "que {medicine} tengo que tomar {day} al {time}",
+                        "que {medicine} tengo que tomar {day} "
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "TIMEOFDAY",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "noche"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "mediodía"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "mañana"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "DAYOFWEEK",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "mañana"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hoy"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "domingo"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sabado"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "viernes"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "jueves"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "miercoles"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "martes"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lunes"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "MEDICINE",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "tolcapone"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "amantadina"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "levodopa"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "ibuprofen"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "pergolida"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "medicamentos",
+                                "synonyms": [
+                                    "medicamento"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "medicinas",
+                                "synonyms": [
+                                    "medicina"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "MedicationCalendar",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "medicine",
+                            "type": "MEDICINE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "day",
+                            "type": "DAYOFWEEK",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "time",
+                            "type": "TIMEOFDAY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.124652868308.201745808056"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.124652868308.201745808056",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "En qué momento del día?"
+                    }
+                ]
+            }
+        ]
+    }
+}

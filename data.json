@@ -1,0 +1,282 @@
+{
+    "lunes": {
+        "mañana": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Ibuprofen",
+                "cantidad": "1 gramo"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "mediodía": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "noche": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Amantadina",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Tolcapone",
+                "cantidad": "500 mg"
+            }
+        ]
+    },
+    "martes": {
+        "mañana": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Ibuprofen",
+                "cantidad": "1 gramo"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "mediodía": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "noche": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Amantadina",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Tolcapone",
+                "cantidad": "500 mg"
+            }
+        ]
+    },
+    "miercoles": {
+        "mañana": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Ibuprofen",
+                "cantidad": "1 gramo"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "mediodía": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "noche": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Amantadina",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Tolcapone",
+                "cantidad": "500 mg"
+            }
+        ]
+    },
+    "jueves": {
+        "mañana": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Ibuprofen",
+                "cantidad": "1 gramo"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "mediodía": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "noche": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Amantadina",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Tolcapone",
+                "cantidad": "500 mg"
+            }
+        ]
+    },
+    "viernes": {
+        "mañana": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Ibuprofen",
+                "cantidad": "1 gramo"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "mediodía": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "noche": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Amantadina",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Tolcapone",
+                "cantidad": "500 mg"
+            }
+        ]
+    },
+    "sabado": {
+        "mañana": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Ibuprofen",
+                "cantidad": "1 gramo"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "mediodía": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "noche": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Amantadina",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Tolcapone",
+                "cantidad": "500 mg"
+            }
+        ]
+    },
+    "domingo": {
+        "mañana": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Ibuprofen",
+                "cantidad": "1 gramo"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "mediodía": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "2 píldoras"
+            },
+            {
+                "medicamento": "Levodopa",
+                "cantidad": "1 píldora"
+            }
+        ],
+        "noche": [
+            {
+                "medicamento": "Pergolida",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Amantadina",
+                "cantidad": "1 píldora"
+            },
+            {
+                "medicamento": "Tolcapone",
+                "cantidad": "500 mg"
+            }
+        ]
+    }
+}

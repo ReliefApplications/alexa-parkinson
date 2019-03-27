@@ -1,0 +1,37 @@
+{
+    "name": "alexa-parkinson",
+    "version": "1.0.0",
+    "description": "The .json of the Alexa skills kit is saved in vui.json.",
+    "private": true,
+    "dependencies": {
+        "alexa-app": "^4.2.2",
+        "babyparse": "^0.4.6",
+        "dotenv": "^6.1.0",
+        "express": "^4.16.3",
+        "request": "^2.88.0",
+        "socket.io": "^2.1.1",
+        "socket.io-client": "^2.1.1",
+        "ssml-builder": "^0.4.3"
+    },
+    "main": "index.js",
+    "devDependencies": {
+        "gulp": "^3.9.1",
+        "gulp-shell": "latest"
+    },
+    "scripts": {
+        "build": "rm -rf dist && tsc",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ReliefApplications/backend_alexa_wfp.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ReliefApplications/backend_alexa_wfp/issues"
+    },
+    "homepage": "https://github.com/ReliefApplications/backend_alexa_wfp#readme"
+}
