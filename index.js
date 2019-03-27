@@ -1,7 +1,7 @@
 /** import handlers */
 const AmazonHandler = require('./src/Handlers/AmazonHandler').AmazonHandler;
 const CoreHandler = require('./src/Handlers/CoreHandler').CoreHandler;
-const applicationId = 'amzn1.ask.skill.ecf62345-0300-4561-8bd0-3acdce03288b';
+const applicationId = 'amzn1.ask.skill.c671c665-5983-4ca9-ba1b-317809409a26';
 
 exports.handler = function (alexaApp) {
 
