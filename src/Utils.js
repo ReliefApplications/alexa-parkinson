@@ -10,9 +10,6 @@ exports.Utils = {
      * @param time string, The time of the day
      */
     getGeneralData: function (day, time) {
-        console.log(day);
-        console.log(time);
-        console.log(data);
         let result = data[day][time];
         return result;
     },
