@@ -10,7 +10,7 @@ exports.AmazonHandler = {
     ,
     HelpIntent:
         function (request, response) {
-            let speechOutput = 'Intente preguntar cuantas medicinas debes tomar. Tambien puedes quitar, diciendo stop o exit.';
+            let speechOutput = 'Intente preguntar cuantas medicinas debes tomar. Tambien puedes quitar, diciendo stop.';
             response.say(speechOutput);
             response.reprompt(speechOutput);
             response.shouldEndSession(false);
