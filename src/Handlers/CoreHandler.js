@@ -5,7 +5,7 @@ exports.CoreHandler = {
     'LaunchRequest':
         // This is triggered when the user says: 'Open parkison skill'
         function (request, response) {
-            response.say(Constants.TEXTS.welcomeOutput);
+            response.say(Constants.TEXTS.welcomeTitle + ' ' + Constants.TEXTS.welcomeText);
             response.reprompt(Constants.TEXTS.welcomeReprompt);
             response.card(Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText);
             response.shouldEndSession(false);
