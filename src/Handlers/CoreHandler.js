@@ -7,7 +7,7 @@ exports.CoreHandler = {
         function (request, response) {
             response.say(Constants.TEXTS.welcomeOutput);
             response.reprompt(Constants.TEXTS.welcomeReprompt);
-            response.card('Bienvenido!', Constants.TEXTS.welcomeOutput);
+            response.card(Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText);
             response.shouldEndSession(false);
             return response;
         }
