@@ -28,7 +28,8 @@ exports.CoreHandler = {
             let medicineResult = '';
 
             let daySlotFormatted = daySlotRaw ? daySlotRaw : 'hoy';
-            let timeSlotFormatted = timeSlotRaw
+            let timeSlotFormatted = timeSlotRaw;
+
             switch (timeSlotRaw) {
                 case 'mañana':
                     timeSlotFormatted = 'por la ' + timeSlotRaw;
@@ -41,9 +42,9 @@ exports.CoreHandler = {
                     break;
             }
 
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
                 if (!medicineSlotRaw || (medicineSlotRaw === 'medicinas' || medicineSlotRaw === 'medicamentos')) {
-                    let generalResult = Utils.getGeneralData({ 'day': daySlotRaw, 'time': timeSlotRaw });
+                    let generalResult = Utils.getGeneralData(Utils.getDayOfWeek(daySlotRaw), Utils.getTimeOfDay(timeSlotRaw));
                     medicineResult = 'Debes tomar';
                     generalResult.forEach((element, index) => {
                         medicineResult += ` ${element['cantidad']} de ${element['medicamento']}`;
@@ -52,7 +53,7 @@ exports.CoreHandler = {
                         }
                     });
                 } else {
-                    let specificResult = Utils.getSpecificData(medicineSlotRaw, { 'day': daySlotRaw, 'time': timeSlotRaw });
+                    let specificResult = Utils.getSpecificData(medicineSlotRaw, Utils.getDayOfWeek(daySlotRaw), Utils.getTimeOfDay(timeSlotRaw));
                     if (!specificResult) {
                         medicineResult = `No tienes que tomar ${medicineSlotRaw}`;
                     } else {
@@ -64,20 +65,21 @@ exports.CoreHandler = {
 
                 resolve(speechOutput);
             })
-                .then((result) => {
-                    response.say(result);
-                    response.reprompt(result);
-                    response.card('Medicamentos que tomar', result);
-                    response.shouldEndSession(false);
-                    return response;
-                },
+                .then(
+                    (result) => {
+                        response.say(result);
+                        response.reprompt(result);
+                        response.card('Medicamentos que tomar', result);
+                        response.shouldEndSession(false);
+                        return response;
+                    },
                     (error) => {
-                        console.log(error);
+                        console.log('error', error);
                         speechOutput = 'Lo siento, hubo un problema con la solicitud';
                         response.say(speechOutput);
                         response.reprompt(speechOutput);
                         response.card('Error!', speechOutput);
-                        response.shouldEndSession(false);
+                        response.shouldEndSession(true);
                     });
         }
 };

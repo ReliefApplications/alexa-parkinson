@@ -6,24 +6,23 @@ const spanishTime = ['mañana', 'mediodía', 'noche'];
 exports.Utils = {
     /**
      * This function is used to get the medicine data by day / hour from the mock json file
-     * @param datetime object, An object containing keys 'day' and 'time'
+     * @param day string, The day of the week
+     * @param time string, The time of the day
      */
-    getGeneralData: function (datetime) {
-        let time = datetime['time'] ? datetime['time'] : getTimeOfDay();
-        let day = datetime['day'] ? datetime['day'] : spanishDay[new Date().getDay()];
-
+    getGeneralData: function (day, time) {
+        console.log(day);
+        console.log(time);
+        console.log(data);
         let result = data[day][time];
         return result;
     },
     /**
      * This function is used to get one specific medicine data by day / hour from the mock json file
      * @param medicine string, The name of the medicine which information we need
-     * @param datetime object, An object containing keys 'day' and 'time'
+     * @param day string, The day of the week
+     * @param time string, The time of the day
      */
-    getSpecificData: function (medicine, datetime) {
-        let day = getDayOfWeek(datetime['day']);
-        let time = getTimeOfDay(datetime['time']);
-
+    getSpecificData: function (medicine, day, time) {
         let generalResult = data[day][time];
         let result = null;
 
@@ -39,7 +38,7 @@ exports.Utils = {
      * This function is used to get the current day of the week in spanish
      * @param day string, Day of the week (absolute or relative)
      */
-    getTimeOfDay: function (day) {
+    getDayOfWeek: function (day) {
         if (day && spanishDay.indexOf(day) >= 0) {
             return day;
         } else if (day === 'mañana') {
