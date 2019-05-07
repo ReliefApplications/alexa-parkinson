@@ -24,6 +24,10 @@ exports.handler = function (alexaApp) {
         return CoreHandler.MedicationCalendar(request, response);
     });
 
+    alexaApp.intent('MedicationLeft', function (request, response) {
+        return CoreHandler.MedicationLeft(request, response);
+    });
+
     alexaApp.intent('AMAZON.FallbackIntent', function (request, response) {
         return AmazonHandler.FallbackIntent(request, response);
     });

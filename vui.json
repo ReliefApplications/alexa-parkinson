@@ -53,6 +53,18 @@
                         "que {medicine} tengo que tomar {day} al {time}",
                         "que {medicine} tengo que tomar {day} "
                     ]
+                },
+                {
+                    "name": "MedicationLeft",
+                    "slots": [
+                        {
+                            "name": "medecine",
+                            "type": "MEDICINE"
+                        }
+                    ],
+                    "samples": [
+                        "Cuantos {medecine} me quedan"
+                    ]
                 }
             ],
             "types": [
@@ -205,6 +217,20 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "MedicationLeft",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "medecine",
+                            "type": "MEDICINE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -216,6 +242,24 @@
                     {
                         "type": "PlainText",
                         "value": "En qué momento del día?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.262531015699.752221504795",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Qué día ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.262531015699.976054460772",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Qué día ?"
                     }
                 ]
             }

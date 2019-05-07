@@ -1,0 +1,22 @@
+{
+    "amantadina" : {
+        "cantidad" : "10",
+        "tipo" : "píldora"
+    },
+    "ibuprofen" : {
+        "cantidad" : "10",
+        "tipo" : "gramo"
+    },
+    "levodopa" : {
+        "cantidad" : "10",
+        "tipo" : "píldora"
+    },
+    "pergolida" : {
+        "cantidad" : "10",
+        "tipo" : "píldora"
+    },
+    "tolcapone" : {
+        "cantidad" : "10",
+        "tipo" : "gramo"
+    }
+}
