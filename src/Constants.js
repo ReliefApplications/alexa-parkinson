@@ -5,6 +5,7 @@ exports.Constants = {
     welcomeText: "Queremos ofrecerte toda la información sobre tu medicación además de darte la posibilidad de consultar tus dudas con la Asociación Parkinson Madrid."
       + "\n Di “Mi Medicación” o “Llamar”",
     welcomeReprompt: "Disculpa, ¿Deseas información sobre tu medicación?",
+    welcomeReprompt2: "Lo siento, no te he entendido. ¿Quieres información sobre tu medicación?",
 
     //--- MyMedication ---
     myMedicationTitle: "Mi medicación",
@@ -14,6 +15,11 @@ exports.Constants = {
     //--- Llamar ---
     llamarTitle: "Llamada",
     llamarText: "Texto a definir",
-    llamarReprompt: "Texto a definir"
+    llamarReprompt: "Texto a definir",
+
+    //--- Unhandled ---
+    unhandledTitle:"Solicitud desconocida.",
+    unhandledText:"Lo siento, no te he entendido.",
+    unhandledReprompt:"Lo siento, no te he entendido."
   }
 };

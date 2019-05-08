@@ -10,6 +10,8 @@ exports.handler = function (alexaApp) {
             // Fail ungracefully
             throw 'Invalid applicationId: ' + request.sessionDetails.application.applicationId;
         }
+        //------------  to suppress -------------------
+        response.say("***" + request.type() + "***");
     };
 
     alexaApp.error = function (exception, request, response) {
@@ -51,4 +53,9 @@ exports.handler = function (alexaApp) {
     alexaApp.intent('AMAZON.StopIntent', function (request, response) {
         return AmazonHandler.StopIntent(request, response);
     });
+
+    // Unhandled utterances
+    alexaApp.intent('DidNotUnderstand', function (request, response) {
+        return CoreHandler.DidNotUnderstand(request,response);
+    })
 };

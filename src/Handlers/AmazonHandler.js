@@ -1,7 +1,7 @@
 exports.AmazonHandler = {
     FallbackIntent:
         function (request, response) {
-            let speechOutput = 'No he entendido la pregunta.';
+            let speechOutput = 'Lo siento, no te he entendido.';
             response.say(speechOutput);
             response.reprompt(speechOutput);
             response.shouldEndSession(false);
@@ -19,7 +19,7 @@ exports.AmazonHandler = {
     ,
     CancelIntent:
         function (request, response) {
-            let speechOutput = 'Hasta luego.';
+            let speechOutput = 'Hasta pronto. Si quieres volver a utilizar esta función di “Parkinson”';
             response.say(speechOutput);
             response.reprompt(speechOutput);
             response.shouldEndSession(true);
@@ -28,7 +28,7 @@ exports.AmazonHandler = {
     ,
     StopIntent:
         function (request, response) {
-            let speechOutput = 'Gracias por usar el Alexa skill Parkinson.';
+            let speechOutput = 'Hasta pronto. Si quieres volver a utilizar esta función di “Parkinson”';
             response.say(speechOutput);
             response.reprompt(speechOutput);
             response.shouldEndSession(true);
