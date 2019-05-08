@@ -65,6 +65,21 @@
                     "samples": [
                         "Cuantos {medicine} me quedan"
                     ]
+                },
+                {
+                    "name": "Call",
+                    "slots": [],
+                    "samples": [
+                        "Llamar"
+                    ]
+                },
+                {
+                    "name": "MyMedication",
+                    "slots": [],
+                    "samples": [
+                        "Medicación",
+                        "Mi Medicación"
+                    ]
                 }
             ],
             "types": [

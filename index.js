@@ -20,6 +20,14 @@ exports.handler = function (alexaApp) {
         return CoreHandler.LaunchRequest(request, response);
     });
 
+    alexaApp.intent('MyMedication', function (request, response) {
+        return CoreHandler.MyMedication(request, response);
+    });
+
+    alexaApp.intent('Call', function (request, response) {
+        return CoreHandler.Call(request, response);
+    });
+
     alexaApp.intent('MedicationCalendar', function (request, response) {
         return CoreHandler.MedicationCalendar(request, response);
     });
