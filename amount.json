@@ -1,22 +1,24 @@
 {
-    "amantadina" : {
-        "cantidad" : "10",
-        "tipo" : "píldora"
-    },
-    "ibuprofen" : {
-        "cantidad" : "10",
-        "tipo" : "gramo"
-    },
-    "levodopa" : {
-        "cantidad" : "10",
-        "tipo" : "píldora"
-    },
-    "pergolida" : {
-        "cantidad" : "10",
-        "tipo" : "píldora"
-    },
-    "tolcapone" : {
-        "cantidad" : "10",
-        "tipo" : "gramo"
-    }
+    "stock": [
+        {
+            "medicine": "amantadina",
+            "cantidad": "10",
+            "tipo": "píldora"
+        },
+        {
+            "medicine": "ibuprofen",
+            "cantidad": "0.1",
+            "tipo": "gramo"
+        },
+        {
+            "medicine": "levodopa",
+            "cantidad": "10",
+            "tipo": "píldora"
+        },
+        {
+            "medicine": "pergolida",
+            "cantidad": "10",
+            "tipo": "píldora"
+        }
+    ]
 }

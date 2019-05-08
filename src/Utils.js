@@ -4,6 +4,10 @@ const amount = require('../amount.json');
 const spanishDay = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
 const spanishTime = ['mañana', 'mediodía', 'noche'];
 
+
+
+
+
 exports.Utils = {
     /**
      * This function is used to get the medicine data by day / hour from the mock json file
@@ -64,43 +68,77 @@ exports.Utils = {
         }
     },
     /**
-     * This function returns all medecine counts
+     * This function returns all medicine counts
      */
-    getAllAmounts: function (){
-        return amount;
+    getAllAmounts: function () {
+        return amount.stock;
     },
     /**
-     * This function is used to get the current amount of the medecine
-     * @param medecine string, Medecine specified
+     * This function is used to get the current amount of the medicine
+     * @param medecine string, Medicine specified
      */
-    getSpecificAmount: function (medecine) {
+    getSpecificAmount: function (medicine) {
+        stock = amount.stock;
+        let rawData = stock.filter(
+            function (stock) { return stock.medicine == medicine }
+        );
+        let result = null;
+        if (rawData.length > 0) {
+            result = this.getSingleAmount(rawData[0]);
+        }
+        return result;
+    },
+    /**
+     * This function is used to get a single medicine amount
+     * @param medecine string, Medicine specified
+     */
+    getSingleAmount: function (medicine) {
 
-        let cantidad = amount[medecine][cantidad];
-        let tipo = amount[medecine][tipo];
+        let cantidad = Number(medicine.cantidad);
+        let tipo = medicine.tipo;
         let result = null;
 
-        if (cantidad == 0){
-            result = result = `${cantidad} ${tipo}`;
-        }else{
-            switch (tipo){
-                case 'píldora' :
+        if (cantidad == 0) {
+            result = `${cantidad} ${tipo}`;
+        } else {
+            switch (tipo) {
+                case 'píldora':
                     result = `${cantidad} píldora`;
                     break;
-                case 'gramo' :
-                    if(cantidad < 1){
+                case 'gramo':
+                    if (cantidad < 1) {
                         cantidad *= 100;
-                        result = `${cantidad} miligramos`;
-                    }else {
+                        result = `${cantidad} miligramo`;
+                    } else {
                         result = `${cantidad} gramo`;
                     }
                     break;
-                default :
+                default:
                     result = `${cantidad} ${tipo}`;
             }
-            if(cantidad >= 2){
+            if (cantidad >= 2) {
                 result += `s`;
             }
-            return result;
         }
+        return result;
     }
 };
+
+/*
+const Utils = require('./Utils').Utils;
+console.log(Utils.getSpecificAmount("ibuprofen"));
+
+function getAll() {
+    let generalResult = Utils.getAllAmounts();
+    amountLeftResult = 'Te quedan';
+
+    generalResult.forEach((element, index) => {
+        amountLeftResult += ` ${Utils.getSingleAmount(element)} de ${element.medicine}`;
+        if (index < generalResult.length - 1) {
+            amountLeftResult += ' y';
+        }
+    });
+    return amountLeftResult;
+}
+
+console.log(getAll());*/

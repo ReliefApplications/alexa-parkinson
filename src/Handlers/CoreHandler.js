@@ -82,51 +82,52 @@ exports.CoreHandler = {
                         response.shouldEndSession(true);
                     });
         },
-        'MedicationLeft':
-            // This is triggered when a user ask for information about his medication calendar
-            function (request, response) {
-                let medicineSlotRaw = request.slots.medicine.resolution(0) ?
-                    request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
-    
-                let speechOutput = 'Lo siento';
-                let amountLeftResult = '';
-    
-                return new Promise((resolve, reject) => {
-                    if (!medicineSlotRaw || (medicineSlotRaw === 'medicinas' || medicineSlotRaw === 'medicamentos')) {
-                        let generalResult = Utils.getAllAmounts();
-                        amountLeftResult = 'Te quedan';
-                        generalResult.forEach((element, index) => {
-                            amountLeftResult += ` ${Utils.getSpecificAmount(element[medecine])} de ${medicineSlotRaw}`;
-                            if (index < generalResult.length - 1) {
-                                amountLeftResult += ' y';
-                            }
-                        });
-                    } else {
-                        let specificResult = Utils.getSpecificAmount(medicineSlotRaw);
-                        if (!specificResult) {
-                            amountLeftResult = `No te quedas ${medicineSlotRaw}`;
-                        } else {
-                            amountLeftResult = `Te quedas ${specificResult} de ${medicineSlotRaw}`;
+    'MedicationLeft':
+        // This is triggered when a user ask for information about his medication calendar
+        function (request, response) {
+            let medicineSlotRaw = request.slots.medicine.resolution(0) ?
+                request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
+
+            let speechOutput = 'Lo siento';
+            let amountLeftResult = '';
+
+            return new Promise((resolve, reject) => {
+                if (!medicineSlotRaw || (medicineSlotRaw === 'medicinas' || medicineSlotRaw === 'medicamentos')) {
+                    let generalResult = Utils.getAllAmounts();
+                    amountLeftResult = 'Te quedan';
+
+                    generalResult.forEach((element, index) => {
+                        amountLeftResult += ` ${Utils.getSingleAmount(element)} de ${element.medicine}`;
+                        if (index < generalResult.length - 1) {
+                            amountLeftResult += ' y';
                         }
+                    });
+                } else {
+                    let specificResult = Utils.getSpecificAmount(medicineSlotRaw);
+                    if (!specificResult) {
+                        amountLeftResult = `No te quedas ${medicineSlotRaw}`;
+                    } else {
+                        amountLeftResult = `Te quedas ${specificResult} de ${medicineSlotRaw}`;
                     }
-    
-                    speechOutput = amountLeftResult;
-    
-                    resolve(speechOutput);
-                })
-                    .then((result) => {
-                        response.say(result);
-                        response.reprompt(result);
-                        response.card('Medicamentos ', result);
+                }
+
+                speechOutput = amountLeftResult;
+
+                resolve(speechOutput);
+            })
+                .then((result) => {
+                    response.say(result);
+                    response.reprompt(result);
+                    response.card('Medicamentos ', result);
+                    response.shouldEndSession(false);
+                    return response;
+                },
+                    (error) => {
+                        speechOutput = 'Lo siento, hubo un problema con la solicitud';
+                        response.say(speechOutput);
+                        response.reprompt(speechOutput);
+                        response.card('Error!', speechOutput);
                         response.shouldEndSession(false);
-                        return response;
-                    },
-                        (error) => {
-                            speechOutput = 'Lo siento, hubo un problema con la solicitud';
-                            response.say(speechOutput);
-                            response.reprompt(speechOutput);
-                            response.card('Error!', speechOutput);
-                            response.shouldEndSession(false);
-                        });
-            }
+                    });
+        }
 };
