@@ -71,7 +71,7 @@ exports.CoreHandler = {
             }
 
             return new Promise((resolve) => {
-                if (!medicineSlotRaw || (medicineSlotRaw === 'medicinas' || medicineSlotRaw === 'medicamentos')) {
+                if (!medicineSlotRaw || (medicineSlotRaw === 'medicamentos')) {
                     let generalResult = Utils.getGeneralData(Utils.getDayOfWeek(daySlotRaw), Utils.getTimeOfDay(timeSlotRaw));
                     medicineResult = 'Debes tomar';
                     generalResult.forEach((element, index) => {
@@ -124,7 +124,7 @@ exports.CoreHandler = {
             let amountLeftResult = '';
 
             return new Promise((resolve, reject) => {
-                if (!medicineSlotRaw || (medicineSlotRaw === 'medicinas' || medicineSlotRaw === 'medicamentos')) {
+                if (!medicineSlotRaw || (medicineSlotRaw === 'medicamentos')) {
                     let generalResult = Utils.getAllAmounts();
                     amountLeftResult = 'Te quedan';
 

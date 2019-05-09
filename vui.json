@@ -77,10 +77,6 @@
                     "name": "MyMedication",
                     "slots": [],
                     "samples": [
-                        "mi medicamentos",
-                        "medicamentos",
-                        "me medicine",
-                        "medicine",
                         "medicacion",
                         "mi medicacion",
                         "Medicación",
@@ -235,15 +231,11 @@
                             "name": {
                                 "value": "medicamentos",
                                 "synonyms": [
+                                    "medicinas",
+                                    "medicina",
+                                    "medicacion",
+                                    "medicación",
                                     "medicamento"
-                                ]
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "medicinas",
-                                "synonyms": [
-                                    "medicina"
                                 ]
                             }
                         }
