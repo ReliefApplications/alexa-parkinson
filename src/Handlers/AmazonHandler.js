@@ -34,4 +34,40 @@ exports.AmazonHandler = {
             response.shouldEndSession(true);
             return response;
         }
+    ,
+    // repetition logic, got to change
+    RepeatIntent:
+        function (request, response) {
+            let speechOutput = 'Pronto repetiré.';
+            response.say(speechOutput);
+            response.reprompt(speechOutput);
+            response.shouldEndSession(false);
+            return response;
+        }
+    ,
+    // see dialog delegate
+    // Yes answer
+    YesIntent:
+        function (request, response) {
+            let session = request.getSession();
+            dialogState = session.get('dialogState');
+
+            let speechOutput = 'Recibí una respuesta positiva';
+            response.say('***' + dialogState + '***' + speechOutput);
+            response.reprompt(speechOutput);
+            response.shouldEndSession(false);
+            return response;
+        },
+    // No answer
+    NoIntent:
+        function (request, response) {
+            let session = request.getSession();
+            dialogState = session.get('dialogState');
+
+            let speechOutput = 'Recibí una respuesta negativa';
+            response.say('***' + dialogState + '***' + speechOutput);
+            response.reprompt(speechOutput);
+            response.shouldEndSession(false);
+            return response;
+        }
 };

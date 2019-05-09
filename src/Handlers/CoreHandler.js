@@ -5,6 +5,9 @@ exports.CoreHandler = {
     'LaunchRequest':
         // This is triggered when the user says: 'Open parkison' or 'Abre parkinson' 
         function (request, response) {
+            //--- to suppress ---
+            let session = request.getSession();
+            session.set('dialogState', 'principio');
             response.say(Constants.TEXTS.welcomeTitle + ' ' + Constants.TEXTS.welcomeText);
             response.reprompt(Constants.TEXTS.welcomeReprompt)
             response.card(Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText);
@@ -14,6 +17,8 @@ exports.CoreHandler = {
     'MyMedication':
         // This is triggered when the user says: 'Mi medicación' or 'Medicación'
         function (request, response) {
+            let session = request.getSession();
+            session.set('dialogState','medicación');
             response.say(Constants.TEXTS.myMedicationText);
             response.reprompt(Constants.TEXTS.myMedicationReprompt);
             response.card(Constants.TEXTS.myMedicationTitle, Constants.TEXTS.myMedicationText);
@@ -23,6 +28,8 @@ exports.CoreHandler = {
     'Call':
         // This is triggered when the user says: 'Llamar'
         function (request, response) {
+            let session = request.getSession();
+            session.set('dialogState','llamada');
             response.say(Constants.TEXTS.llamarText);
             response.reprompt(Constants.TEXTS.llamarReprompt);
             response.card(Constants.TEXTS.llamarTitle, Constants.TEXTS.llamarText);
@@ -33,6 +40,10 @@ exports.CoreHandler = {
     'MedicationCalendar':
         // This is triggered when a user ask for information about his medication calendar
         function (request, response) {
+
+            let session = request.getSession();
+            session.set('dialogState','calendario');
+
             let medicineSlotRaw = request.slots.medicine.resolution(0) ?
                 request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
 
@@ -103,6 +114,10 @@ exports.CoreHandler = {
     'MedicationLeft':
         // This is triggered when a user ask for information about his medication calendar
         function (request, response) {
+
+            let session = request.getSession();
+            session.set('dialogState','medicamentos restante');
+
             let medicineSlotRaw = request.slots.medicine.resolution(0) ?
                 request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
 
