@@ -5,9 +5,8 @@ exports.CoreHandler = {
     'LaunchRequest':
         // This is triggered when the user says: 'Open parkison' or 'Abre parkinson' 
         function (request, response) {
-            //--- to suppress ---
             let session = request.getSession();
-            session.set('dialogState', 'principio');
+            session.set('dialogState', 'launch');
             response.say(Constants.TEXTS.welcomeTitle + ' ' + Constants.TEXTS.welcomeText);
             response.reprompt(Constants.TEXTS.welcomeReprompt)
             response.card(Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText);
@@ -18,7 +17,7 @@ exports.CoreHandler = {
         // This is triggered when the user says: 'Mi medicación' or 'Medicación'
         function (request, response) {
             let session = request.getSession();
-            session.set('dialogState','medicación');
+            session.set('dialogState', 'myMedication');
             response.say(Constants.TEXTS.myMedicationText);
             response.reprompt(Constants.TEXTS.myMedicationReprompt);
             response.card(Constants.TEXTS.myMedicationTitle, Constants.TEXTS.myMedicationText);
@@ -29,7 +28,7 @@ exports.CoreHandler = {
         // This is triggered when the user says: 'Llamar'
         function (request, response) {
             let session = request.getSession();
-            session.set('dialogState','llamada');
+            session.set('dialogState', 'call');
             response.say(Constants.TEXTS.llamarText);
             response.reprompt(Constants.TEXTS.llamarReprompt);
             response.card(Constants.TEXTS.llamarTitle, Constants.TEXTS.llamarText);
@@ -42,7 +41,7 @@ exports.CoreHandler = {
         function (request, response) {
 
             let session = request.getSession();
-            session.set('dialogState','calendario');
+            session.set('dialogState', 'medicationSchedule');
 
             let medicineSlotRaw = request.slots.medicine.resolution(0) ?
                 request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
@@ -116,7 +115,7 @@ exports.CoreHandler = {
         function (request, response) {
 
             let session = request.getSession();
-            session.set('dialogState','medicamentos restante');
+            session.set('dialogState', 'medicationLeft');
 
             let medicineSlotRaw = request.slots.medicine.resolution(0) ?
                 request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
@@ -166,10 +165,86 @@ exports.CoreHandler = {
     'DidNotUnderstand':
         // This is triggered when Alexa can't handle request
         function (request, response) {
-            response.say(Constants.TEXTS.unhandledText);
-            response.reprompt(Constants.TEXTS.unhandledReprompt);
-            response.card(Constants.TEXTS.unhandledTitle, Constants.TEXTS.unhandledText);
-            response.shouldEndSession(false);
+            let session = request.getSession();
+            dialogState = session.get('dialogState');
+            let speechOutput = Constants.TEXTS.unhandledDefaultText;
+            let endSession = false;
+
+            switch (dialogState) {
+                //--- lauch ---
+                case "launch":
+                    session.set('dialogState', 'launchLoopBack1');
+                    speechOutput += Constants.TEXTS.unhandledLaunchText1;
+                    endSession = false;
+                    break;
+                case "launchLoopBack1":
+                    session.set('dialogState', 'launchLoopBack2');
+                    speechOutput += Constants.TEXTS.unhandledLaunchText2;
+                    endSession = false;
+                    break;
+                case "launchLoopBack2":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- my medication ---
+                case "myMedication":
+                    session.set('dialogState', 'myMedicationLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMyMedicationText;
+                    endSession = false;
+                    break;
+                case "myMedicationLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- medicationSchedule ---
+                case "medicationSchedule":
+                    session.set('dialogState', 'medicationScheduleLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMedicationScheduleText;
+                    endSession = false;
+                    break;
+                case "medicationScheduleLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- medicationLeft ---
+                case "medicationLeft":
+                    session.set('dialogState', 'medicationLeftLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMedicationLeftText;
+                    endSession = false;
+                    break;
+                case "medicationLeftLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- call ---
+                case "call":
+                    session.set('dialogState', 'callLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledCallText;
+                    endSession = false;
+                    break;
+                case "callLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                default:
+                    speechOutput = Constants.TEXTS.unhandledDefaultText;
+                    endSession = false;
+            }
+            response.say(speechOutput);
+            //response.reprompt(Constants.TEXTS.unhandledReprompt);
+            response.card(Constants.TEXTS.unhandledTitle, speechOutput);
+            response.shouldEndSession(endSession);
+
             return response;
         }
 };

@@ -123,23 +123,3 @@ exports.Utils = {
         return result;
     }
 };
-
-/*
-test
-const Utils = require('./Utils').Utils;
-console.log(Utils.getSpecificAmount("ibuprofen"));
-
-function getAll() {
-    let generalResult = Utils.getAllAmounts();
-    amountLeftResult = 'Te quedan';
-
-    generalResult.forEach((element, index) => {
-        amountLeftResult += ` ${Utils.getSingleAmount(element)} de ${element.medicine}`;
-        if (index < generalResult.length - 1) {
-            amountLeftResult += ' y';
-        }
-    });
-    return amountLeftResult;
-}
-
-console.log(getAll());*/

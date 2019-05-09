@@ -1,3 +1,5 @@
+const CoreHandler = require('./src/Handlers/CoreHandler').CoreHandler;
+
 exports.AmazonHandler = {
     FallbackIntent:
         function (request, response) {
@@ -51,22 +53,165 @@ exports.AmazonHandler = {
         function (request, response) {
             let session = request.getSession();
             dialogState = session.get('dialogState');
+            let speechOutput = "";
+            let endSession = false;
 
-            let speechOutput = 'Recibí una respuesta positiva';
-            response.say('***' + dialogState + '***' + speechOutput);
-            response.reprompt(speechOutput);
+            switch (dialogState) {
+                //--- lauch ---
+                case "launch":
+                    session.set('dialogState', 'launchLoopBack1');
+                    speechOutput += Constants.TEXTS.unhandledLaunchText1;
+                    endSession = false;
+                    break;
+                case "launchLoopBack1":
+                    session.set('dialogState', 'launchLoopBack2');
+                    speechOutput += Constants.TEXTS.unhandledLaunchText2;
+                    endSession = false;
+                    break;
+                case "launchLoopBack2":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- my medication ---
+                case "myMedication":
+                    session.set('dialogState', 'myMedicationLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMyMedicationText;
+                    endSession = false;
+                    break;
+                case "myMedicationLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- medicationSchedule ---
+                case "medicationSchedule":
+                    session.set('dialogState', 'medicationScheduleLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMedicationScheduleText;
+                    endSession = false;
+                    break;
+                case "medicationScheduleLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- medicationLeft ---
+                case "medicationLeft":
+                    session.set('dialogState', 'medicationLeftLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMedicationLeftText;
+                    endSession = false;
+                    break;
+                case "medicationLeftLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- call ---
+                case "call":
+                    session.set('dialogState', 'callLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledCallText;
+                    endSession = false;
+                    break;
+                case "callLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                default:
+                    speechOutput = Constants.TEXTS.unhandledDefaultText;
+                    endSession = false;
+            }
+
+            response.say(speechOutput);
             response.shouldEndSession(false);
             return response;
         },
     // No answer
     NoIntent:
         function (request, response) {
+
             let session = request.getSession();
             dialogState = session.get('dialogState');
+            let speechOutput = "";
+            let endSession = false;
 
-            let speechOutput = 'Recibí una respuesta negativa';
-            response.say('***' + dialogState + '***' + speechOutput);
-            response.reprompt(speechOutput);
+            switch (dialogState) {
+                //--- lauch ---
+                case "launch":
+                    session.set('dialogState', 'launchLoopBack1');
+                    speechOutput += Constants.TEXTS.unhandledLaunchText1;
+                    endSession = false;
+                    break;
+                case "launchLoopBack1":
+                    session.set('dialogState', 'launchLoopBack2');
+                    speechOutput += Constants.TEXTS.unhandledLaunchText2;
+                    endSession = false;
+                    break;
+                case "launchLoopBack2":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- my medication ---
+                case "myMedication":
+                    session.set('dialogState', 'myMedicationLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMyMedicationText;
+                    endSession = false;
+                    break;
+                case "myMedicationLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- medicationSchedule ---
+                case "medicationSchedule":
+                    session.set('dialogState', 'medicationScheduleLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMedicationScheduleText;
+                    endSession = false;
+                    break;
+                case "medicationScheduleLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- medicationLeft ---
+                case "medicationLeft":
+                    session.set('dialogState', 'medicationLeftLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledMedicationLeftText;
+                    endSession = false;
+                    break;
+                case "medicationLeftLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                //--- call ---
+                case "call":
+                    session.set('dialogState', 'callLoopBack');
+                    speechOutput += Constants.TEXTS.unhandledCallText;
+                    endSession = false;
+                    break;
+                case "callLoopBack":
+                    session.set('dialogState', 'unhandledClose');
+                    speechOutput = Constants.TEXTS.unhandledClose;
+                    endSession = true;
+                    break;
+
+                default:
+                    speechOutput = Constants.TEXTS.unhandledDefaultText;
+                    endSession = false;
+            }
+
+            response.say(speechOutput);
             response.shouldEndSession(false);
             return response;
         }
