@@ -1,4 +1,5 @@
-const CoreHandler = require('./src/Handlers/CoreHandler').CoreHandler;
+const Constants = require('../Constants').Constants;
+const CoreHandler = require('./CoreHandler').CoreHandler;
 
 exports.AmazonHandler = {
     FallbackIntent:
@@ -55,67 +56,23 @@ exports.AmazonHandler = {
             dialogState = session.get('dialogState');
             let speechOutput = "";
             let endSession = false;
-
+            
             switch (dialogState) {
                 //--- lauch ---
-                case "launch":
-                    session.set('dialogState', 'launchLoopBack1');
-                    speechOutput += Constants.TEXTS.unhandledLaunchText1;
-                    endSession = false;
-                    break;
                 case "launchLoopBack1":
-                    session.set('dialogState', 'launchLoopBack2');
-                    speechOutput += Constants.TEXTS.unhandledLaunchText2;
-                    endSession = false;
-                    break;
+                    return CoreHandler.MyMedication(request, response);
                 case "launchLoopBack2":
-                    session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
-                    endSession = true;
-                    break;
-
-                //--- my medication ---
-                case "myMedication":
-                    session.set('dialogState', 'myMedicationLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMyMedicationText;
-                    endSession = false;
-                    break;
-                case "myMedicationLoopBack":
-                    session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
-                    endSession = true;
-                    break;
+                    return CoreHandler.Call(request, response);
 
                 //--- medicationSchedule ---
-                case "medicationSchedule":
-                    session.set('dialogState', 'medicationScheduleLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMedicationScheduleText;
-                    endSession = false;
-                    break;
                 case "medicationScheduleLoopBack":
-                    session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
-                    endSession = true;
-                    break;
+                    return CoreHandler.MedicationCalendar(request, response);
 
                 //--- medicationLeft ---
-                case "medicationLeft":
-                    session.set('dialogState', 'medicationLeftLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMedicationLeftText;
-                    endSession = false;
-                    break;
                 case "medicationLeftLoopBack":
-                    session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
-                    endSession = true;
-                    break;
+                    return CoreHandler.MedicationLeft(request, response);
 
                 //--- call ---
-                case "call":
-                    session.set('dialogState', 'callLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledCallText;
-                    endSession = false;
-                    break;
                 case "callLoopBack":
                     session.set('dialogState', 'unhandledClose');
                     speechOutput = Constants.TEXTS.unhandledClose;
@@ -126,15 +83,13 @@ exports.AmazonHandler = {
                     speechOutput = Constants.TEXTS.unhandledDefaultText;
                     endSession = false;
             }
-
             response.say(speechOutput);
-            response.shouldEndSession(false);
+            response.shouldEndSession(endSession);
             return response;
         },
     // No answer
     NoIntent:
         function (request, response) {
-
             let session = request.getSession();
             dialogState = session.get('dialogState');
             let speechOutput = "";
@@ -142,11 +97,6 @@ exports.AmazonHandler = {
 
             switch (dialogState) {
                 //--- lauch ---
-                case "launch":
-                    session.set('dialogState', 'launchLoopBack1');
-                    speechOutput += Constants.TEXTS.unhandledLaunchText1;
-                    endSession = false;
-                    break;
                 case "launchLoopBack1":
                     session.set('dialogState', 'launchLoopBack2');
                     speechOutput += Constants.TEXTS.unhandledLaunchText2;
@@ -158,24 +108,7 @@ exports.AmazonHandler = {
                     endSession = true;
                     break;
 
-                //--- my medication ---
-                case "myMedication":
-                    session.set('dialogState', 'myMedicationLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMyMedicationText;
-                    endSession = false;
-                    break;
-                case "myMedicationLoopBack":
-                    session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
-                    endSession = true;
-                    break;
-
                 //--- medicationSchedule ---
-                case "medicationSchedule":
-                    session.set('dialogState', 'medicationScheduleLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMedicationScheduleText;
-                    endSession = false;
-                    break;
                 case "medicationScheduleLoopBack":
                     session.set('dialogState', 'unhandledClose');
                     speechOutput = Constants.TEXTS.unhandledClose;
@@ -183,11 +116,6 @@ exports.AmazonHandler = {
                     break;
 
                 //--- medicationLeft ---
-                case "medicationLeft":
-                    session.set('dialogState', 'medicationLeftLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMedicationLeftText;
-                    endSession = false;
-                    break;
                 case "medicationLeftLoopBack":
                     session.set('dialogState', 'unhandledClose');
                     speechOutput = Constants.TEXTS.unhandledClose;
@@ -195,11 +123,6 @@ exports.AmazonHandler = {
                     break;
 
                 //--- call ---
-                case "call":
-                    session.set('dialogState', 'callLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledCallText;
-                    endSession = false;
-                    break;
                 case "callLoopBack":
                     session.set('dialogState', 'unhandledClose');
                     speechOutput = Constants.TEXTS.unhandledClose;
@@ -210,9 +133,8 @@ exports.AmazonHandler = {
                     speechOutput = Constants.TEXTS.unhandledDefaultText;
                     endSession = false;
             }
-
-            response.say(speechOutput);
-            response.shouldEndSession(false);
-            return response;
+           response.say(speechOutput);
+           response.shouldEndSession(endSession);
+           return response;
         }
 };
