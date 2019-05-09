@@ -121,5 +121,9 @@ exports.Utils = {
             }
         }
         return result;
+    },
+    setDialogState(request, state){
+        let session = request.getSession();
+        session.set('dialogState', state);
     }
 };

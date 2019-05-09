@@ -80,7 +80,7 @@ exports.AmazonHandler = {
                     break;
 
                 default:
-                    speechOutput = Constants.TEXTS.unhandledDefaultText;
+                    speechOutput = Constants.TEXTS.invalidAnswer;
                     endSession = false;
             }
             response.say(speechOutput);
@@ -130,7 +130,7 @@ exports.AmazonHandler = {
                     break;
 
                 default:
-                    speechOutput = Constants.TEXTS.unhandledDefaultText;
+                    speechOutput = Constants.TEXTS.invalidAnwer;
                     endSession = false;
             }
            response.say(speechOutput);
