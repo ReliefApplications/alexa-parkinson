@@ -122,8 +122,43 @@ exports.Utils = {
         }
         return result;
     },
-    setDialogState(request, state){
+    setDialogState(request, state) {
         let session = request.getSession();
         session.set('dialogState', state);
+    },
+    supportsDisplay(request) {
+        let hasDisplay =
+            request.context &&
+            request.context.System &&
+            request.context.System.device &&
+            request.context.System.device.supportedInterfaces &&
+            request.context.System.device.supportedInterfaces.Display
+
+        return hasDisplay;
+    },
+    renderBodyTemplate(url,title,text) {
+        let template = {
+            "type": "Display.RenderTemplate",
+            "template": {
+                "type": "BodyTemplate1",
+                "backButton": "HIDDEN",
+                "backgroundImage": {
+                    "contentDescription": "",
+                    "sources": [{
+                        "url": url,
+                        "size": "MEDIUM"
+                    }
+                    ]
+                },
+                "title": title,
+                "textContent": {
+                    "primaryText": {
+                        "text": text,
+                        "type": "PlainText"
+                    }
+                }
+            }
+        };
+        return template;
     }
 };

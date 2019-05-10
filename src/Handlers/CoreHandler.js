@@ -8,7 +8,9 @@ exports.CoreHandler = {
             Utils.setDialogState(request, 'launch');
             response.say(Constants.TEXTS.welcomeTitle + ' ' + Constants.TEXTS.welcomeText);
             response.reprompt(Constants.TEXTS.welcomeReprompt)
-            response.card(Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText);
+            if(Utils.supportsDisplay(request)){
+                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.welcomeImage, Constants.TEXTS.welcomeTitle,Constants.TEXTS.welcomeText));
+            }
             response.shouldEndSession(false);
             return response;
         },
@@ -18,7 +20,9 @@ exports.CoreHandler = {
             Utils.setDialogState(request, 'myMedication');
             response.say(Constants.TEXTS.myMedicationText);
             response.reprompt(Constants.TEXTS.myMedicationReprompt);
-            response.card(Constants.TEXTS.myMedicationTitle, Constants.TEXTS.myMedicationText);
+            if(Utils.supportsDisplay(request)){
+                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.myMedicationTitle,Constants.TEXTS.myMedicationText));
+            }
             response.shouldEndSession(false);
             return response;
         },
@@ -26,9 +30,11 @@ exports.CoreHandler = {
         // This is triggered when the user says: 'Llamar'
         function (request, response) {
             Utils.setDialogState(request, 'call');
-            response.say(Constants.TEXTS.llamarText);
-            response.reprompt(Constants.TEXTS.llamarReprompt);
-            response.card(Constants.TEXTS.llamarTitle, Constants.TEXTS.llamarText);
+            response.say(Constants.TEXTS.callText);
+            response.reprompt(Constants.TEXTS.callReprompt);
+            if(Utils.supportsDisplay(request)){
+                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.callTitle,Constants.TEXTS.callText));
+            }
             response.shouldEndSession(false);
             return response;
         }
@@ -93,7 +99,9 @@ exports.CoreHandler = {
                     (result) => {
                         response.say(result);
                         response.reprompt(result);
-                        response.card('Medicamentos que tomar', result);
+                        if(Utils.supportsDisplay(request)){
+                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Medicamentos que tomar',result));
+                        }
                         response.shouldEndSession(false);
                         return response;
                     },
@@ -102,7 +110,9 @@ exports.CoreHandler = {
                         speechOutput = 'Lo siento, hubo un problema con la solicitud';
                         response.say(speechOutput);
                         response.reprompt(speechOutput);
-                        response.card('Error!', speechOutput);
+                        if(Utils.supportsDisplay(request)){
+                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Error!',speechOutput));
+                        }
                         response.shouldEndSession(true);
                     });
         },
@@ -145,7 +155,9 @@ exports.CoreHandler = {
                 .then((result) => {
                     response.say(result);
                     response.reprompt(result);
-                    response.card('Medicamentos ', result);
+                    if(Utils.supportsDisplay(request)){
+                        response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Medicamentos ',result));
+                    }
                     response.shouldEndSession(false);
                     return response;
                 },
@@ -153,7 +165,9 @@ exports.CoreHandler = {
                         speechOutput = 'Lo siento, hubo un problema con la solicitud';
                         response.say(speechOutput);
                         response.reprompt(speechOutput);
-                        response.card('Error!', speechOutput);
+                        if(Utils.supportsDisplay(request)){
+                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Error!',speechOutput));
+                        }
                         response.shouldEndSession(false);
                     });
         },
@@ -237,7 +251,9 @@ exports.CoreHandler = {
             }
             response.say(speechOutput);
             //response.reprompt(Constants.TEXTS.unhandledReprompt);
-            response.card(Constants.TEXTS.unhandledTitle, speechOutput);
+            if(Utils.supportsDisplay(request)){
+                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.unhandledTitle,speechOutput));
+            }
             response.shouldEndSession(endSession);
 
             return response;

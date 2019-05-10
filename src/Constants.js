@@ -2,8 +2,7 @@ exports.Constants = {
   TEXTS: {
     //--- WELCOME ---
     welcomeTitle: "Bienvenido a la skill de Asistencia Parkinson.",
-    welcomeText: "Queremos ofrecerte toda la información sobre tu medicación además de darte la posibilidad de consultar tus dudas con la Asociación Parkinson Madrid."
-      + "\nDi “Mi Medicación” o “Llamar”",
+    welcomeText: "Queremos ofrecerte toda la información sobre tu medicación además de darte la posibilidad de consultar tus dudas con la Asociación Parkinson Madrid. \nDi “Mi Medicación” o “Llamar”",
     welcomeReprompt: "Di “Mi Medicación” o “Llamar”",
 
     //--- MyMedication ---
@@ -11,10 +10,10 @@ exports.Constants = {
     myMedicationText: "Ok, pregúntame por tu medicación programada. Por ejemplo di: ¿Qué medicación tengo que tomar hoy?",
     myMedicationReprompt: "Disculpa ¿Quieres información sobre tu medicación de hoy?",
 
-    //--- Llamar ---
-    llamarTitle: "Llamada",
-    llamarText: "Llamada texto",
-    llamarReprompt: "llamada repete",
+    //--- Call ---
+    callTitle: "Llamada",
+    callText: "Llamada texto",
+    callReprompt: "llamada repete",
 
     //--- Unhandled DEFAULT ---
     unhandledDefaultTitle:"Solicitud desconocida.",
@@ -42,5 +41,9 @@ exports.Constants = {
 
     //--- Invalid Answer ---
     invalidAnwer: "Lo siento, no es una respuesta válida."
+  },
+  IMAGES: {
+    welcomeImage: "https://i.ytimg.com/vi/PUOun9RImC8/maxresdefault.jpg",
+    defaultImage: "https://i.ytimg.com/vi/PUOun9RImC8/maxresdefault.jpg"
   }
 };
