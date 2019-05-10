@@ -136,7 +136,7 @@ exports.Utils = {
 
         return hasDisplay;
     },
-    renderBodyTemplate(url,title,text) {
+    renderBodyTemplate(url, title, text) {
         let template = {
             "type": "Display.RenderTemplate",
             "template": {
@@ -158,6 +158,33 @@ exports.Utils = {
                     }
                 }
             }
+        };
+        return template;
+    },
+    renderListTemplate(url, title, itemsToDisplay) {
+        let listItems = [];
+        for (i in itemsToDisplay){
+            templateItems.push({"token":"string","textContent":itemsToDisplay[i].medicine});
+        }
+
+        let template = {
+            "type": "ListTemplate1",
+            "token": "string",
+            "backButton": "HIDDEN",
+            "backgroundImage": url,
+            "title": title,
+            "listItems": [{
+                "token": "string",
+                "textContent": "Item 1"
+              },
+              {
+                "token": "string",
+                "textContent": "Item 2"
+              },
+              {
+                "token": "string",
+                "textContent": "Item 3"
+              }]
         };
         return template;
     }

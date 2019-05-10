@@ -8,8 +8,8 @@ exports.CoreHandler = {
             Utils.setDialogState(request, 'launch');
             response.say(Constants.TEXTS.welcomeTitle + ' ' + Constants.TEXTS.welcomeText);
             response.reprompt(Constants.TEXTS.welcomeReprompt)
-            if(Utils.supportsDisplay(request)){
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.welcomeImage, Constants.TEXTS.welcomeTitle,Constants.TEXTS.welcomeText));
+            if (Utils.supportsDisplay(request)) {
+                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.welcomeImage, Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText));
             }
             response.shouldEndSession(false);
             return response;
@@ -20,8 +20,8 @@ exports.CoreHandler = {
             Utils.setDialogState(request, 'myMedication');
             response.say(Constants.TEXTS.myMedicationText);
             response.reprompt(Constants.TEXTS.myMedicationReprompt);
-            if(Utils.supportsDisplay(request)){
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.myMedicationTitle,Constants.TEXTS.myMedicationText));
+            if (Utils.supportsDisplay(request)) {
+                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.myMedicationTitle, Constants.TEXTS.myMedicationText));
             }
             response.shouldEndSession(false);
             return response;
@@ -32,8 +32,8 @@ exports.CoreHandler = {
             Utils.setDialogState(request, 'call');
             response.say(Constants.TEXTS.callText);
             response.reprompt(Constants.TEXTS.callReprompt);
-            if(Utils.supportsDisplay(request)){
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.callTitle,Constants.TEXTS.callText));
+            if (Utils.supportsDisplay(request)) {
+                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.callTitle, Constants.TEXTS.callText));
             }
             response.shouldEndSession(false);
             return response;
@@ -60,6 +60,8 @@ exports.CoreHandler = {
             let daySlotFormatted = daySlotRaw ? daySlotRaw : 'hoy';
             let timeSlotFormatted = timeSlotRaw;
 
+            let itemsToDisplay = [];
+
             switch (timeSlotRaw) {
                 case 'mañana':
                     timeSlotFormatted = 'por la ' + timeSlotRaw;
@@ -78,6 +80,7 @@ exports.CoreHandler = {
                     medicineResult = 'Debes tomar';
                     generalResult.forEach((element, index) => {
                         medicineResult += ` ${element['cantidad']} de ${element['medicamento']}`;
+                        itemsToDisplay.push({ "medicine": element.cantidad, "quantity": element.medicamento });
                         if (index < generalResult.length - 1) {
                             medicineResult += ' y';
                         }
@@ -88,6 +91,7 @@ exports.CoreHandler = {
                         medicineResult = `No tienes que tomar ${medicineSlotRaw}`;
                     } else {
                         medicineResult = `Debes tomar ${specificResult} de ${medicineSlotRaw}`;
+                        itemsToDisplay.push({ "medicine": medicineSlotRaw, "quantity": specificResult });
                     }
                 }
 
@@ -99,8 +103,12 @@ exports.CoreHandler = {
                     (result) => {
                         response.say(result);
                         response.reprompt(result);
-                        if(Utils.supportsDisplay(request)){
-                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Medicamentos que tomar',result));
+                        if (Utils.supportsDisplay(request)) {
+                            if (itemsToDisplay.length > 0) {
+                                response.directive(Utils.renderListTemplate(Constants.IMAGES.defaultImage, 'Medicamentos que tomar', itemsToDisplay));
+                            } else {
+                                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Medicamentos que tomar', result));
+                            }
                         }
                         response.shouldEndSession(false);
                         return response;
@@ -110,8 +118,8 @@ exports.CoreHandler = {
                         speechOutput = 'Lo siento, hubo un problema con la solicitud';
                         response.say(speechOutput);
                         response.reprompt(speechOutput);
-                        if(Utils.supportsDisplay(request)){
-                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Error!',speechOutput));
+                        if (Utils.supportsDisplay(request)) {
+                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Error!', speechOutput));
                         }
                         response.shouldEndSession(true);
                     });
@@ -128,13 +136,17 @@ exports.CoreHandler = {
             let speechOutput = 'Lo siento';
             let amountLeftResult = '';
 
+            let itemsToDisplay = [];
+
             return new Promise((resolve, reject) => {
                 if (!medicineSlotRaw || (medicineSlotRaw === 'medicamentos')) {
                     let generalResult = Utils.getAllAmounts();
                     amountLeftResult = 'Te quedan';
 
                     generalResult.forEach((element, index) => {
-                        amountLeftResult += ` ${Utils.getSingleAmount(element)} de ${element.medicine}`;
+                        let amount = Utils.getSingleAmount(element);
+                        amountLeftResult += ` ${amount} de ${element.medicine}`;
+                        itemsToDisplay.push({ "medicine": element.medicine, "quantity": amount });
                         if (index < generalResult.length - 1) {
                             amountLeftResult += ' y';
                         }
@@ -145,6 +157,7 @@ exports.CoreHandler = {
                         amountLeftResult = `No te quedas ${medicineSlotRaw}`;
                     } else {
                         amountLeftResult = `Te quedas ${specificResult} de ${medicineSlotRaw}`;
+                        itemsToDisplay.push({ "medicine": medicineSlotRaw, "quantity": specificResult });
                     }
                 }
 
@@ -155,8 +168,12 @@ exports.CoreHandler = {
                 .then((result) => {
                     response.say(result);
                     response.reprompt(result);
-                    if(Utils.supportsDisplay(request)){
-                        response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Medicamentos ',result));
+                    if (Utils.supportsDisplay(request)) {
+                        if (itemsToDisplay.length > 0) {
+                            response.directive(Utils.renderListTemplate(Constants.IMAGES.defaultImage, 'Medicamentos', itemsToDisplay));
+                        } else {
+                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Medicamentos', result));
+                        }
                     }
                     response.shouldEndSession(false);
                     return response;
@@ -165,8 +182,8 @@ exports.CoreHandler = {
                         speechOutput = 'Lo siento, hubo un problema con la solicitud';
                         response.say(speechOutput);
                         response.reprompt(speechOutput);
-                        if(Utils.supportsDisplay(request)){
-                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Error!',speechOutput));
+                        if (Utils.supportsDisplay(request)) {
+                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Error!', speechOutput));
                         }
                         response.shouldEndSession(false);
                     });
@@ -176,7 +193,7 @@ exports.CoreHandler = {
         function (request, response) {
             let session = request.getSession();
             dialogState = session.get('dialogState');
-            let speechOutput = Constants.TEXTS.unhandledDefaultText +' ';
+            let speechOutput = Constants.TEXTS.unhandledDefaultText + ' ';
             let endSession = false;
 
             switch (dialogState) {
@@ -251,8 +268,8 @@ exports.CoreHandler = {
             }
             response.say(speechOutput);
             //response.reprompt(Constants.TEXTS.unhandledReprompt);
-            if(Utils.supportsDisplay(request)){
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.unhandledTitle,speechOutput));
+            if (Utils.supportsDisplay(request)) {
+                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.unhandledTitle, speechOutput));
             }
             response.shouldEndSession(endSession);
 
