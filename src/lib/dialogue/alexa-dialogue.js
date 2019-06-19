@@ -26,23 +26,19 @@ let myMedication = new State(
                 texts.myMedicationText)
                 );
         }
-        response.say("😁😁♋♋ PArte 2");
         response.shouldEndSession(false);
         return response;
     },
 
     (request, response) => {
-        response.say("Borbones 🐏es");
         response.shouldEndSession(false);
     },
 
     (request, response) => {
-        response.say("A respondido no");
         response.shouldEndSession(false);
     },
 
     (request, response) => {
-        response.say("Estamos en la funcion de no comprension");
         response.shouldEndSession(false);
     }
 );
