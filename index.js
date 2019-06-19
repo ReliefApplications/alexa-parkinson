@@ -3,6 +3,8 @@ const AmazonHandler = require('./src/Handlers/AmazonHandler').AmazonHandler;
 const CoreHandler = require('./src/Handlers/CoreHandler').CoreHandler;
 const applicationId = 'amzn1.ask.skill.c671c665-5983-4ca9-ba1b-317809409a26';
 
+const dialogue = require('./src/lib/dialogue/alexa-dialogue.js').dialogue;
+
 exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
@@ -21,7 +23,8 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MyMedication', function (request, response) {
-        return CoreHandler.MyMedication(request, response);
+        // return CoreHandler.MyMedication(request, response);
+        return dialogue.navigateTo('myMedication', request, response);
     });
 
     alexaApp.intent('Call', function (request, response) {
@@ -57,15 +60,18 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        return AmazonHandler.YesIntent(request, response);
+        // return AmazonHandler.YesIntent(request, response);
+        return dialogue.saidYes(request, response);
     });
 
     alexaApp.intent('AMAZON.NoIntent', function (request, response) {
-        return AmazonHandler.NoIntent(request, response);
+        // return AmazonHandler.NoIntent(request, response);
+        return dialogue.saidNo(request, response);
     });
 
     // Unhandled utterances
     alexaApp.intent('DidNotUnderstand', function (request, response) {
-        return CoreHandler.DidNotUnderstand(request,response);
+        // return CoreHandler.DidNotUnderstand(request,response);
+        return dialogue.didNotUnderstand(request, response);
     })
 };

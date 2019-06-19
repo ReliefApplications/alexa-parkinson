@@ -6,13 +6,13 @@ module.exports.trees = (function () {
      * @param {Function} callback - Function to execute when entering the state
      * @param {Function} yes - Function to execute when answering 'yes'
      * @param {Function} no - Function to execute when answering 'no'
-     * @param {Function} nocomprendo - Function to execute when answering 'don't understand'
+     * @param {Function} didNotUnderstand - Function to execute when answering 'don't understand'
      */
-    function State(callback, yes, no, nocomprendo) {
+    function State(callback, yes, no, didNotUnderstand) {
 
         this.yes = yes instanceof Function ? yes : () => {};
         this.no = no instanceof Function ? no : () => {};
-        this.nocomprendo = nocomprendo instanceof Function ? nocomprendo : () => {};
+        this.didNotUnderstand = didNotUnderstand instanceof Function ? didNotUnderstand : () => {};
         this.action = callback instanceof Function ? callback : () => {};
 
         this.children = {};
@@ -31,20 +31,20 @@ module.exports.trees = (function () {
             return this;
         }
 
-        State.prototype.do = function (...params) {
-            this.action(params);
+        State.prototype.do = function (request, response, ...params) {
+            this.action(request, response);
         }
 
-        State.prototype.saidYes = function() {
-            this.yes();
+        State.prototype.saidYes = function(request, response) {
+            this.yes(request, response);
         }
 
-        State.prototype.saidNo = function() {
-            this.no();
+        State.prototype.saidNo = function(request, response) {
+            this.no(request, response);
         }
 
-        State.prototype.didntUnderstood = function() {
-            this.nocomprendo();
+        State.prototype.didNotUnderstand = function(request, response) {
+            this.didNotUnderstand(request, response);
         }
     }
 
@@ -57,28 +57,28 @@ module.exports.trees = (function () {
         this.currentNode = this.rootNode;
         // this.nodes = {}
 
-        StateTree.prototype.addIntentAction = function (hash, node) {
-            this.rootNode.addChild(hash, node);
+        StateTree.prototype.addIntentAction = function (stateName, node) {
+            this.rootNode.addChild(stateName, node);
             return this;
         }
 
-        StateTree.prototype.navigateTo = function (hash, ...params) {
+        StateTree.prototype.navigateTo = function (stateName, request, response) {
             // Take what is supposed to be the next node
-            let nextNode = this.currentNode.children[hash.toString()];
+            let nextNode = this.currentNode.children[stateName.toString()];
             // If it's not a child
             if (nextNode === undefined) {
                 // Should be a in-order search
                 this.currentNode = this.rootNode;
-                nextNode = this.currentNode.children[hash.toString()];
+                nextNode = this.currentNode.children[stateName.toString()];
                 // console.log("After check", nextNode);
             } else if (nextNode instanceof StateTree) {
                 nextNode = nextNode.rootNode;
-                nextNode = this.currentNode.children[hash.toString()];
+                nextNode = this.currentNode.children[stateName.toString()];
             }
 
-            // If nextNode is still undefined, it's not a child of the root node
             this.currentNode = nextNode;
-            this.currentNode.do(params);
+            // If nextNode is still undefined, it's not a child of the root node
+            return this.currentNode.do(request, response);
         }
 
         StateTree.prototype.setRootAction = function (callback) {
@@ -90,9 +90,9 @@ module.exports.trees = (function () {
             this.rootNode.do();
         }
 
-        StateTree.prototype.saidYes = function() { this.currentNode.saidYes(); }
-        StateTree.prototype.saidYes = function() { this.currentNode.saidNo(); }
-        StateTree.prototype.didntUnderstood = function() { this.currentNode.didntUnderstood(); }
+        StateTree.prototype.saidYes = function(request, response) { this.currentNode.saidYes(request, response); }
+        StateTree.prototype.saidNo = function(request, response) { this.currentNode.saidNo(request, response); }
+        StateTree.prototype.didNotUnderstand = function(request, response) { this.currentNode.didNotUnderstand(request, response); }
     }
 
     return {
