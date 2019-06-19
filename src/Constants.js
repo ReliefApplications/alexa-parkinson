@@ -12,8 +12,8 @@ exports.Constants = {
 
     //--- Call ---
     callTitle: "Llamada",
-    callText: "Llamada texto",
-    callReprompt: "llamada repete",
+    callText: "Informacion sobre la llamada. Quieres llamar?", // Do you want to call the association?
+    callReprompt: "llamada repete", // Do you want to call the association?
 
     //--- Unhandled DEFAULT ---
     unhandledDefaultTitle:"Solicitud desconocida.",
