@@ -4,9 +4,7 @@ const amount = require('../amount.json');
 const spanishDay = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
 const spanishTime = ['mañana', 'mediodía', 'noche'];
 
-
-
-
+const constants = require('./Constants').Constants;
 
 exports.Utils = {
 
@@ -19,10 +17,10 @@ exports.Utils = {
      */
     displayIfSupported: function (request, response, title, text, image) {
         if (image === undefined)
-            image = Utils.IMAGES.defaultImage;
+            image = constants.IMAGES.defaultImage;
 
-        if (Utils.supportsDisplay(request)) {
-            response.directive(Utils.renderBodyTemplate(image, title, text));
+        if (this.supportsDisplay(request)) {
+            response.directive(this.renderBodyTemplate(image, title, text));
         }
 
     },

@@ -5,6 +5,9 @@ const applicationId = 'amzn1.ask.skill.c671c665-5983-4ca9-ba1b-317809409a26';
 
 const dialogue = require('./src/lib/dialogue/alexa-dialogue.js').dialogue;
 
+const utils = require('./src/Utils').Utils;
+
+
 exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
@@ -16,6 +19,7 @@ exports.handler = function (alexaApp) {
 
     alexaApp.error = function (exception, request, response) {
         response.say('Lo sentimos, se encontró un error tratando su pregunta. Inténtalo más tarde.');
+        // response.shouldEndSession(false);
     };
 
     alexaApp.launch(function (request, response) {
@@ -28,11 +32,21 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('Call', function (request, response) {
-        return CoreHandler.Call(request, response);
+        // return CoreHandler.Call(request, response);
+        return dialogue.navigateTo('Call', request, response);
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
-        return CoreHandler.MedicationCalendar(request, response);
+        // return CoreHandler.MedicationCalendar(request, response);
+        let data = dialogue.navigateTo('MedicationCalendar', request, response);
+
+        response.say(data.text);
+
+        utils.displayIfSupported(
+            request, response, data.title, data.text, data.image
+        );
+
+        response.shouldEndSession(data.shouldEnd);
     });
 
     alexaApp.intent('MedicationLeft', function (request, response) {
@@ -55,8 +69,8 @@ exports.handler = function (alexaApp) {
         return AmazonHandler.StopIntent(request, response);
     });
 
-    alexaApp.intent('AMAZON.RepeatIntent', function (request, response){
-        return AmazonHandler.RepeatIntent(request,response);
+    alexaApp.intent('AMAZON.RepeatIntent', function (request, response) {
+        return AmazonHandler.RepeatIntent(request, response);
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {

@@ -37,7 +37,7 @@ module.exports.trees = (function () {
     }
 
     State.prototype.do = function (request, response, ...params) {
-        this.action(request, response);
+        return this.action(request, response);
     }
 
     State.prototype.saidYes = function(request, response) {
@@ -73,9 +73,12 @@ module.exports.trees = (function () {
 
     StateTree.prototype.navigateTo = function (stateName, request, response) {
         // Take what is supposed to be the next node
+        // response.say("Before nextnode");
         let nextNode = this.currentNode.children[stateName.toString()];
         // If it's not a child
         if (nextNode === undefined) {
+            // response.say("Inside if");
+            
             // Should be a in-order search
             this.currentNode = this.rootNode;
             nextNode = this.currentNode.children[stateName.toString()];

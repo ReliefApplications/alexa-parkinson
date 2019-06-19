@@ -3,7 +3,9 @@ const tree = require('./dialogue-tree').trees;
 const Utils = require('../../Utils').Utils;
 const Constants = require('../../Constants').Constants;
 
-const call = require('./tree/call-dialogue');
+const call = require('./scenarios/call').callIntent;
+const medicationCalendar = require('./scenarios/medication-calendar').medicationCalendarIntent;
+
 
 // Utility variables
 const texts = Constants.TEXTS;
@@ -29,7 +31,7 @@ const myMedication = new State(
                 );
         }
         response.shouldEndSession(false);
-        return response;
+
     },
 
     (request, response) => {
@@ -47,5 +49,7 @@ const myMedication = new State(
 
 
 dialogue.addIntentAction('myMedication', myMedication);
-dialogue.addIntentAction('Call', )
+dialogue.addIntentAction('Call', call);
+dialogue.addIntentAction('MedicationCalendar', medicationCalendar);
+
 module.exports.dialogue = dialogue;
