@@ -3,6 +3,8 @@ const tree = require('./dialogue-tree').trees;
 const Utils = require('../../Utils').Utils;
 const Constants = require('../../Constants').Constants;
 
+const call = require('./tree/call-dialogue');
+
 // Utility variables
 const texts = Constants.TEXTS;
 const images = Constants.IMAGES;
@@ -13,7 +15,7 @@ const dialogue = new tree.StateTree();
 const State = tree.State;
 
 
-let myMedication = new State(
+const myMedication = new State(
     // What to do after "Mi medicaciones"
     (request, response) => {
         response.say(texts.myMedicationText);
@@ -45,5 +47,5 @@ let myMedication = new State(
 
 
 dialogue.addIntentAction('myMedication', myMedication);
-
+dialogue.addIntentAction('Call', )
 module.exports.dialogue = dialogue;
