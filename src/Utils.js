@@ -8,6 +8,16 @@ const constants = require('./Constants').Constants;
 
 exports.Utils = {
 
+    respond: function(request, response, output) {
+        response.say(output.text);
+        response.prompt(); // TODO add
+        this.displayIfSupported(
+            request, response, output.title, output.text, undefined
+            );
+
+        response.shouldEndSession(output.shouldEnd);
+    },
+
     /**
      * Displays some data if the Alexa device supports a screen
      * 
