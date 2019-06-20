@@ -1,18 +1,34 @@
 const Constants = require('../Constants').Constants;
 const Utils = require('../Utils').Utils;
 
+const db = require('../lib/data/database');
+
 exports.CoreHandler = {
     'LaunchRequest':
         // This is triggered when the user says: 'Open parkison' or 'Abre parkinson' 
         function (request, response) {
+
             Utils.setDialogState(request, 'launch');
+
             response.say(Constants.TEXTS.welcomeTitle + ' ' + Constants.TEXTS.welcomeText);
             response.reprompt(Constants.TEXTS.welcomeReprompt)
             if (Utils.supportsDisplay(request)) {
                 response.directive(Utils.renderBodyTemplate(Constants.IMAGES.welcomeImage, Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText));
             }
+            
+            // db.createConnection()
+            // .then(() => {
+            //     response.say("Todo bien");
+            //     response.shouldEndSession(false);
+            // })
+            // .catch(err => {
+            //     response.say(err.message);
+            // })
+            // .finally(() => response
+            // );
+            response.say("Todo bien");
             response.shouldEndSession(false);
-            return response;
+            
         },
     'MyMedication':
         // This is triggered when the user says: 'Mi medicación' or 'Medicación'

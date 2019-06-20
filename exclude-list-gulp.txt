@@ -5,3 +5,4 @@ node_modules
 .gitignore
 gulpfile.js
 exclude-list-gulp.txt
+.data

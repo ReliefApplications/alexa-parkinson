@@ -10,3 +10,17 @@ services:
         - './:/usr/dockers/devapp/'
     entrypoint: Docker/docker-entrypoint.sh
     restart: always
+  
+  db:
+    image: mysql
+    ports:
+      - 4000:3306
+    volumes:
+      - ./.data:/var/lib/mysql
+    expose:
+      - '3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'aA12345'
+      MYSQL_DATABASE: 'alexa_parkinson'
+      MYSQL_USER: 'parkinson_user'
+      MYSQL_PASSWORD: 'aA12345'
