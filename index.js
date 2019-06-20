@@ -3,6 +3,11 @@ const AmazonHandler = require('./src/Handlers/AmazonHandler').AmazonHandler;
 const CoreHandler = require('./src/Handlers/CoreHandler').CoreHandler;
 const applicationId = 'amzn1.ask.skill.c671c665-5983-4ca9-ba1b-317809409a26';
 
+const dialogue = require('./src/lib/dialogue/alexa-dialogue.js').dialogue;
+
+const utils = require('./src/Utils').Utils;
+
+
 exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
@@ -14,6 +19,7 @@ exports.handler = function (alexaApp) {
 
     alexaApp.error = function (exception, request, response) {
         response.say('Lo sentimos, se encontró un error tratando su pregunta. Inténtalo más tarde.');
+        // response.shouldEndSession(false);
     };
 
     alexaApp.launch(function (request, response) {
@@ -21,19 +27,32 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MyMedication', function (request, response) {
-        return CoreHandler.MyMedication(request, response);
+        // return CoreHandler.MyMedication(request, response);
+        return dialogue.navigateTo('myMedication', request, response);
     });
 
     alexaApp.intent('Call', function (request, response) {
-        return CoreHandler.Call(request, response);
+        // return CoreHandler.Call(request, response);
+        return dialogue.navigateTo('Call', request, response);
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
-        return CoreHandler.MedicationCalendar(request, response);
+        // return CoreHandler.MedicationCalendar(request, response);
+        let output = dialogue.navigateTo('MedicationCalendar', request, response);
+
+        response.say(output.text);
+
+        utils.displayIfSupported(
+            request, response, output.title, output.text, output.image
+        );
+
+        response.shouldEndSession(output.shouldEnd);
     });
 
     alexaApp.intent('MedicationLeft', function (request, response) {
-        return CoreHandler.MedicationLeft(request, response);
+        // return CoreHandler.MedicationLeft(request, response);
+        let output = dialogue.navigateTo('MedicationLeft', request, response);
+        utils.respond(request, response, output);
     });
 
     alexaApp.intent('AMAZON.FallbackIntent', function (request, response) {
@@ -52,20 +71,23 @@ exports.handler = function (alexaApp) {
         return AmazonHandler.StopIntent(request, response);
     });
 
-    alexaApp.intent('AMAZON.RepeatIntent', function (request, response){
-        return AmazonHandler.RepeatIntent(request,response);
+    alexaApp.intent('AMAZON.RepeatIntent', function (request, response) {
+        return AmazonHandler.RepeatIntent(request, response);
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        return AmazonHandler.YesIntent(request, response);
+        // return AmazonHandler.YesIntent(request, response);
+        return dialogue.saidYes(request, response);
     });
 
     alexaApp.intent('AMAZON.NoIntent', function (request, response) {
-        return AmazonHandler.NoIntent(request, response);
+        // return AmazonHandler.NoIntent(request, response);
+        return dialogue.saidNo(request, response);
     });
 
     // Unhandled utterances
     alexaApp.intent('DidNotUnderstand', function (request, response) {
-        return CoreHandler.DidNotUnderstand(request,response);
+        // return CoreHandler.DidNotUnderstand(request,response);
+        return dialogue.didNotUnderstand(request, response);
     })
 };

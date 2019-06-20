@@ -4,11 +4,36 @@ const amount = require('../amount.json');
 const spanishDay = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
 const spanishTime = ['mañana', 'mediodía', 'noche'];
 
-
-
-
+const constants = require('./Constants').Constants;
 
 exports.Utils = {
+
+    respond: function(request, response, output) {
+        response.say(output.text);
+        response.prompt(); // TODO add
+        this.displayIfSupported(
+            request, response, output.title, output.text, undefined
+            );
+
+        response.shouldEndSession(output.shouldEnd);
+    },
+
+    /**
+     * Displays some data if the Alexa device supports a screen
+     * 
+     * @param {string} title - The title displayed on the screen
+     * @param {string} text - The text displayed on the screen
+     * @param {string} image - The background image on the device. Can be undefined.
+     */
+    displayIfSupported: function (request, response, title, text, image) {
+        if (image === undefined)
+            image = constants.IMAGES.defaultImage;
+
+        if (this.supportsDisplay(request)) {
+            response.directive(this.renderBodyTemplate(image, title, text));
+        }
+
+    },
     /**
      * This function is used to get the medicine data by day / hour from the mock json file
      * @param day string, The day of the week
@@ -163,8 +188,8 @@ exports.Utils = {
     },
     renderListTemplate(url, title, itemsToDisplay) {
         let listItems = [];
-        for (i in itemsToDisplay){
-            templateItems.push({"token":"string","textContent":itemsToDisplay[i].medicine});
+        for (i in itemsToDisplay) {
+            templateItems.push({ "token": "string", "textContent": itemsToDisplay[i].medicine });
         }
 
         let template = {
@@ -176,15 +201,15 @@ exports.Utils = {
             "listItems": [{
                 "token": "string",
                 "textContent": "Item 1"
-              },
-              {
+            },
+            {
                 "token": "string",
                 "textContent": "Item 2"
-              },
-              {
+            },
+            {
                 "token": "string",
                 "textContent": "Item 3"
-              }]
+            }]
         };
         return template;
     }
