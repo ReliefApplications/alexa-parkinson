@@ -38,19 +38,21 @@ exports.handler = function (alexaApp) {
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
         // return CoreHandler.MedicationCalendar(request, response);
-        let data = dialogue.navigateTo('MedicationCalendar', request, response);
+        let output = dialogue.navigateTo('MedicationCalendar', request, response);
 
-        response.say(data.text);
+        response.say(output.text);
 
         utils.displayIfSupported(
-            request, response, data.title, data.text, data.image
+            request, response, output.title, output.text, output.image
         );
 
-        response.shouldEndSession(data.shouldEnd);
+        response.shouldEndSession(output.shouldEnd);
     });
 
     alexaApp.intent('MedicationLeft', function (request, response) {
-        return CoreHandler.MedicationLeft(request, response);
+        // return CoreHandler.MedicationLeft(request, response);
+        let output = dialogue.navigateTo('MedicationLeft', request, response);
+        utils.respond(request, response, output);
     });
 
     alexaApp.intent('AMAZON.FallbackIntent', function (request, response) {
