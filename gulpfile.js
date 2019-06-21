@@ -26,7 +26,7 @@ gulp.task('push', shell.task([
     'echo Deploying the project on the server ...',
     'echo',
     'scp -r dist/* tester@217.70.189.97:/var/www/html/alexa-parkinson',
-    'ssh -t tester@217.70.189.97 "cd /var/www/html/alexa-parkinson && sudo docker-compose down && sudo docker-compose up -d"',
+    'ssh -t tester@217.70.189.97 "cd /var/www/html/alexa-parkinson && sudo docker-compose down  && sudo docker-compose up -d"',
     'echo',
     'echo Push finished',
     'echo',

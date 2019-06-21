@@ -1,9 +1,13 @@
-version: '2'
+version: '2.1'
 services:
 
   devapp:
     image: alexa-parkinson
     build: .
+    depends_on:
+      - db
+      #db:
+      #  condition: service_healthy
     ports:
         - '12118:12118'
     volumes:
@@ -12,11 +16,12 @@ services:
     restart: always
   
   db:
-    image: mysql
+    image: mysql:5.7
     ports:
       - 4000:3306
     volumes:
       - ./.data:/var/lib/mysql
+      - ./Docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     expose:
       - '3306'
     environment:
@@ -24,3 +29,9 @@ services:
       MYSQL_DATABASE: 'alexa_parkinson'
       MYSQL_USER: 'parkinson_user'
       MYSQL_PASSWORD: 'aA12345'
+    restart: always
+    healthcheck:
+      test: "/usr/bin/mysql --user=parkinson_user --password=aA12345 --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10

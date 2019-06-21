@@ -9,4 +9,5 @@ fi
 # if the node_modules directory is not exsiting
 if [ ! -d node_modules ]; then
     npm install
+    echo "npm install processed"
 fi

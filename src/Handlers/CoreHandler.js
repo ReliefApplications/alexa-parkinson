@@ -2,33 +2,41 @@ const Constants = require('../Constants').Constants;
 const Utils = require('../Utils').Utils;
 
 const db = require('../lib/data/database');
+// const mysql = require('mysql');
 
 exports.CoreHandler = {
     'LaunchRequest':
         // This is triggered when the user says: 'Open parkison' or 'Abre parkinson' 
         function (request, response) {
-
-            Utils.setDialogState(request, 'launch');
-
-            response.say(Constants.TEXTS.welcomeTitle + ' ' + Constants.TEXTS.welcomeText);
-            response.reprompt(Constants.TEXTS.welcomeReprompt)
-            if (Utils.supportsDisplay(request)) {
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.welcomeImage, Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText));
-            }
-            
-            // db.createConnection()
-            // .then(() => {
-            //     response.say("Todo bien");
-            //     response.shouldEndSession(false);
-            // })
-            // .catch(err => {
-            //     response.say(err.message);
-            // })
-            // .finally(() => response
-            // );
-            response.say("Todo bien");
-            response.shouldEndSession(false);
-            
+            // db.testConnection()
+            //     .then(
+            //         (result)=>{
+                Utils.setDialogState(request, 'launch');
+                if(db !== undefined){
+                    response.say("db exists");
+                    if(db.connection !== undefined){
+                        response.say("connection exists");
+                        //response.say(db.connection);
+                    }else{
+                        response.say("connection doesn't exists");
+                    }
+                }else {
+                    response.say("db doesn't exist");
+                }
+                        
+                response.say("Everything fine");
+                response.reprompt("Everything fine");
+                response.shouldEndSession(false);
+                return response;
+                //     },
+                //     (err) => {
+                //         Utils.setDialogState(request, 'launch');
+                //         speechOutput = 'Lo siento, hubo un problema con la solicitud';
+                //         response.say(speechOutput);
+                //         response.reprompt(speechOutput);
+                //         response.shouldEndSession(true);
+                //     }
+                // );
         },
     'MyMedication':
         // This is triggered when the user says: 'Mi medicación' or 'Medicación'
