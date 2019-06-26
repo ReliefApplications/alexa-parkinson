@@ -1,4 +1,9 @@
-version: '2'
+version: '3.7'
+
+networks:
+  database:
+    external: false
+
 services:
 
   devapp:
@@ -10,17 +15,17 @@ services:
         - './:/usr/dockers/devapp/'
     entrypoint: Docker/docker-entrypoint.sh
     restart: always
-  
+    networks:
+      - database
+
   db:
-    image: mysql
-    ports:
-      - 4000:3306
-    volumes:
-      - ./.data:/var/lib/mysql
-    expose:
-      - '3306'
+    image: mongo:latest
     environment:
-      MYSQL_ROOT_PASSWORD: 'aA12345'
-      MYSQL_DATABASE: 'alexa_parkinson'
-      MYSQL_USER: 'parkinson_user'
-      MYSQL_PASSWORD: 'aA12345'
+      - MONGO_DATA_DIR=/data/db
+      - MONGODB_USER="parkinson_user"
+      - MONGODB_PASS="jkvhskjbvserj45oiheowr"
+    ports:
+      - '27017:27017'
+    restart: always
+    networks:
+      - database
