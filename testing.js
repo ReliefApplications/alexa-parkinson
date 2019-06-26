@@ -1,7 +1,7 @@
-new Promise( (resolve, reject) => {
-    let i = "Lorem ipsum dolor sit amet";
-    resolve(i);
-})
-.then(s => {
-    console.log(s);
-})
+const db = require('./src/lib/database/userdata');
+
+db.open().then(
+    res => console.log("OK")
+).catch(
+    res => console.log("NO")
+).finally();

@@ -7,6 +7,7 @@ const dialogue = require('./src/lib/dialogue/alexa-dialogue.js').dialogue;
 
 const utils = require('./src/Utils').Utils;
 
+const database = require('./src/lib/database/userdata');
 
 exports.handler = function (alexaApp) {
 
@@ -15,6 +16,18 @@ exports.handler = function (alexaApp) {
             // Fail ungracefully
             throw 'Invalid applicationId: ' + request.sessionDetails.application.applicationId;
         }
+        // Get the ASK (Alexa SKill) user ID from the request
+        let userId = request.context.System.user.userId;
+        // Use it to take the user from the database
+        return database.getUser(userId).then(
+            user => {
+                if (user !== null) {
+                    // Store the user into the request object
+                    request.currentUser = user;
+                }
+            }
+        )
+        .catch(res => console.log(res));
     };
 
     alexaApp.error = function (exception, request, response) {
