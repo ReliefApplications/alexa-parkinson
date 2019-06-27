@@ -1,5 +1,5 @@
 const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+// const nodeExternals = require('webpack-node-externals');
 
 const {
   NODE_ENV = 'production',
@@ -8,13 +8,13 @@ const {
 module.exports = {
   entry: './app.js',
   mode: NODE_ENV,
-  externals: [ nodeExternals() ],
+  // externals: [ nodeExternals() ],
   target: 'node',
   resolve: {
     extensions: ['.js']
   },
   output: {
-    filename: 'alexa-parkinson.js',
+    filename: 'app.js',
     path: path.resolve(__dirname, 'dist')
   }
 };
