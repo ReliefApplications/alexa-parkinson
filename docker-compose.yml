@@ -9,6 +9,10 @@ services:
   devapp:
     image: alexa-parkinson
     build: .
+    depends_on:
+      - db
+      #db:
+      #  condition: service_healthy
     ports:
         - '12118:12118'
     volumes:

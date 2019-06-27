@@ -36,12 +36,12 @@ exports.handler = function (alexaApp) {
     };
 
     alexaApp.error = function (exception, request, response) {
-        response.say('Lo sentimos, se encontró un error tratando su pregunta. Inténtalo más tarde.');
-        // response.shouldEndSession(false);
+        response.say('Some error');
     };
 
     alexaApp.launch(function (request, response) {
-        return CoreHandler.LaunchRequest(request, response);
+        response.say("launch intent");
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('Registration', function(request, response) {
@@ -50,62 +50,76 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MyMedication', function (request, response) {
-        // return CoreHandler.MyMedication(request, response);
-        return dialogue.navigateTo('myMedication', request, response);
+        response.say("my medication intent");
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('Call', function (request, response) {
-        // return CoreHandler.Call(request, response);
-        return dialogue.navigateTo('Call', request, response);
+
+        return new Promise(function(resolve,reject) {
+            const connection = mysql.createConnection({
+                host: 'db',
+                port: 3306,
+                user: 'parkinson_user',
+                password: 'aA12345',
+                database: 'alexa_parkinson'
+            });
+            connection.connect(function(err){
+                if(!err) {
+                    resolve("Connection");
+                }else{
+                    resolve("Broken");
+                }
+            });
+        }).then((res) => {
+            response.say(res);
+            return response.send();
+        });
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
-        // return CoreHandler.MedicationCalendar(request, response);
-        let output = dialogue.navigateTo('MedicationCalendar', request, response);
-
-        response.say(output.text);
-
-        utils.displayIfSupported(
-            request, response, output.title, output.text, output.image
-        );
-
-        response.shouldEndSession(output.shouldEnd);
+        response.say("medication calendar intent");
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('MedicationLeft', function (request, response) {
-        // return CoreHandler.MedicationLeft(request, response);
-        let output = dialogue.navigateTo('MedicationLeft', request, response);
-        utils.respond(request, response, output);
+        response.say("medication left intent");
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('AMAZON.FallbackIntent', function (request, response) {
-        return AmazonHandler.FallbackIntent(request, response);
+        response.say("fall back intent");
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
-        return AmazonHandler.HelpIntent(request, response);
+        response.say("help intent");
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
-        return AmazonHandler.CancelIntent(request, response);
+        response.say("cancel intent");
+        response.shouldEndSession(true);
     });
 
     alexaApp.intent('AMAZON.StopIntent', function (request, response) {
-        return AmazonHandler.StopIntent(request, response);
+        response.say("stop intent");
+        response.shouldEndSession(true);
     });
 
     alexaApp.intent('AMAZON.RepeatIntent', function (request, response) {
-        return AmazonHandler.RepeatIntent(request, response);
+        response.say("repeat intent");
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        // return AmazonHandler.YesIntent(request, response);
-        return dialogue.saidYes(request, response);
+        response.say("yes intent");
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('AMAZON.NoIntent', function (request, response) {
-        // return AmazonHandler.NoIntent(request, response);
-        return dialogue.saidNo(request, response);
+        response.say("no intent");
+        response.shouldEndSession(false);
     });
 
     // Unhandled utterances
