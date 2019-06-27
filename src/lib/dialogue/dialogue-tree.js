@@ -1,3 +1,4 @@
+
 module.exports.trees = (function () {
 
     /**
@@ -77,9 +78,6 @@ module.exports.trees = (function () {
         let nextNode = this.currentNode.children[stateName.toString()];
         // If it's not a child
         if (nextNode === undefined) {
-            // response.say("Inside if");
-            
-            // Should be a in-order search
             this.currentNode = this.rootNode;
             nextNode = this.currentNode.children[stateName.toString()];
             // console.log("After check", nextNode);
@@ -87,8 +85,9 @@ module.exports.trees = (function () {
             nextNode = nextNode.rootNode;
             nextNode = this.currentNode.children[stateName.toString()];
         }
+
         this.currentNode = nextNode;
-        // If nextNode is still undefined, it's not a child of the root node
+
         return this.currentNode.do(params);
     }
 
