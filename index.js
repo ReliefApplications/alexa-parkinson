@@ -19,15 +19,20 @@ exports.handler = function (alexaApp) {
         // Get the ASK (Alexa SKill) user ID from the request
         let userId = request.context.System.user.userId;
         // Use it to take the user from the database
-        return database.getUser(userId).then(
-            user => {
+        return database.getUser(userId)
+            .then(user => {
                 if (user !== null) {
                     // Store the user into the request object
                     request.currentUser = user;
+                } else {
+                    // TODO put in constants
+                    response.say("Es esta la primera vez que nos encontramos. ¿Como te llamas?");
+                    // Should we end the session at this point?
+                    // TODO investigate
                 }
             }
-        )
-        .catch(res => console.log(res));
+            )
+            .catch(res => utils.log(res));
     };
 
     alexaApp.error = function (exception, request, response) {
@@ -37,6 +42,10 @@ exports.handler = function (alexaApp) {
 
     alexaApp.launch(function (request, response) {
         return CoreHandler.LaunchRequest(request, response);
+    });
+
+    alexaApp.intent('Registration', function(request, response) {
+        
     });
 
     alexaApp.intent('MyMedication', function (request, response) {

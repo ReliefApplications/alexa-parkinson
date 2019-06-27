@@ -15,18 +15,6 @@ exports.CoreHandler = {
             if (Utils.supportsDisplay(request)) {
                 response.directive(Utils.renderBodyTemplate(Constants.IMAGES.welcomeImage, Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText));
             }
-            
-            // db.createConnection()
-            // .then(() => {
-            //     response.say("Todo bien");
-            //     response.shouldEndSession(false);
-            // })
-            // .catch(err => {
-            //     response.say(err.message);
-            // })
-            // .finally(() => response
-            // );
-            response.say("Todo bien");
             response.shouldEndSession(false);
             
         },

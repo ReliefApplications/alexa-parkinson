@@ -4,6 +4,7 @@ const configuration = require('../../configurations').database;
 module.exports = {
     /**
      * Opens the database connection according to the configuration settings
+     * @returns {Promise}
      */
     openDatabase: function () {
         return new Promise(function (resolve, reject) {
@@ -18,6 +19,8 @@ module.exports = {
     },
 
     /**
+     * Takes a user from his ASK Id
+     * 
      * @param {number} userId - the ASK ID of the user (taken from the request object)
      * @returns {Promise}
      */
