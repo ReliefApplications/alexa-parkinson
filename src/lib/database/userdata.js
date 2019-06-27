@@ -37,6 +37,28 @@ module.exports = {
             connection.close();
 
             return new Promise((resolve, reject) => resolve(user));
+    },
+
+    /**
+     * Save a user into the database
+     * @param {string} userId - ASK Id of the user
+     * @param {string} name - The name provided by the 'Registration' intent
+     */
+    saveUser: async function (userId, name) {
+        const connection = await this.openDatabase();
+
+        let result = await connection.db(configuration.dbname)
+            .collection(configuration.schemas.user).insertOne(
+                {
+                    _id: userId,
+                    name: name,
+                    medicines: []
+                }
+            );
+        
+        connection.close();
+
+        return result;
     }
 }
 

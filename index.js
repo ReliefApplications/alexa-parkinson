@@ -9,6 +9,11 @@ const utils = require('./src/Utils').Utils;
 
 const database = require('./src/lib/database/userdata');
 
+function getUserIdFromRequest(request) {
+    return request.sessionDetails.userId;
+}
+
+
 exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
@@ -19,20 +24,16 @@ exports.handler = function (alexaApp) {
         // Get the ASK (Alexa SKill) user ID from the request
         let userId = request.context.System.user.userId;
         // Use it to take the user from the database
-        // return database.getUser(userId)
-        //     .then(user => {
-        //         if (user !== null) {
-        //             // Store the user into the request object
-        //             request.currentUser = user;
-        //         } else {
-        //             // TODO put in constants
-        //             response.say("Es esta la primera vez que nos encontramos. ¿Como te llamas?");
-        //             // Should we end the session at this point?
-        //             // TODO investigate
-        //         }
-        //     }
-        //     )
-        //     .catch(res => utils.log(res));
+        return database.getUser(userId)
+            .then(user => {
+                if (user !== null) {
+                    // Store the user into the request object
+                    request.currentUser = user;
+                    response.say("Hola, " + user.name + "!");
+                }
+            }
+            )
+            .catch(res => utils.log(res));
     };
 
     alexaApp.error = function (exception, request, response) {
@@ -41,17 +42,30 @@ exports.handler = function (alexaApp) {
     };
 
     alexaApp.launch(function (request, response) {
-        return CoreHandler.LaunchRequest(request, response);
+        if (!request.currentUser) {
+            response.say("Es esta la primera vez que nos encontramos. ¿Como te llamas?");
+            response.shouldEndSession(false);
+        } else {
+            return CoreHandler.LaunchRequest(request, response);
+        }
     });
 
     alexaApp.intent('Registration', function(request, response) {
-        let output = dialogue.navigateTo('registration', request.slots);
-        response.say("Tu nombre es " + output.name);
+        let output = dialogue.navigateTo('registration', request.slots, getUserIdFromRequest(request));
+        if (output === undefined) {
+            response.say("Por favor, dime tu nombre");
+        } else {
+            utils.log(request);
+            utils.log(getUserIdFromRequest(request));
+            return response.say("Encantada, " + output.name);
+        }
+        response.shouldEndSession(false);
     });
 
     alexaApp.intent('MyMedication', function (request, response) {
         // return CoreHandler.MyMedication(request, response);
-        return dialogue.navigateTo('myMedication', request, response);
+        utils.log("the world is quiet here");
+        return dialogue.navigateTo('myMedication', request.slots);
     });
 
     alexaApp.intent('Call', function (request, response) {

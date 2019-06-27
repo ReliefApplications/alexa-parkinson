@@ -1,15 +1,14 @@
 const tree = require('../dialogue-tree');
-const utils = require('../../../Utils');
+const utils = require('../../../Utils').Utils;
+const userService = require('../../database/userdata');
 
-
-module.exports.registrationIntent = new tree.trees.State(
-    ([slots]) => {
-        utils.log("slots is", slots);
-        utils.log("Registration #0");
+const registration = new tree.trees.State(
+    ([slots, userId]) => {
         if (slots['name'] !== undefined) {
-            utils.log("'name' exists");
             let name = slots['name'].value;
-
+            
+            userService.saveUser(userId, name);
+            
             return {
                 name: name
             }
@@ -22,3 +21,5 @@ module.exports.registrationIntent = new tree.trees.State(
 
     () => { } // no comprendido
 );
+
+module.exports.registrationIntent = registration;
