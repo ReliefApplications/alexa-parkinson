@@ -36,8 +36,8 @@ module.exports.trees = (function () {
         return this;
     }
 
-    State.prototype.do = function (request, response, ...params) {
-        return this.action(request, response);
+    State.prototype.do = function (...params) {
+        return this.action(params);
     }
 
     State.prototype.saidYes = function(request, response) {
@@ -71,7 +71,7 @@ module.exports.trees = (function () {
         return this;
     }
 
-    StateTree.prototype.navigateTo = function (stateName, request, response) {
+    StateTree.prototype.navigateTo = function (stateName, ...params) {
         // Take what is supposed to be the next node
         // response.say("Before nextnode");
         let nextNode = this.currentNode.children[stateName.toString()];
@@ -89,7 +89,7 @@ module.exports.trees = (function () {
         }
         this.currentNode = nextNode;
         // If nextNode is still undefined, it's not a child of the root node
-        return this.currentNode.do(request, response);
+        return this.currentNode.do(params);
     }
 
     StateTree.prototype.setRootAction = function (callback) {
