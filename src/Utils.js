@@ -8,6 +8,15 @@ const constants = require('./Constants').Constants;
 
 exports.Utils = {
 
+    /**
+     * Define a logging strategy
+     * @param {Array<String>} - string array to be logged (same behavior as console.log)
+     */
+    log: function(...params) {
+        // Define a logging strategy
+        console.log(params);
+    },
+
     respond: function(request, response, output) {
         response.say(output.text);
         response.prompt(); // TODO add
