@@ -166,6 +166,24 @@
                 {
                     "name": "AMAZON.ScrollUpIntent",
                     "samples": []
+                },
+                {
+                    "name": "Registration",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "AMAZON.FirstName",
+                            "samples": [
+                                "Mi nombre es {name}",
+                                "Me llamo {name}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Yo soy {name}",
+                        "Mi nombre es {name}",
+                        "Me llamo {name}"
+                    ]
                 }
             ],
             "types": [
@@ -328,6 +346,22 @@
                             "prompts": {}
                         }
                     ]
+                },
+                {
+                    "name": "Registration",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "AMAZON.FirstName",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1153800461089.793568973432"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -339,6 +373,15 @@
                     {
                         "type": "PlainText",
                         "value": "En qué momento del día?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1153800461089.793568973432",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Como te llamas?"
                     }
                 ]
             }

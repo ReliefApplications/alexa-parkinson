@@ -1,8 +1,13 @@
 const tree = require('../dialogue-tree');
+const utils = require('../../../Utils');
+
 
 module.exports.registrationIntent = new tree.trees.State(
-    (slots) => {
+    ([slots]) => {
+        utils.log("slots is", slots);
+        utils.log("Registration #0");
         if (slots['name'] !== undefined) {
+            utils.log("'name' exists");
             let name = slots['name'].value;
 
             return {
@@ -16,4 +21,4 @@ module.exports.registrationIntent = new tree.trees.State(
     () => { }, // no
 
     () => { } // no comprendido
-)
+);
