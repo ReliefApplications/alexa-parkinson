@@ -6,7 +6,7 @@ const Constants = require('../../Constants').Constants;
 const call = require('./scenarios/call').callIntent;
 const medicationCalendar = require('./scenarios/medication-calendar').medicationCalendarIntent;
 const medicationLeft = require('./scenarios/medication-left').medicationsLeftIntent;
-
+const registration = require('./scenarios/registration').registrationIntent;
 // Utility variables
 const texts = Constants.TEXTS;
 const images = Constants.IMAGES;
@@ -19,7 +19,7 @@ const State = tree.State;
 
 const myMedication = new State(
     // What to do after "Mi medicaciones"
-    (request, response) => {
+    ([request, response]) => {
         response.say(texts.myMedicationText);
         response.reprompt(texts.myMedicationReprompt);
 
@@ -52,5 +52,6 @@ dialogue.addIntentAction('myMedication', myMedication);
 dialogue.addIntentAction('Call', call);
 dialogue.addIntentAction('MedicationCalendar', medicationCalendar);
 dialogue.addIntentAction('MedicationLeft', medicationLeft);
+dialogue.addIntentAction('registration', registration);
 
 module.exports.dialogue = dialogue;

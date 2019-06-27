@@ -5,7 +5,7 @@ const constants = require('../../../Constants').Constants;
 
 
 const left = new state.State(
-    () => {
+    ([request, response]) => {
         let medicineSlotRaw = request.slots.medicine.resolution(0) ?
             request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
 

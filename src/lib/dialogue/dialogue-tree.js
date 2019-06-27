@@ -36,7 +36,7 @@ module.exports.trees = (function () {
         return this;
     }
 
-    State.prototype.do = function (...params) {
+    State.prototype.do = function (params) {
         return this.action(params);
     }
 

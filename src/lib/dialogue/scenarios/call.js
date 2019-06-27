@@ -10,7 +10,7 @@ const images = Constants.IMAGES;
 // console.log(texts);
 
 const call = new State(
-    (request, response) => {
+    ([request, response]) => {
         response.say(texts.callText);
         response.reprompt(texts.callReprompt);
         if (Utils.supportsDisplay(request)) {

@@ -5,7 +5,9 @@ const Constants = require('../../../Constants').Constants;
 const Utils = require('../../../Utils').Utils;
 
 const calendar = new State(
-    (request, response) => {
+    ([request, response]) => {
+        // let request = params[0];
+        // let response = params[1];
         let medicineSlotRaw = request.slots.medicine.resolution(0) ?
             request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
 

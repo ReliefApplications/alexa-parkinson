@@ -1,8 +1,6 @@
 const Constants = require('../Constants').Constants;
 const Utils = require('../Utils').Utils;
 
-const db = require('../lib/data/database');
-
 exports.CoreHandler = {
     'LaunchRequest':
         // This is triggered when the user says: 'Open parkison' or 'Abre parkinson' 
