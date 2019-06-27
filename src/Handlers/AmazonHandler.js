@@ -31,20 +31,33 @@ exports.AmazonHandler = {
     ,
     StopIntent:
         function (request, response) {
-            let speechOutput = 'Hasta pronto. Si quieres volver a utilizar esta función di “Parkinson”';
-            response.say(speechOutput);
-            response.reprompt(speechOutput);
-            response.shouldEndSession(true);
+            db.connection.connect(function(e) {
+            if(e) {
+                response.say("error connection database");
+                return;
+            }
+            response.say("Connection established");
+            });
+
+            db.connection.query("SELECT * FROM user", function(e,r,f) {
+                if(e)
+                    throw e;
+                r.forEach(result => {
+                    response.say(result.id);
+                });
+            });
+
+            db.connection.end();
             return response;
+
+            // response.say("blabla");
+            // return response;
         }
     ,
     // repetition logic, got to change
     RepeatIntent:
         function (request, response) {
-            let speechOutput = 'Pronto repetiré.';
-            response.say(speechOutput);
-            response.reprompt(speechOutput);
-            response.shouldEndSession(false);
+            response.say("blabla");
             return response;
         }
     ,

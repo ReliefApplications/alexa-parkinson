@@ -29,9 +29,6 @@ RUN npm -v
 # Bundle app source
 COPY . .
 
-# copy the check script : do what you want. see below for the call
-COPY ./Docker/check-project.sh ./Docker/check-project.sh
-
 ##
 # Since we are not creating any user here, you need to add the default docker's user
 # to your computer by updatinf both following files:
