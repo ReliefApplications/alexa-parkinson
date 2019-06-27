@@ -21,10 +21,10 @@ module.exports = {
     /**
      * Takes a user from his ASK Id
      * 
-     * @param {number} userId - the ASK ID of the user (taken from the request object)
+     * @param {number} askId - the ASK ID of the user (taken from the request object)
      * @returns {Promise}
      */
-    getUser: async function (userId) {
+    getUser: async function (askId) {
         // return new Promise((resolve, reject) => {
 
             const connection = await this.openDatabase();
@@ -32,7 +32,7 @@ module.exports = {
             // Using again await to get the result and close
             // the db connection before returning the promise
             let user = await connection.db(configuration.dbname)
-                .collection(configuration.schemas.user).findOne({ '_id': userId });
+                .collection(configuration.schemas.user).findOne({ '_id': askId });
             
             connection.close();
 
