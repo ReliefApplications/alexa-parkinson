@@ -6,3 +6,13 @@ node_modules
 gulpfile.js
 exclude-list-gulp.txt
 .data
+
+index.js
+app.js
+testing.js
+webpack.config.js
+
+package.json
+package-lock.json
+src
+README.md
