@@ -7,7 +7,7 @@ const registration = new tree.trees.State(
         if (slots['name'] !== undefined) {
             let name = slots['name'].value;
             
-            userService.saveUser(userId, name);
+            userService.addNewUser(userId, name);
             
             return {
                 name: name

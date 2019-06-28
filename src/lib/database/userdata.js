@@ -8,13 +8,15 @@ module.exports = {
      */
     openDatabase: function () {
         return new Promise(function (resolve, reject) {
-            mongo.connect(configuration.url, { useNewUrlParser: true }, function (error, client) {
-                if (error !== null) {
-                    reject(error);
-                }
-                // let db = client.db(configuration.dbname);
-                resolve(client);
-            });
+            mongo.connect(configuration.url,
+                { useNewUrlParser: true, auth: { user: configuration.username, password: configuration.password } },
+                function (error, client) {
+                    if (error !== null) {
+                        reject(error);
+                    }
+                    // let db = client.db(configuration.dbname);
+                    resolve(client);
+                });
         });
     },
 
@@ -27,16 +29,16 @@ module.exports = {
     getUser: async function (askId) {
         // return new Promise((resolve, reject) => {
 
-            const connection = await this.openDatabase();
-            
-            // Using again await to get the result and close
-            // the db connection before returning the promise
-            let user = await connection.db(configuration.dbname)
-                .collection(configuration.schemas.user).findOne({ '_id': askId });
-            
-            connection.close();
+        const connection = await this.openDatabase();
 
-            return new Promise((resolve, reject) => resolve(user));
+        // Using again await to get the result and close
+        // the db connection before returning the promise
+        let user = await connection.db(configuration.dbname)
+            .collection(configuration.schemas.user).findOne({ '_id': askId });
+
+        connection.close();
+
+        return new Promise((resolve, reject) => resolve(user));
     },
 
     /**
@@ -44,7 +46,7 @@ module.exports = {
      * @param {string} userId - ASK Id of the user
      * @param {string} name - The name provided by the 'Registration' intent
      */
-    saveUser: async function (userId, name) {
+    addNewUser: async function (userId, name) {
         const connection = await this.openDatabase();
 
         let result = await connection.db(configuration.dbname)
@@ -55,7 +57,7 @@ module.exports = {
                     medicines: []
                 }
             );
-        
+
         connection.close();
 
         return result;
