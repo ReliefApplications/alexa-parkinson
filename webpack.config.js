@@ -13,6 +13,9 @@ module.exports = {
   resolve: {
     extensions: ['.js']
   },
+  module: {
+    noParse: /configurations.js/
+  },
   output: {
     filename: 'app.js',
     path: path.resolve(__dirname, 'dist')
