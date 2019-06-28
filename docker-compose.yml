@@ -1,8 +1,12 @@
 version: '3.7'
 
 networks:
+  # Network to bind the connection between the two services
   database:
-    external: false
+    internal: true
+  # Network to bind the connection with the 'outside world'
+  backend:
+
 
 services:
 
@@ -21,6 +25,7 @@ services:
     restart: always
     networks:
       - database
+      - backend
 
   db:
     image: mongo:latest
@@ -32,8 +37,7 @@ services:
       - ./data/db:/data/db
     # env_file:
     #   - env/mongo.env
-    ports:
-      - '27017:27017'
+    # entrypoint: mongod --auth
     restart: always
     networks:
       - database
