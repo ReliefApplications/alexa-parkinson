@@ -46,3 +46,6 @@ docker-compose.yml
 
 # Database
 data/*
+
+# Configuration
+configurations.js
