@@ -37,7 +37,6 @@ services:
       - ./data/db:/data/db
     # env_file:
     #   - env/mongo.env
-    # entrypoint: mongod --auth
     restart: always
     networks:
       - database
