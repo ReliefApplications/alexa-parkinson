@@ -42,6 +42,7 @@ Thumbs.db
 
 # Docker
 /Docker/docker-entrypoint.sh
+docker-compose.yml
 
 # Database
 data/*
