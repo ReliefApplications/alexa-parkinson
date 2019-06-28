@@ -174,12 +174,14 @@
                             "name": "name",
                             "type": "AMAZON.FirstName",
                             "samples": [
+                                "{name}",
                                 "Mi nombre es {name}",
                                 "Me llamo {name}"
                             ]
                         }
                     ],
                     "samples": [
+                        "{name}",
                         "Yo soy {name}",
                         "Mi nombre es {name}",
                         "Me llamo {name}"
