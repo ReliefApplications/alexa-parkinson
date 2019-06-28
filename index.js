@@ -63,31 +63,11 @@ exports.handler = function (alexaApp) {
 
     alexaApp.intent('MyMedication', function (request, response) {
         // return CoreHandler.MyMedication(request, response);
-        utils.log("the world is quiet here");
         return dialogue.navigateTo('myMedication', request.slots);
     });
 
     alexaApp.intent('Call', function (request, response) {
-
-        return new Promise(function(resolve,reject) {
-            const connection = mysql.createConnection({
-                host: 'db',
-                port: 3306,
-                user: 'parkinson_user',
-                password: 'aA12345',
-                database: 'alexa_parkinson'
-            });
-            connection.connect(function(err){
-                if(!err) {
-                    resolve("Connection");
-                }else{
-                    resolve("Broken");
-                }
-            });
-        }).then((res) => {
-            response.say(res);
-            return response.send();
-        });
+        response.say("Llamada!");
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
