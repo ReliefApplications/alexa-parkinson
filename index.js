@@ -29,7 +29,6 @@ exports.handler = function (alexaApp) {
                 if (user !== null) {
                     // Store the user into the request object
                     request.currentUser = user;
-                    response.say("Hola, " + user.name + "!");
                 }
             }
             )
@@ -45,6 +44,7 @@ exports.handler = function (alexaApp) {
             response.say("Es esta la primera vez que nos encontramos. ¿Como te llamas?");
             response.shouldEndSession(false);
         } else {
+            response.say("Hola, " + request.currentUser.name + "!");
             return CoreHandler.LaunchRequest(request, response);
         }
     });
