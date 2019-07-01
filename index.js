@@ -107,12 +107,13 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        response.say("yes intent");
+        dialogue.saidYes();
+        // response.say("yes intent");
         response.shouldEndSession(false);
     });
 
     alexaApp.intent('AMAZON.NoIntent', function (request, response) {
-        response.say("no intent");
+        dialogue.saidNo();
         response.shouldEndSession(false);
     });
 
