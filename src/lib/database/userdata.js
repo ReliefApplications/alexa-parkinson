@@ -51,7 +51,7 @@ module.exports = {
         const connection = await this.openDatabase();
 
         let result = await connection.db(configuration.database.dbname)
-            .collection(configuration.schemas.user).insertOne(
+            .collection(configuration.database.schemas.user).insertOne(
                 {
                     _id: askId,
                     name: name,
