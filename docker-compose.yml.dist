@@ -33,8 +33,6 @@ services:
       - MONGO_DATA_DIR=/data/db #### Change as you prefer
     volumes:
       - ./data/db:/data/db #### Change accordingly to MONGO_DATA_DIR. Needed to make the data persistent
-    # env_file:
-    #   - env/mongo.env
     restart: always
     networks:
       - database
