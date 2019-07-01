@@ -48,4 +48,4 @@ docker-compose.yml
 data/*
 
 # Configuration
-configurations.js
+src/configurations.json

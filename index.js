@@ -32,7 +32,9 @@ exports.handler = function (alexaApp) {
                 }
             }
             )
-            .catch(res => utils.log(res));
+            .catch(res => {
+                utils.log(res);
+            });
     };
 
     alexaApp.error = function (exception, request, response) {

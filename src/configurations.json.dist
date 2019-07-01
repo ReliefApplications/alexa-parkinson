@@ -1,0 +1,12 @@
+{
+    "database": {
+        "url": "mongodb://db:27017",
+        "dbname": "<database name (set into docker-compose file)>",
+        "username": "<database username (set into docker-compose file)>",
+        "password": "<database password (set into docker-compose file)>",
+        
+        "schemas": {
+            "user": "<insert here the name of the 'user' collection>"
+        }
+    }
+}

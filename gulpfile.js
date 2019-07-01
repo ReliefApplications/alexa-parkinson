@@ -15,8 +15,8 @@ gulp.task('build', shell.task([
     'echo',
     'echo Building the project into ./dist ...',
     'echo',
-    'rsync -avz --progress --exclude-from "exclude-list-gulp.txt" ./ dist/',
     './node_modules/.bin/webpack',
+    'rsync -avz --progress --exclude-from "exclude-list-gulp.txt" ./ dist/',
     'echo',
     'echo Building finished',
     'echo'

@@ -1,5 +1,6 @@
 const mongo = require('mongodb');
-const configuration = require('../../configurations').database;
+const configuration = require('../../configurations')();
+const utils = require('../../Utils').Utils;
 
 module.exports = {
     /**
@@ -8,8 +9,8 @@ module.exports = {
      */
     openDatabase: function () {
         return new Promise(function (resolve, reject) {
-            mongo.connect(configuration.url,
-                { useNewUrlParser: true, auth: { user: configuration.username, password: configuration.password } },
+            mongo.connect(configuration.database.url,
+                { useNewUrlParser: true, auth: { user: configuration.database.username, password: configuration.database.password } },
                 function (error, client) {
                     if (error !== null) {
                         reject(error);
@@ -33,8 +34,8 @@ module.exports = {
 
         // Using again await to get the result and close
         // the db connection before returning the promise
-        let user = await connection.db(configuration.dbname)
-            .collection(configuration.schemas.user).findOne({ '_id': askId });
+        let user = await connection.db(configuration.database.dbname)
+            .collection(configuration.database.schemas.user).findOne({ '_id': askId });
 
         connection.close();
 
@@ -43,16 +44,16 @@ module.exports = {
 
     /**
      * Save a user into the database
-     * @param {string} userId - ASK Id of the user
+     * @param {string} askId - ASK Id of the user
      * @param {string} name - The name provided by the 'Registration' intent
      */
-    addNewUser: async function (userId, name) {
+    addNewUser: async function (askId, name) {
         const connection = await this.openDatabase();
 
-        let result = await connection.db(configuration.dbname)
+        let result = await connection.db(configuration.database.dbname)
             .collection(configuration.schemas.user).insertOne(
                 {
-                    _id: userId,
+                    _id: askId,
                     name: name,
                     medicines: []
                 }
