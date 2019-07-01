@@ -56,8 +56,6 @@ exports.handler = function (alexaApp) {
         if (output === undefined) {
             response.say("Por favor, dime tu nombre");
         } else {
-            utils.log(request);
-            utils.log(getUserIdFromRequest(request));
             return response.say("Encantada, " + output.name);
         }
         response.shouldEndSession(false);
@@ -69,7 +67,7 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('Call', function (request, response) {
-        response.say("Llamada!");
+        return dialogue.navigateTo('Call');
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
