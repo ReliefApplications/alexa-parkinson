@@ -52,3 +52,21 @@ If it's the first time, run
 ```
 sudo ./docker-build.sh
 ```
+
+## Database information
+
+The database is into a container unreachable from outside the container itself and the devapp container. Thus, to access its command line, data, and to manage it directly by hand you must ssh into the server and access the container with
+```
+sudo docker-compose exec db bash
+```
+(obviously after it has been started)
+
+### Insert new data from a csv file
+
+This command is used to import data into the db from a csv file. Look at ``` mongoimport --help ``` for more options.
+
+**BEWARE** it must be with COMMA (,) separated values, NOT COLUMNS (:). Plus, in this command we are supposing that the first line is the table header.
+
+```
+mongoimport --db=parkinson --collection=medicine --username=<database_user> --password=<database_password> --authenticationDatabase=<database_for_auth> --type=csv --headerline parkinson.csv
+```
