@@ -63,11 +63,12 @@ exports.handler = function (alexaApp) {
 
     alexaApp.intent('MyMedication', function (request, response) {
         // return CoreHandler.MyMedication(request, response);
-        return dialogue.navigateTo('myMedication', request.slots);
+        return dialogue.navigateTo('myMedication', request, response);
     });
 
     alexaApp.intent('Call', function (request, response) {
-        return dialogue.navigateTo('Call');
+        return dialogue.navigateTo('Call', request, response);
+        // response.say("Hey");
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
