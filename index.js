@@ -56,8 +56,6 @@ exports.handler = function (alexaApp) {
         if (output === undefined) {
             response.say("Por favor, dime tu nombre");
         } else {
-            utils.log(request);
-            utils.log(getUserIdFromRequest(request));
             return response.say("Encantada, " + output.name);
         }
         response.shouldEndSession(false);
@@ -65,11 +63,12 @@ exports.handler = function (alexaApp) {
 
     alexaApp.intent('MyMedication', function (request, response) {
         // return CoreHandler.MyMedication(request, response);
-        return dialogue.navigateTo('myMedication', request.slots);
+        return dialogue.navigateTo('myMedication', request, response);
     });
 
     alexaApp.intent('Call', function (request, response) {
-        response.say("Llamada!");
+        return dialogue.navigateTo('Call', request, response);
+        // response.say("Hey");
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
