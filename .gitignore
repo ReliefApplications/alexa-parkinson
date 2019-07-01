@@ -45,7 +45,7 @@ Thumbs.db
 docker-compose.yml
 
 # Database
-data/*
+data
 
 # Configuration
 src/configurations.json
