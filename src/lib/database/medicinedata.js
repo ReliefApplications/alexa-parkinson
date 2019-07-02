@@ -10,7 +10,7 @@ module.exports = {
      * 
      * @param {string} searchInput - Commercial name of the medicine.
      */
-    getMedicineByCommercialName: function(searchInput) {
+    getMedicineByCommercialName: async function(searchInput) {
         const connection = await databaseConnection.openDatabase();
         
         let data = await connection.collection(configuration.database.schema.medicine).find(
@@ -28,11 +28,11 @@ module.exports = {
      * 
      * @param {string} searchInput - Generic definition or phrase to search the medicine
      */
-    getMedicineByRelativeDefinition: function(searchInput) {
+    getMedicineByRelativeDefinition: async function(searchInput) {
         const connection = await databaseConnection.openDatabase();
         
         let data = await connection.collection(configuration.database.schema.medicine).find(
-            {'product': { '$regex': `${searchInput}`} }
+            { '$text': {'$search': medicineName} },
         );
 
         connection.close();
