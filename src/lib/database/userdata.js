@@ -1,26 +1,9 @@
 const mongo = require('mongodb');
 const configuration = require('../../configurations')();
 const utils = require('../../Utils').Utils;
+const generalDatabase = require('./general');
 
 module.exports = {
-    /**
-     * Opens the database connection according to the configuration settings
-     * @returns {Promise}
-     */
-    openDatabase: function () {
-        return new Promise(function (resolve, reject) {
-            mongo.connect(configuration.database.url,
-                { useNewUrlParser: true, auth: { user: configuration.database.username, password: configuration.database.password } },
-                function (error, client) {
-                    if (error !== null) {
-                        reject(error);
-                    }
-                    // let db = client.db(configuration.dbname);
-                    resolve(client);
-                });
-        });
-    },
-
     /**
      * Takes a user from his ASK Id
      * 
@@ -30,7 +13,7 @@ module.exports = {
     getUser: async function (askId) {
         // return new Promise((resolve, reject) => {
 
-        const connection = await this.openDatabase();
+        const connection = await generalDatabase.openDatabase();
 
         // Using again await to get the result and close
         // the db connection before returning the promise
@@ -48,7 +31,7 @@ module.exports = {
      * @param {string} name - The name provided by the 'Registration' intent
      */
     addNewUser: async function (askId, name) {
-        const connection = await this.openDatabase();
+        const connection = await generalDatabase.openDatabase();
 
         let result = await connection.db(configuration.database.dbname)
             .collection(configuration.database.schemas.user).insertOne(
