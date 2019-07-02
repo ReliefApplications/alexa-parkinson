@@ -22,13 +22,12 @@ const call = new State(
 
     // Yes
     (request, response) => {
-        // Calling the association.
-        // TODO: ask how are associations between association and patient
+        response.say("Estoy llamando");
     },
 
     // No
     (request, response) => {
-        response.shouldEndSession(false);
+        response.shouldEndSession(true);
     },
 
     // Didn't understand
