@@ -2,7 +2,7 @@
  * General functions for the database management
  */
 const mongo = require('mongodb');
-const configuration = require('../../configurations')();
+const configuration = require('../../configurations');
 
 module.exports = {
     /**
@@ -12,7 +12,7 @@ module.exports = {
     openDatabase: function () {
         return new Promise(function (resolve, reject) {
             mongo.connect(configuration.database.url,
-                { useNewUrlParser: true, auth: { user: configuration.database.username, password: configuration.database.password } },
+                { useNewUrlParser: true, auth: { user:configuration.database.username , password:configuration.database.password } },
                 function (error, client) {
                     if (error !== null) {
                         reject(error);

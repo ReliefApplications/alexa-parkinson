@@ -12,6 +12,7 @@ app.js
 testing.js
 webpack.config.js
 configurations.js
+configurations.json
 
 package-lock.json
 src

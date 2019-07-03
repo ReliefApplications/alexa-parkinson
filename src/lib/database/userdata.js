@@ -1,5 +1,5 @@
 const mongo = require('mongodb');
-const configuration = require('../../configurations')();
+const configuration = require('../../configurations');
 const utils = require('../../Utils').Utils;
 const generalDatabase = require('./general');
 
