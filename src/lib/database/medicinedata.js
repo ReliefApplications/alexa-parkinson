@@ -13,8 +13,20 @@ module.exports = {
     getMedicineByCommercialName: async function(searchInput) {
         const connection = await databaseConnection.openDatabase();
         
-        let data = await connection.collection(configuration.database.schema.medicine).find(
+        let data = await connection.db(configuration.database.dbname).collection(configuration.database.schemas.medicine).find(
             {'product': { '$regex': `${searchInput}`} }
+        ).toArray();
+
+        connection.close();
+
+        return data;
+    },
+
+    getMedicineByActivePrinciple: async function(activePrinciple) {
+        const connection = await databaseConnection.openDatabase();
+        
+        let data = await connection.db(configuration.database.dbname).collection(configuration.database.schemas.medicine).find(
+            {'active_principle': { '$regex': `${activePrinciple}`} }
         );
 
         connection.close();
@@ -31,7 +43,7 @@ module.exports = {
     getMedicineByRelativeDefinition: async function(searchInput) {
         const connection = await databaseConnection.openDatabase();
         
-        let data = await connection.collection(configuration.database.schema.medicine).find(
+        let data = await connection.db(configuration.database.dbname).collection(configuration.database.schemas.medicine).find(
             { '$text': {'$search': medicineName} },
         );
 

@@ -24,7 +24,7 @@
                     "slots": [
                         {
                             "name": "medicine",
-                            "type": "MEDICINE"
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
                         },
                         {
                             "name": "day",
@@ -59,7 +59,7 @@
                     "slots": [
                         {
                             "name": "medicine",
-                            "type": "MEDICINE"
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
                         }
                     ],
                     "samples": [
@@ -186,6 +186,23 @@
                         "Mi nombre es {name}",
                         "Me llamo {name}"
                     ]
+                },
+                {
+                    "name": "MedicineInformations",
+                    "slots": [
+                        {
+                            "name": "medicine",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
+                        },
+                        {
+                            "name": "medicineBrandName",
+                            "type": "MEDICINE_COMMERCIAL_NAME"
+                        }
+                    ],
+                    "samples": [
+                        "Qué efectos secundarios tiene {medicineBrandName} ",
+                        "Qué efectos secundarios tiene {medicine} "
+                    ]
                 }
             ],
             "types": [
@@ -260,36 +277,41 @@
                     ]
                 },
                 {
-                    "name": "MEDICINE",
+                    "name": "MEDICINE_ACTIVE_PRINCIPLE",
                     "values": [
                         {
                             "name": {
-                                "value": "tolcapone"
+                                "value": "Comtan"
                             }
                         },
                         {
                             "name": {
-                                "value": "amantadina"
+                                "value": "Carbidopa"
                             }
                         },
                         {
                             "name": {
-                                "value": "levodopa"
+                                "value": "Levodopa"
                             }
                         },
                         {
                             "name": {
-                                "value": "ibuprofen"
+                                "value": "Bromocriptina"
                             }
                         },
                         {
                             "name": {
-                                "value": "pergolida"
+                                "value": "Pergolide"
                             }
                         },
                         {
                             "name": {
-                                "value": "medicamentos",
+                                "value": "Pramipexol"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "medicamento",
                                 "synonyms": [
                                     "medicinas",
                                     "medicina",
@@ -297,6 +319,46 @@
                                     "medicación",
                                     "medicamento"
                                 ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "MEDICINE_COMMERCIAL_NAME",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Stalevo"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Requip"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Mirapex"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Permax"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Parlodel"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Carbidopa/Levodopa"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Sinemet"
                             }
                         }
                     ]
@@ -312,7 +374,7 @@
                     "slots": [
                         {
                             "name": "medicine",
-                            "type": "MEDICINE",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -342,7 +404,7 @@
                     "slots": [
                         {
                             "name": "medicine",
-                            "type": "MEDICINE",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}

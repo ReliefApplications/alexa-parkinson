@@ -1,25 +1,25 @@
-product,active_principle,color,shape,number,secondary_effects
-Sinemet 10/100 mg ,Carbidopa/levodopa,azul,pastilla larga,647,náuseas vómitos y pérdida de apetito 
-Sinemet 25/100 mg.,Carbidopa/levodopa,amarillo,pastilla larga,650,náuseas vómitos y pérdida de apetito 
-Sinemet 25/250 mg. ,Carbidopa/levodopa,azul verde,pastilla larga,654,náuseas vómitos y pérdida de apetito 
-Carbidopa/levodopa genérica 25/100 mg. ,Carbidopa/levodopa,amarillo claro,pastilla redonda,,náuseas vómitos y pérdida de apetito 
-Carbidopa/levodopa genérica 25/250 mg.,Carbidopa/levodopa,gris,pastilla redonda,,náuseas vómitos y pérdida de apetito 
+product,active_principle,color,shape,number,side_effects
+Sinemet 10/100 mg,Carbidopa/levodopa,azul,pastilla larga,647,náuseas vómitos y pérdida de apetito 
+Sinemet 25/100 mg,Carbidopa/levodopa,amarillo,pastilla larga,650,náuseas vómitos y pérdida de apetito 
+Sinemet 25/250 mg,Carbidopa/levodopa,azul verde,pastilla larga,654,náuseas vómitos y pérdida de apetito 
+Carbidopa/levodopa genérica 25/100 mg,Carbidopa/levodopa,amarillo claro,pastilla redonda,,náuseas vómitos y pérdida de apetito 
+Carbidopa/levodopa genérica 25/250 mg,Carbidopa/levodopa,gris,pastilla redonda,,náuseas vómitos y pérdida de apetito 
 Sinemet CR 25/100,Carbidopa/levodopa de liberación controlada,roja,pastilla larga,601,náuseas vómitos y pérdida de apetito 
 Sinemet CR 50/200,Carbidopa/levodopa de liberación controlada,marrón,pastilla larga,521,náuseas vómitos y pérdida de apetito 
-Parlodel 2.5 mg. ,Bromocriptina ,blanca,pastilla redonda,,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión 
-Parlodel 5 mg.,Bromocriptina ,blanca y naranja,pildora ,,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión 
-Permax 0.25 mg.,Pergolide ,verde,pastilla larga,A625,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión 
-Permax 1 mg.,Pergolide ,roja,pastilla larga,A630,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión 
-Mirapex 0.125 mg.,Pramipexol ,blanca,pastilla redonda,,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
-Mirapex 0.25 mg. ,Pramipexol ,blanca,pastilla redonda,,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
-Mirapex 0.5 mg. ,Pramipexol ,blanca,pastilla redonda,88,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
-Mirapex 1 mg. ,Pramipexol ,blanca,pastilla redonda,6 6,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
-Mirapex 1.5 mg. ,Pramipexol ,blanca,pastilla redonda,37 37,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
+Parlodel 2.5 mg,Bromocriptina ,blanca,pastilla redonda,,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión 
+Parlodel 5 mg,Bromocriptina ,blanca y naranja,pildora ,,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión 
+Permax 0.25 mg,Pergolide ,verde,pastilla larga,A625,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión 
+Permax 1 mg,Pergolide ,roja,pastilla larga,A630,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión 
+Mirapex 0.125 mg,Pramipexol ,blanca,pastilla redonda,,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
+Mirapex 0.25 mg,Pramipexol ,blanca,pastilla redonda,,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
+Mirapex 0.5 mg,Pramipexol ,blanca,pastilla redonda,88,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
+Mirapex 1 mg,Pramipexol ,blanca,pastilla redonda,6 6,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
+Mirapex 1.5 mg,Pramipexol ,blanca,pastilla redonda,37 37,Hipotensión arterial náuseas edema ronchas decoloradas en la piel confusión  ataques de sueño sedación alucinaciones 
 Requip 0.25 mg,Ropinirol ,gris,pentágono,4890,Náuseas hipotensión arterial ataques de sueño sedación 
-Requip 0.5 mg.,Ropinirol ,amarillo,pentágono,4897,Náuseas hipotensión arterial ataques de sueño sedación 
-Requip 1 mg.,Ropinirol ,verde,pentágono,,Náuseas hipotensión arterial ataques de sueño sedación 
-Requip 2 mg.,Ropinirol ,roja,pentágono,4893,Náuseas hipotensión arterial ataques de sueño sedación 
-Requip 5 mg.,Ropinirol ,azul,pentágono,4894,Náuseas hipotensión arterial ataques de sueño sedación 
-Stalevo 50 mg. ,comtan carbidopa y levodopa,roja,pastilla redonda,50,Discinesia náuseas dolor abdominal estreñimiento mareo cansancio alucinaciones 
-Stalevo 100 mg. ,comtan carbidopa y levodopa,roja,pastilla larga,100,Discinesia náuseas dolor abdominal estreñimiento mareo cansancio alucinaciones 
-Stalevo 150 mg. ,comtan carbidopa y levodopa,roja,pastilla larga rombo,150,Discinesia náuseas dolor abdominal estreñimiento mareo cansancio alucinaciones 
+Requip 0.5 mg,Ropinirol ,amarillo,pentágono,4897,Náuseas hipotensión arterial ataques de sueño sedación 
+Requip 1 mg,Ropinirol ,verde,pentágono,,Náuseas hipotensión arterial ataques de sueño sedación 
+Requip 2 mg,Ropinirol ,roja,pentágono,4893,Náuseas hipotensión arterial ataques de sueño sedación 
+Requip 5 mg,Ropinirol ,azul,pentágono,4894,Náuseas hipotensión arterial ataques de sueño sedación 
+Stalevo 50 mg,comtan carbidopa y levodopa,roja,pastilla redonda,50,Discinesia náuseas dolor abdominal estreñimiento mareo cansancio alucinaciones 
+Stalevo 100 mg,comtan carbidopa y levodopa,roja,pastilla larga,100,Discinesia náuseas dolor abdominal estreñimiento mareo cansancio alucinaciones 
+Stalevo 150 mg,comtan carbidopa y levodopa,roja,pastilla larga rombo,150,Discinesia náuseas dolor abdominal estreñimiento mareo cansancio alucinaciones 

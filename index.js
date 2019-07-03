@@ -71,6 +71,11 @@ exports.handler = function (alexaApp) {
         // response.say("Hey");
     });
 
+    alexaApp.intent('MedicineInformations', function (request, response) {
+        return dialogue.navigateTo('MedicineInformations', request.slots);
+        // response.say("Hey");
+    });
+
     alexaApp.intent('MedicationCalendar', function (request, response) {
         response.say("medication calendar intent");
         response.shouldEndSession(false);
