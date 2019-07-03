@@ -30,8 +30,7 @@ exports.handler = function (alexaApp) {
                     // Store the user into the request object
                     request.currentUser = user;
                 }
-            }
-            )
+            })
             .catch(res => {
                 utils.log(res);
             });
@@ -51,7 +50,7 @@ exports.handler = function (alexaApp) {
         }
     });
 
-    alexaApp.intent('Registration', function(request, response) {
+    alexaApp.intent('Registration', function (request, response) {
         let output = dialogue.navigateTo('registration', request.slots, getUserIdFromRequest(request));
         if (output === undefined) {
             response.say("Por favor, dime tu nombre");
@@ -72,7 +71,13 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MedicineInformations', function (request, response) {
-        return dialogue.navigateTo('MedicineInformations', request.slots);
+        return dialogue.navigateTo('MedicineInformations', request.slots)
+            .then(output => {
+
+                console.log(output);
+                response.say(output.speak);
+                response.shouldEndSession(false);
+            });
         // response.say("Hey");
     });
 

@@ -12,9 +12,10 @@ module.exports = {
      */
     getMedicineByCommercialName: async function(searchInput) {
         const connection = await databaseConnection.openDatabase();
-        
-        let data = await connection.db(configuration.database.dbname).collection(configuration.database.schemas.medicine).find(
-            {'product': { '$regex': `${searchInput}`} }
+
+        let data = await connection.db(configuration.database.dbname)
+            .collection(configuration.database.schemas.medicine).find(
+            {'product': { '$regex': `${searchInput}`, '$options':'i'} }
         ).toArray();
 
         connection.close();
@@ -25,7 +26,8 @@ module.exports = {
     getMedicineByActivePrinciple: async function(activePrinciple) {
         const connection = await databaseConnection.openDatabase();
         
-        let data = await connection.db(configuration.database.dbname).collection(configuration.database.schemas.medicine).find(
+        let data = await connection.db(configuration.database.dbname)
+            .collection(configuration.database.schemas.medicine).find(
             {'active_principle': { '$regex': `${activePrinciple}`} }
         );
 
