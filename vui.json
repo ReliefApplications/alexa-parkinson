@@ -197,11 +197,14 @@
                         {
                             "name": "medicineBrandName",
                             "type": "MEDICINE_COMMERCIAL_NAME"
+                        },
+                        {
+                            "name": "medicineInformation",
+                            "type": "MEDICINE_INFORMATION"
                         }
                     ],
                     "samples": [
-                        "Qué efectos secundarios tiene {medicineBrandName} ",
-                        "Qué efectos secundarios tiene {medicine} "
+                        "Qué {medicineInformation} tiene {medicineBrandName} "
                     ]
                 }
             ],
@@ -362,6 +365,26 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "MEDICINE_INFORMATION",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "forma"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "color"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "efectos secundarios"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -424,6 +447,34 @@
                             "prompts": {
                                 "elicitation": "Elicit.Slot.1153800461089.793568973432"
                             }
+                        }
+                    ]
+                },
+                {
+                    "name": "MedicineInformations",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "medicine",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "medicineBrandName",
+                            "type": "MEDICINE_COMMERCIAL_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "medicineInformation",
+                            "type": "MEDICINE_INFORMATION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 }
