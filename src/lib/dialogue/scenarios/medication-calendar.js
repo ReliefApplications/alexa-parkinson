@@ -4,8 +4,8 @@ const State = require('../dialogue-tree').trees.State;
 const Constants = require('../../../Constants').Constants;
 const Utils = require('../../../Utils').Utils;
 
-const calendar = new State(
-    ([request, response]) => {
+const calendar = new State({
+    main: ([request, response]) => {
         // let request = params[0];
         // let response = params[1];
         let medicineSlotRaw = request.slots.medicine.resolution(0) ?
@@ -65,6 +65,6 @@ const calendar = new State(
             shouldEnd: false
         };
     }
-);
+});
 
 module.exports.medicationCalendarIntent = calendar;

@@ -1,22 +1,26 @@
 
+/**
+ * Function that checks if a function is valid to be called
+ * @param {Function} func - Function to check
+ */
+function isValidFunction(func) {
+    return func !== undefined && (func instanceof Function);
+}
+
 module.exports.trees = (function () {
 
     /**
      * Encodes a specifix state of the discussion
      * @constructor
-     * @param {Function} callback - Function to execute when entering the state
-     * @param {Function} yes - Function to execute when answering 'yes'
-     * @param {Function} no - Function to execute when answering 'no'
-     * @param {Function} didNotUnderstand - Function to execute when answering 'don't understand'
+     * @param {Object} actions - Functions to execute in various contexts. 'main' is mandatory.
      */
-    function State(callback, yes, no, didNotUnderstand) {
+    function State(actions) {
 
-        /** */
-        this.yes = yes instanceof Function ? yes : () => {};
-        this.no = no instanceof Function ? no : () => {};
-        this.didNotUnderstand = didNotUnderstand instanceof Function ? didNotUnderstand : () => {};
-        this.action = callback instanceof Function ? callback : () => {};
-
+        if (!isValidFunction(actions['main'])) {
+            throw "Main function not specified!";
+        }
+        
+        this.actions = actions;
         this.children = {};
     }
     
@@ -37,20 +41,29 @@ module.exports.trees = (function () {
         return this;
     }
 
-    State.prototype.do = function (params) {
-        return this.action(params);
+    State.prototype.do = function (name, params) {
+        if (isValidFunction(this.actions[name])) {
+            return this.actions[name](params);
+        }
+        return null;
     }
 
-    State.prototype.saidYes = function(request, response) {
-        this.yes(request, response);
+    State.prototype.mainAction = function (params) {
+        return this.do('main', params)
     }
 
-    State.prototype.saidNo = function(request, response) {
-        this.no(request, response);
+    State.prototype.saidYes = function(params) {
+        // this.yes(request, response);
+        this.do('yes', params)
     }
 
-    State.prototype.didNotUnderstand = function(request, response) {
-        this.didNotUnderstand(request, response);
+    State.prototype.saidNo = function(params) {
+        this.do('no', params);
+    }
+
+    State.prototype.didNotUnderstand = function(params) {
+        // this.didNotUnderstand(params);
+        this.do('didNotUnderstand', params);
     }
 
     /**
@@ -88,7 +101,7 @@ module.exports.trees = (function () {
 
         this.currentNode = nextNode;
 
-        return this.currentNode.do(params);
+        return this.currentNode.mainAction(params);
     }
 
     StateTree.prototype.setRootAction = function (callback) {
@@ -96,12 +109,12 @@ module.exports.trees = (function () {
     }
 
     StateTree.prototype.start = function () {
-        this.rootNode.do();
+        this.rootNode.mainAction();
     }
 
-    StateTree.prototype.saidYes = function(request, response) { this.currentNode.saidYes(request, response); }
-    StateTree.prototype.saidNo = function(request, response) { this.currentNode.saidNo(request, response); }
-    StateTree.prototype.didNotUnderstand = function(request, response) { this.currentNode.didNotUnderstand(request, response); }
+    StateTree.prototype.saidYes = function(...params) { this.currentNode.saidYes(params); }
+    StateTree.prototype.saidNo = function(...params) { this.currentNode.saidNo(params); }
+    StateTree.prototype.didNotUnderstand = function(...params) { this.currentNode.didNotUnderstand(params); }
     
 
     return {

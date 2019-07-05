@@ -2,8 +2,8 @@ const tree = require('../dialogue-tree');
 const utils = require('../../../Utils').Utils;
 const userService = require('../../database/userdata');
 
-const registration = new tree.trees.State(
-    ([slots, userId]) => {
+const registration = new tree.trees.State({
+    main: ([slots, userId]) => {
         if (slots['name'] !== undefined) {
             let name = slots['name'].value;
             
@@ -15,11 +15,11 @@ const registration = new tree.trees.State(
         }
     },
 
-    () => { }, // yes
+    yes: () => { }, // yes
 
-    () => { }, // no
+    no: () => { }, // no
 
-    () => { } // no comprendido
-);
+    didNotUnderstand: () => { } // no comprendido
+});
 
 module.exports.registrationIntent = registration;

@@ -9,8 +9,8 @@ const images = Constants.IMAGES;
 
 // console.log(texts);
 
-const call = new State(
-    ([request, response]) => {
+const call = new State({
+    main: ([request, response]) => {
         response.say(texts.callText);
         response.reprompt(texts.callReprompt);
         if (Utils.supportsDisplay(request)) {
@@ -21,20 +21,20 @@ const call = new State(
     },
 
     // Yes
-    (request, response) => {
+    yes: ([request, response]) => {
         response.say("Estoy llamando");
     },
 
     // No
-    (request, response) => {
+    no: ([request, response]) => {
         response.shouldEndSession(true);
     },
 
     // Didn't understand
-    (request, response) => {
+    didNotUnderstand: ([request, response]) => {
         response.shouldEndSession(false);
     }
 
-);
+});
 
 module.exports.callIntent = call;

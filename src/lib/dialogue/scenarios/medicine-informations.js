@@ -7,42 +7,54 @@ const slotToDbColumnMap = {
     efectos_secundarios: 'side_effects'
 }
 
-const medicineInfoIntent = new states.State(
+const medicineInfoIntent = new states.State({
 
-    async function ([slots]) {
-        return new Promise((resolve, reject) => {
+    main: async function ([slots]) {
+        return new Promise(async (resolve, reject) => {
             let info = slots.medicineInformation.value;
             if (!Object.keys(slotToDbColumnMap).includes(info)) {
                 reject();
             }
-            info = slotToDbColumnMap[info];
+            console.log("RAW INFO", info);
+
+
+            info = slotToDbColumnMap[info.replace(' ', '_')];
 
             let name = slots.medicineBrandName.value;
             // If there is the "medicineInformation" slot, then replace the whitespaces with underscores,
             // otherwise take the side effects
             // let formattedInfo = info !== undefined ? info.replace(' ', '_') : 'efectos_secundarios';
             // The results number can be greater than 1, so let's check
-            console.log(info);
+            console.log("INFO: ", info);
             let medicineResult = await medicineService.getMedicineByCommercialName(name);
-
+            console.log("Got medicine result", medicineResult);
             if (medicineResult.length > 1) {
-                try {
-                    medicineResult = medicineResult.map(x => x[info]);
-                    let resultLength = medicineResult.length;
-                    // Produces a string similar to "medicine1, medicine2, medicine3, ... y medicine n"
-                    let listOfMedicines = medicineResult.slice(0, resultLength - 1).join(',')
-                        + " y " + medicineResult.slice(resultLength - 1);
+                // try {
+                medicineResult = medicineResult.map(x => x[info]);
+                console.log("MAPPED MEDICINES", medicineResult);
+                let resultLength = medicineResult.length;
+                console.log("BEFORE SLICE TRICK");
 
-                    resolve({
-                        speak: "Tengo mas de 1 medicamentos con ese nombre. " + listOfMedicines
-                    });
-                } catch (err) {
-                    console.error(err);
-                }
+                // Produces a string similar to "medicine1, medicine2, medicine3, ... y medicine n"
+                let listOfMedicines = medicineResult.slice(0, resultLength - 1).join(',')
+                    + " y " + medicineResult.slice(resultLength - 1);
+
+                console.log("Before resolve. L.O.M", listOfMedicines);
+                let out = "Tengo mas de 1 medicamentos con ese nombre. " + listOfMedicines;
+                console.log(out);
+
+                resolve({
+                    speak: out
+                });
+                // } catch (err) {
+                // console.log("ERROR", err);
+                // reject(err);
+                // }
 
             } else if (medicineResult.length === 1) {
-                console.log(medcine)
+                console.log("FOUND ONE!", medicineResult);
                 resolve({
+                    // TODO: change the column name into the database
                     speak: "Los efectos secundarios son " + medicineResult[0].side_effects
                 });
 
@@ -55,12 +67,12 @@ const medicineInfoIntent = new states.State(
 
     },
 
-    (request, response) => { response.shouldEndSession(false); },
+    yes: (request, response) => { response.shouldEndSession(false); },
 
-    (request, response) => { response.shouldEndSession(false); },
+    no: (request, response) => { response.shouldEndSession(false); },
 
-    (request, response) => { response.shouldEndSession(false); }
-);
+    didNotUnderstand: (request, response) => { response.shouldEndSession(false); }
+});
 
 
 module.exports.medicineInfoIntent = medicineInfoIntent;

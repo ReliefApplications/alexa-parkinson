@@ -4,8 +4,8 @@ const state = require('../dialogue-tree').trees;
 const constants = require('../../../Constants').Constants;
 
 
-const left = new state.State(
-    ([request, response]) => {
+const left = new state.State({
+    main: ([request, response]) => {
         let medicineSlotRaw = request.slots.medicine.resolution(0) ?
             request.slots.medicine.resolution(0).first().name.toLowerCase() : undefined;
 
@@ -46,6 +46,6 @@ const left = new state.State(
                 shouldEnd: false
             };
     }
-);
+});
 
 module.exports.medicationsLeftIntent = left;

@@ -14,47 +14,47 @@ const images = Constants.IMAGES;
 
 
 
-const dialogue = new tree.StateTree();
+const dialogue = new tree.StateTree({
+    // Root callback (if not defined throws an error)
+    main: () => {}
+});
 const State = tree.State;
 
-
-const myMedication = new State(
+const myMedication = new State({
     // What to do after "Mi medicaciones"
-    ([request, response]) => {
+    main: ([request, response]) => {
         response.say(texts.myMedicationText);
         response.reprompt(texts.myMedicationReprompt);
-
+        
         if (Utils.supportsDisplay(request)) {
             response.directive(Utils.renderBodyTemplate(
                 images.defaultImage,
                 texts.myMedicationTitle,
                 texts.myMedicationText)
                 );
-        }
-        response.shouldEndSession(false);
+            }
+            response.shouldEndSession(false);
 
-    },
-
-    (request, response) => {
-        response.shouldEndSession(false);
-    },
-
-    (request, response) => {
+        },
+        
+    yes: (request, response) => {
         response.shouldEndSession(false);
     },
-
-    (request, response) => {
+    
+    no: (request, response) => {
+        response.shouldEndSession(false);
+    },
+    
+    didNotUnderstand: (request, response) => {
         response.shouldEndSession(false);
     }
-);
-
+});
 
 dialogue.addIntentAction('myMedication', myMedication);
 dialogue.addIntentAction('Call', call);
 dialogue.addIntentAction('MedicationCalendar', medicationCalendar);
 dialogue.addIntentAction('MedicationLeft', medicationLeft);
 dialogue.addIntentAction('registration', registration);
-console.log("Before adding the Intent");
 dialogue.addIntentAction('MedicineInformations', medicineInformation);
 
 module.exports.dialogue = dialogue;
