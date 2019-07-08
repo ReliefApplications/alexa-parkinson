@@ -7,16 +7,13 @@ gulpfile.js
 exclude-list-gulp.txt
 data
 
-index.js
-app.js
+
 testing.js
 webpack.config.js
 configurations.js
 configurations.json
 
 package-lock.json
-src
 README.md
 
-docker-compose.yml
 docker-compose.yml.dist
