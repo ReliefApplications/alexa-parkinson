@@ -14,7 +14,7 @@ module.exports.trees = (function () {
      * @constructor
      * @param {Object} actions - Functions to execute in various contexts. 'main' is mandatory.
      */
-    function State(actions) {
+    function /** @class */ State(actions) {
 
         if (!isValidFunction(actions['main'])) {
             throw "Main function not specified!";
@@ -70,7 +70,7 @@ module.exports.trees = (function () {
      * Wrapper for the tree of states
      * @param {Function} rootCallback - Callback of root node 
      */
-    function StateTree(rootCallback) {
+    function /** @class */ StateTree(rootCallback) {
         this.rootNode = new State(rootCallback);
         this.currentNode = this.rootNode;
         // this.nodes = {}
@@ -100,7 +100,8 @@ module.exports.trees = (function () {
         }
 
         this.currentNode = nextNode;
-
+        console.log("CHECK!", this.currentNode);
+        
         return this.currentNode.mainAction(params);
     }
 

@@ -38,6 +38,8 @@ exports.handler = function (alexaApp) {
 
     alexaApp.error = function (exception, request, response) {
         response.say('Some error');
+        utils.log(exception);
+        // throw exception;
     };
 
     alexaApp.launch(function (request, response) {
@@ -79,6 +81,20 @@ exports.handler = function (alexaApp) {
                 response.shouldEndSession(false);
             });
         // response.say("Hey");
+    });
+
+    alexaApp.intent('CompleteTreatmentInsertion', function (request, response) {
+        response.say("Lorem ipsum");
+        console.table(request.slots);
+        dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
+            .then(updatedUser => {
+                Object.keys(updatedUser.calendar).forEach(x => {
+                    console.log(x);
+                    console.table(updatedUser.calendar[x]);
+                });
+                console.log(JSON.stringify(updatedUser));
+                response.shouldEndSession(false);
+            });
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {

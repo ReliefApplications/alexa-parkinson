@@ -206,12 +206,42 @@
                     "samples": [
                         "Qué {medicineInformation} tiene {medicineBrandName} "
                     ]
+                },
+                {
+                    "name": "CompleteTreatmentInsertion",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "AMAZON.FirstName"
+                        },
+                        {
+                            "name": "medicineName",
+                            "type": "MEDICINE_COMMERCIAL_NAME"
+                        },
+                        {
+                            "name": "frequency",
+                            "type": "TREATMENT_FREQUENCY"
+                        },
+                        {
+                            "name": "momentOfDay",
+                            "type": "TIMEOFDAY"
+                        }
+                    ],
+                    "samples": [
+                        "tiene que tomar {medicineName} {frequency} {momentOfDay}",
+                        "{name} tiene que tomar {medicineName} {frequency}  {momentOfDay}"
+                    ]
                 }
             ],
             "types": [
                 {
                     "name": "TIMEOFDAY",
                     "values": [
+                        {
+                            "name": {
+                                "value": "tarde"
+                            }
+                        },
                         {
                             "name": {
                                 "value": "noche"
@@ -385,6 +415,42 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "TREATMENT_FREQUENCY",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "cada ora"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cada dos horas"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cada cuatro horas"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cada mes"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cada semana"
+                            }
+                        },
+                        {
+                            "id": "daily",
+                            "name": {
+                                "value": "cada dia"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -472,6 +538,41 @@
                         {
                             "name": "medicineInformation",
                             "type": "MEDICINE_INFORMATION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "CompleteTreatmentInsertion",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "AMAZON.FirstName",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "medicineName",
+                            "type": "MEDICINE_COMMERCIAL_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "frequency",
+                            "type": "TREATMENT_FREQUENCY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "momentOfDay",
+                            "type": "TIMEOFDAY",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
