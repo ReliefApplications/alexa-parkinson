@@ -225,11 +225,34 @@
                         {
                             "name": "momentOfDay",
                             "type": "TIMEOFDAY"
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "second_intensity",
+                            "type": "AMAZON.NUMBER"
                         }
                     ],
                     "samples": [
-                        "tiene que tomar {medicineName} {frequency} {momentOfDay}",
-                        "{name} tiene que tomar {medicineName} {frequency}  {momentOfDay}"
+                        "tiene que tomar {medicineName} {intensity}  {second_intensity} miligramos {frequency}  {momentOfDay}",
+                        "tiene que tomar {medicineName} {intensity}  miligramos {frequency}  {momentOfDay}",
+                        "tiene que tomar {medicineName} {intensity}  {frequency}  {momentOfDay}",
+                        "tiene que tomar {medicineName}  {frequency}  {momentOfDay}",
+                        "{name} tiene que tomar {medicineName} {frequency}   {momentOfDay}"
+                    ]
+                },
+                {
+                    "name": "MedicineConfirmation",
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{number} {number}"
                     ]
                 }
             ],
@@ -573,6 +596,34 @@
                         {
                             "name": "momentOfDay",
                             "type": "TIMEOFDAY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "second_intensity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "MedicineConfirmation",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "number",
+                            "type": "AMAZON.NUMBER",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}

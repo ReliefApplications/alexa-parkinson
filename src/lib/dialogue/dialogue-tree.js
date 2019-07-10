@@ -100,7 +100,6 @@ module.exports.trees = (function () {
         }
 
         this.currentNode = nextNode;
-        console.log("CHECK!", this.currentNode);
         
         return this.currentNode.mainAction(params);
     }

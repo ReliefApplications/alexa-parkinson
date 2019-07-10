@@ -80,20 +80,29 @@ exports.handler = function (alexaApp) {
                 response.say(output.speak);
                 response.shouldEndSession(false);
             });
-        // response.say("Hey");
     });
 
     alexaApp.intent('CompleteTreatmentInsertion', function (request, response) {
-        response.say("Lorem ipsum");
-        console.table(request.slots);
-        dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
+        // console.table(request.slots);
+        return dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
             .then(updatedUser => {
+                utils.log("Into first THEN on Index");
+                
                 Object.keys(updatedUser.calendar).forEach(x => {
-                    console.log(x);
-                    console.table(updatedUser.calendar[x]);
+                    utils.log(x);
+                    utils.log("INTO FINAL FOR EACH");
+                    utils.log(updatedUser.calendar[x]);
                 });
-                console.log(JSON.stringify(updatedUser));
-                response.shouldEndSession(false);
+                return updatedUser
+            })
+            .then((updatedUser) => {
+                utils.log(JSON.stringify(updatedUser))
+                return response.shouldEndSession(false);
+            })
+            .catch((medicines) => {
+                response.say("Tengo mas de un medicamento con este nombre. Puede ser mas specifico?");
+                response.say(medicines.map(x => x.product).join(', '));
+                return response.shouldEndSession(false);
             });
     });
 

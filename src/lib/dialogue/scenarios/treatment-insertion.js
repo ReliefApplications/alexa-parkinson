@@ -6,7 +6,11 @@ const FREQUENCY_TYPES = [
     'weekly',
 ]
 
-let buildTreatment = function(user, medicineName, frequency, momentOfDay) {
+const lastMedicines = {
+    // userId: Array<Medicine>
+}
+
+let buildTreatment = function (user, medicineName, frequency, momentOfDay) {
 
     /**
      * Build the empty calendar if it wasn't already present
@@ -22,67 +26,74 @@ let buildTreatment = function(user, medicineName, frequency, momentOfDay) {
             sunday: []
         };
 
-        Object.keys(days).forEach(day => {
-            
-            // Take the 'moments' array if exists,
-            // Create it if it doesn't
-            let moments = days[day].moments || [];
-            moments.push(momentOfDay);
-            
-            days[day].push({
-                medicine: medicineName,
-                moments: moments
-            });
-            
-        });
-    // }
-    
-    user.calendar = days;
-    console.log(days);
-    console.log(user);
-    console.log(user.calendar.wednesday);
 
-    return user;
+    return getMedicine(medicineName)
+        .then(medicine => {
+            Object.keys(days).forEach(day => {
+                // Take the 'moments' array if exists,
+                // Create it if it doesn't
+                // the array holds the moments of the day in which a user should take
+                // the medicine
+                let moments = days[day].moments || [];
+                moments.push(momentOfDay);
+
+                days[day].push({
+                    medicine: medicineName, // <- medicine ID
+                    moments: moments
+                });
+
+            });
+
+            user.calendar = days;
+            return user;
+        });
+
 }
 
-module.exports.getMedicine = function(searchName) {
-    return medicineService.getMedicineByCommercialName('sinemet')
-        .then(medicines => {
-            
-            let splittedSearchName = searchName.split(' ');
+function getMedicine(searchName) {
 
-            console.log("Almost into filter");
+    return new Promise(async (resolve, reject) => {
+        let medicines = await medicineService.getMedicineByFormattedName(searchName);
+        
+        if (medicines.length > 1) {
+            console.log("More than one");
             console.log(medicines);
-            
-            return medicines
-                .filter(element => {
-                    console.log("Almost into reduce");
-                    let included = splittedSearchName.reduce( (previous, current) => {
-                        console.log(`Does ${element.product} includes ${current} ?`)
-                        /**
-                         * TODO: FIND TE PERFECT REGULAR EXPRESSION
-                         */
-                        let res = new RegExp(`(\\s/)*${current}(\\s/)*`,"i").test(element.product);
-                        console.log(res);
-                        return previous && res;
+            // lastMedicines[user._id] = medicines;
+            // throw here to have it into the .catch
+            reject(medicines);
+        }
 
-                    }, false);
-                    return included;
-                });
-        });
+        resolve(medicines[0]);
+    });
 }
 
 const treatmentInsertion = new State({
     main: ([slots, user]) => {
-        return new Promise( (resolve, reject) => {
-            // let personName = slots.name.value;
-            let medicineName = slots.medicineName.value;
-            let frequency = slots.frequency.value;
-            let momentOfDay = slots.momentOfDay.value;
-            let treatment = buildTreatment(user, medicineName, frequency, momentOfDay);
-            resolve(treatment);
-        });
+        // return new Promise(async (resolve, reject) => {
+
+        let medicineName = slots.medicineName.value;
+        let frequency = slots.frequency.value;
+        let momentOfDay = slots.momentOfDay.value;
+        let first_intensity = slots.intensity.value || '';
+        let second_intensity = slots.second_intensity.value || '';
+
+        console.log(first_intensity);
+        console.log(second_intensity);
+
+        let full_medicine_name = `${medicineName} ${first_intensity}  ${second_intensity}`.trim();
+
+        console.log("FULL MEDICINE NAME IS ", full_medicine_name)
+        let treatment = buildTreatment(user, full_medicine_name, frequency, momentOfDay);
+        // resolve(treatment);
+        return treatment;
+        // });
     }
 });
 
+
+const treatmentConfirmation = new State({
+    main: ([slots, user]) => {
+
+    }
+});
 module.exports.treatmentInsertion = treatmentInsertion;

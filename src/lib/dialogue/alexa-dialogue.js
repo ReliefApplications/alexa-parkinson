@@ -8,6 +8,8 @@ const medicationCalendar = require('./scenarios/medication-calendar').medication
 const medicationLeft = require('./scenarios/medication-left').medicationsLeftIntent;
 const registration = require('./scenarios/registration').registrationIntent;
 const medicineInformation = require('./scenarios/medicine-informations').medicineInfoIntent;
+const treatmentInsertion = require('./scenarios/treatment-insertion').treatmentInsertion;
+
 // Utility variables
 const texts = Constants.TEXTS;
 const images = Constants.IMAGES;
@@ -56,5 +58,5 @@ dialogue.addIntentAction('MedicationCalendar', medicationCalendar);
 dialogue.addIntentAction('MedicationLeft', medicationLeft);
 dialogue.addIntentAction('registration', registration);
 dialogue.addIntentAction('MedicineInformations', medicineInformation);
-
+dialogue.addIntentAction('CompleteTreatmentInsertion', treatmentInsertion);
 module.exports.dialogue = dialogue;

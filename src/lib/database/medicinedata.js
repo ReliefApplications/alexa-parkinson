@@ -23,6 +23,19 @@ module.exports = {
         return data;
     },
 
+    getMedicineByFormattedName: async function(searchInput) {
+        const connection = await databaseConnection.openDatabase();
+        let searchRegex = searchInput.replace(' ', '\\s');
+        let data = await connection.db(configuration.database.dbname)
+            .collection(configuration.database.schemas.medicine).find(
+            {'formatted_name': { '$regex': `${searchRegex}`, '$options':'i'} }
+        ).toArray();
+
+        connection.close();
+
+        return data;
+    },
+
     getMedicineByActivePrinciple: async function(activePrinciple) {
         const connection = await databaseConnection.openDatabase();
         
