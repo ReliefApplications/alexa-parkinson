@@ -19,55 +19,91 @@ module.exports.trees = (function () {
         if (!isValidFunction(actions['main'])) {
             throw "Main function not specified!";
         }
-        
+
         this.actions = actions;
         this.children = {};
     }
-    
+
+
+
+    State.prototype.setAction =
+        /**
+         * @param {Function} callback - change the main function of the node
+         */
+        function (callback) {
+            this.action = callback;
+        }
+
+
+    State.prototype.addChild =
+        /**
+         * 
+         * @param {string} hash - The "name" of the node into the tree (used to choose one between more children) 
+         * @param {State} node - The actual node object
+         */
+        function (hash, node) {
+            if (node instanceof StateTree) {
+                this.children[hash] = node.rootNode
+            } else {
+                this.children[hash] = node;
+            }
+            return this;
+        }
+
+    State.prototype.do =
+        /**
+         * Executes one action of the node.
+         * @param {string} name - Name of the action
+         * @param {Array} params - Array of parameters to pass to the function
+         */
+        function (name, params) {
+            if (isValidFunction(this.actions[name])) {
+                return this.actions[name](params);
+            }
+            return null;
+        }
+
+    State.prototype.mainAction =
+        /**
+         * Executes the 'main' function. A 'façade' for 'State.prototype.do' 
+         * @param {Array} params - Parameters to pass to an Array 
+         */
+        function (params) {
+            return this.do('main', params)
+        }
+
+    State.prototype.saidYes =
+        /**
+         * Executes the 'yes' function of the node.
+         * @param {Array} params - Parameters to pass to the 'yes' function of the node 
+         */
+        function (params) {
+            // this.yes(request, response);
+            this.do('yes', params)
+        }
+
+    State.prototype.saidNo =
+        /**
+         * Executes the 'no' function of the node.
+         * @param {Array} params - Parameters to pass to the 'no' function of the node 
+         */
+
+        function (params) {
+            this.do('no', params);
+        }
+
+    State.prototype.didNotUnderstand =
+        /**
+         * Executes the 'didNotUnderstand' function of the node.
+         * @param {Array} params - Parameters to pass to the 'didNotUnderstand' function of the node 
+         */
+        function (params) {
+            // this.didNotUnderstand(params);
+            this.do('didNotUnderstand', params);
+        }
 
     /**
-     * @param {Function} callback - function to execute when entering the state
-     */
-    State.prototype.setAction = function (callback) {
-        this.action = callback;
-    }
-
-    State.prototype.addChild = function (hash, node) {
-        if (node instanceof StateTree) {
-            this.children[hash] = node.rootNode
-        } else {
-            this.children[hash] = node;
-        }
-        return this;
-    }
-
-    State.prototype.do = function (name, params) {
-        if (isValidFunction(this.actions[name])) {
-            return this.actions[name](params);
-        }
-        return null;
-    }
-
-    State.prototype.mainAction = function (params) {
-        return this.do('main', params)
-    }
-
-    State.prototype.saidYes = function(params) {
-        // this.yes(request, response);
-        this.do('yes', params)
-    }
-
-    State.prototype.saidNo = function(params) {
-        this.do('no', params);
-    }
-
-    State.prototype.didNotUnderstand = function(params) {
-        // this.didNotUnderstand(params);
-        this.do('didNotUnderstand', params);
-    }
-
-    /**
-     * Wrapper for the tree of states
+     * Dialogue tree
      * @param {Function} rootCallback - Callback of root node 
      */
     function /** @class */ StateTree(rootCallback) {
@@ -100,7 +136,7 @@ module.exports.trees = (function () {
         }
 
         this.currentNode = nextNode;
-        
+
         return this.currentNode.mainAction(params);
     }
 
@@ -112,10 +148,10 @@ module.exports.trees = (function () {
         this.rootNode.mainAction();
     }
 
-    StateTree.prototype.saidYes = function(...params) { this.currentNode.saidYes(params); }
-    StateTree.prototype.saidNo = function(...params) { this.currentNode.saidNo(params); }
-    StateTree.prototype.didNotUnderstand = function(...params) { this.currentNode.didNotUnderstand(params); }
-    
+    StateTree.prototype.saidYes = function (...params) { this.currentNode.saidYes(params); }
+    StateTree.prototype.saidNo = function (...params) { this.currentNode.saidNo(params); }
+    StateTree.prototype.didNotUnderstand = function (...params) { this.currentNode.didNotUnderstand(params); }
+
 
     return {
         State: State,

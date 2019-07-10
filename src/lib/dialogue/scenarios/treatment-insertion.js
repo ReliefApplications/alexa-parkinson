@@ -10,7 +10,7 @@ const lastMedicines = {
     // userId: Array<Medicine>
 }
 
-let buildTreatment = function (user, medicineName, frequency, momentOfDay) {
+function buildTreatment(user, medicineName, frequency, momentOfDay) {
 
     /**
      * Build the empty calendar if it wasn't already present
@@ -54,10 +54,8 @@ function getMedicine(searchName) {
 
     return new Promise(async (resolve, reject) => {
         let medicines = await medicineService.getMedicineByFormattedName(searchName);
-        
+
         if (medicines.length > 1) {
-            console.log("More than one");
-            console.log(medicines);
             // lastMedicines[user._id] = medicines;
             // throw here to have it into the .catch
             reject(medicines);
@@ -67,6 +65,12 @@ function getMedicine(searchName) {
     });
 }
 
+/**
+ * This node will take the medicine and schedule informations and update the user's data
+ * according to the informations.
+ * If it founds one or more medicines, it will ask for confirmation from the user in the
+ * next node.
+ */
 const treatmentInsertion = new State({
     main: ([slots, user]) => {
         // return new Promise(async (resolve, reject) => {
@@ -77,23 +81,24 @@ const treatmentInsertion = new State({
         let first_intensity = slots.intensity.value || '';
         let second_intensity = slots.second_intensity.value || '';
 
-        console.log(first_intensity);
-        console.log(second_intensity);
-
+        // 'merge' medicine name and 
         let full_medicine_name = `${medicineName} ${first_intensity}  ${second_intensity}`.trim();
 
-        console.log("FULL MEDICINE NAME IS ", full_medicine_name)
         let treatment = buildTreatment(user, full_medicine_name, frequency, momentOfDay);
         // resolve(treatment);
         return treatment;
         // });
     }
-});
+
+}).addChild('medicine-choose-confirmation',
+
+    new State({
+
+        main: ([slots, user]) => {
+            
+        }
+    })
+);
 
 
-const treatmentConfirmation = new State({
-    main: ([slots, user]) => {
-
-    }
-});
 module.exports.treatmentInsertion = treatmentInsertion;
