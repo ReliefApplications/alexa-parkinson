@@ -1,5 +1,6 @@
 const State = require('../dialogue-tree').trees.State;
 const medicineService = require('../../database/medicinedata');
+const utils = require('../../../Utils').Utils;
 
 const FREQUENCY_TYPES = [
     'daily',
@@ -51,7 +52,7 @@ function buildTreatment(user, medicineName, frequency, momentOfDay) {
 }
 
 function getMedicine(searchName) {
-
+    utils.log("Searching", searchName);
     return new Promise(async (resolve, reject) => {
         let medicines = await medicineService.getMedicineByFormattedName(searchName);
 
@@ -59,9 +60,12 @@ function getMedicine(searchName) {
             // lastMedicines[user._id] = medicines;
             // throw here to have it into the .catch
             reject(medicines);
+            
+        } else {
+            utils.log("Found one medicine!");
+            utils.log(medicines);
+            resolve(medicines);
         }
-
-        resolve(medicines[0]);
     });
 }
 
@@ -73,7 +77,10 @@ function getMedicine(searchName) {
  */
 const treatmentInsertion = new State({
     main: ([slots, user]) => {
-        // return new Promise(async (resolve, reject) => {
+
+        console.log("SLOTS");
+        
+        console.table(slots);
 
         let medicineName = slots.medicineName.value;
         let frequency = slots.frequency.value;
@@ -81,13 +88,10 @@ const treatmentInsertion = new State({
         let first_intensity = slots.intensity.value || '';
         let second_intensity = slots.second_intensity.value || '';
 
-        // 'merge' medicine name and 
-        let full_medicine_name = `${medicineName} ${first_intensity}  ${second_intensity}`.trim();
+        let full_medicine_name = `${medicineName} ${first_intensity} ${second_intensity}`.trim();
 
         let treatment = buildTreatment(user, full_medicine_name, frequency, momentOfDay);
-        // resolve(treatment);
         return treatment;
-        // });
     }
 
 }).addChild('medicine-choose-confirmation',
@@ -95,7 +99,7 @@ const treatmentInsertion = new State({
     new State({
 
         main: ([slots, user]) => {
-            
+
         }
     })
 );
