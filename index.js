@@ -99,7 +99,7 @@ exports.handler = function (alexaApp) {
         return dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
             .then(updatedUser => {
                 utils.log("Into first THEN on Index");
-                
+                utils.log("Updated user is", updatedUser);
                 Object.keys(updatedUser.calendar).forEach(x => {
                     utils.log(x);
                     utils.log("INTO FINAL FOR EACH");
@@ -113,10 +113,15 @@ exports.handler = function (alexaApp) {
                 return response.shouldEndSession(false);
             })
             .catch((medicines) => {
+                utils.log("medicines in catch", medicines);
                 response.say("Tengo mas de un medicamento con este nombre. Puede ser mas specifico?");
                 response.say(medicines.slice(0, 2).map(x => x.product).join(', '));
                 return response.shouldEndSession(false);
             });
+    });
+
+    alexaApp.intent('MedicineConfirmation', function (request, response) {
+        
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {

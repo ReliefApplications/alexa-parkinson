@@ -259,9 +259,23 @@
                         {
                             "name": "number",
                             "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "medicineName",
+                            "type": "MEDICINE_COMMERCIAL_NAME"
+                        },
+                        {
+                            "name": "firstIntensity",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "secondIntensity",
+                            "type": "AMAZON.NUMBER"
                         }
                     ],
                     "samples": [
+                        "{medicineName} {firstIntensity} ",
+                        "{medicineName} {firstIntensity} {secondIntensity}",
                         "{number} {number}"
                     ]
                 }
@@ -645,6 +659,27 @@
                     "slots": [
                         {
                             "name": "number",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "medicineName",
+                            "type": "MEDICINE_COMMERCIAL_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "firstIntensity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "secondIntensity",
                             "type": "AMAZON.NUMBER",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
