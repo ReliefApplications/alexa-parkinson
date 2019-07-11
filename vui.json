@@ -242,6 +242,8 @@
                         }
                     ],
                     "samples": [
+                        "tiene que tomar {medicineName} {intensity} barra {second_intensity}",
+                        "tengo que tomar {medicineName}",
                         "tiene que tomar {medicineName}",
                         "tiene que tomar {medicineName} {intensity} barra {second_intensity} {frequency} {momentOfDay}",
                         "tiene que tomar {medicineName} {intensity} barra {second_intensity} miligramos {frequency} {momentOfDay}",
