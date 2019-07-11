@@ -216,11 +216,17 @@
                         },
                         {
                             "name": "medicineName",
-                            "type": "MEDICINE_COMMERCIAL_NAME"
+                            "type": "MEDICINE_COMMERCIAL_NAME",
+                            "samples": [
+                                "{medicineName}"
+                            ]
                         },
                         {
                             "name": "frequency",
-                            "type": "TREATMENT_FREQUENCY"
+                            "type": "TREATMENT_FREQUENCY",
+                            "samples": [
+                                "{frequency}"
+                            ]
                         },
                         {
                             "name": "momentOfDay",
@@ -236,10 +242,12 @@
                         }
                     ],
                     "samples": [
-                        "tiene que tomar {medicineName} {intensity}  {second_intensity} miligramos {frequency}  {momentOfDay}",
-                        "tiene que tomar {medicineName} {intensity}  miligramos {frequency}  {momentOfDay}",
-                        "tiene que tomar {medicineName} {intensity}  {frequency}  {momentOfDay}",
-                        "tiene que tomar {medicineName}  {frequency}  {momentOfDay}",
+                        "tiene que tomar {medicineName}",
+                        "tiene que tomar {medicineName} {intensity} barra {second_intensity} {frequency} {momentOfDay}",
+                        "tiene que tomar {medicineName} {intensity} barra {second_intensity} miligramos {frequency} {momentOfDay}",
+                        "tiene que tomar {medicineName} {intensity}  miligramos {frequency} {momentOfDay}",
+                        "tiene que tomar {medicineName} {intensity}  {frequency} {momentOfDay}",
+                        "tiene que tomar {medicineName} {frequency} {momentOfDay}",
                         "{name} tiene que tomar {medicineName} {frequency}   {momentOfDay}"
                     ]
                 },
@@ -464,13 +472,19 @@
                         },
                         {
                             "name": {
-                                "value": "cada semana"
+                                "value": "cada semana",
+                                "synonyms": [
+                                    "una vez a semana"
+                                ]
                             }
                         },
                         {
                             "id": "daily",
                             "name": {
-                                "value": "cada dia"
+                                "value": "cada dia",
+                                "synonyms": [
+                                    "todos los dias"
+                                ]
                             }
                         }
                     ]
@@ -583,22 +597,28 @@
                             "name": "medicineName",
                             "type": "MEDICINE_COMMERCIAL_NAME",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.150008431373.601593372374"
+                            }
                         },
                         {
                             "name": "frequency",
                             "type": "TREATMENT_FREQUENCY",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.498924128818.260363941920"
+                            }
                         },
                         {
                             "name": "momentOfDay",
                             "type": "TIMEOFDAY",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.498924128818.1357504562792"
+                            }
                         },
                         {
                             "name": "intensity",
@@ -649,6 +669,37 @@
                     {
                         "type": "PlainText",
                         "value": "Como te llamas?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.150008431373.601593372374",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Cuale medicamento?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.498924128818.260363941920",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Quantes vezes a semana?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.498924128818.1357504562792",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Manana, tarde o noche?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "En cuale momento del dia?"
                     }
                 ]
             }
