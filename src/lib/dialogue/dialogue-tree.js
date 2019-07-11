@@ -123,13 +123,11 @@ module.exports.trees = (function () {
 
     StateTree.prototype.navigateTo = function (stateName, ...params) {
         // Take what is supposed to be the next node
-        // response.say("Before nextnode");
         let nextNode = this.currentNode.children[stateName.toString()];
         // If it's not a child
         if (nextNode === undefined) {
             this.currentNode = this.rootNode;
             nextNode = this.currentNode.children[stateName.toString()];
-            // console.log("After check", nextNode);
         } else if (nextNode instanceof StateTree) {
             nextNode = nextNode.rootNode;
             nextNode = this.currentNode.children[stateName.toString()];
