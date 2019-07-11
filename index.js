@@ -13,6 +13,10 @@ function getUserIdFromRequest(request) {
     return request.sessionDetails.userId;
 }
 
+// Used to count and distinguish various calls when testing with the actual
+// device
+let instanceCounter = 0;
+
 
 exports.handler = function (alexaApp) {
 
@@ -83,6 +87,14 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('CompleteTreatmentInsertion', function (request, response) {
+        instanceCounter++;
+        
+        // Debug purposes (see instanceCounter definition)
+        console.log("==========================================");
+        console.log(`========   ${instanceCounter}     ========`);
+        console.log("==========================================");
+        
+        
         // console.table(request.slots);
         return dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
             .then(updatedUser => {
@@ -93,7 +105,8 @@ exports.handler = function (alexaApp) {
                     utils.log("INTO FINAL FOR EACH");
                     utils.log(updatedUser.calendar[x]);
                 });
-                return updatedUser
+                response.say("Vale");
+                return updatedUser;
             })
             .then((updatedUser) => {
                 utils.log(JSON.stringify(updatedUser))
@@ -101,7 +114,7 @@ exports.handler = function (alexaApp) {
             })
             .catch((medicines) => {
                 response.say("Tengo mas de un medicamento con este nombre. Puede ser mas specifico?");
-                response.say(medicines.map(x => x.product).join(', '));
+                response.say(medicines.slice(0, 2).map(x => x.product).join(', '));
                 return response.shouldEndSession(false);
             });
     });
