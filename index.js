@@ -21,6 +21,10 @@ let instanceCounter = 0;
 exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
+        
+        console.log("SLOTS");
+        console.table(request.slots);
+        
         if (request.sessionDetails.application.applicationId !== applicationId) {
             // Fail ungracefully
             throw 'Invalid applicationId: ' + request.sessionDetails.application.applicationId;
@@ -114,14 +118,19 @@ exports.handler = function (alexaApp) {
             })
             .catch((medicines) => {
                 utils.log("medicines in catch", medicines);
-                response.say("Tengo mas de un medicamento con este nombre. Puede ser mas specifico?");
+                response.say("Tengo mas de un medicamento con este nombre. Puede ser mas specifico? Por ejemplo");
                 response.say(medicines.slice(0, 2).map(x => x.product).join(', '));
                 return response.shouldEndSession(false);
             });
     });
 
     alexaApp.intent('MedicineConfirmation', function (request, response) {
-        
+        dialogue.navigateTo('medicine-choose-confirmation', request.slots, request.currentUser)
+            .then( ([medicine]) => {
+                utils.log("Got", medicine);
+                response.say("Vale");
+                response.shouldEndSession(false);
+            });
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
