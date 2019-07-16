@@ -257,10 +257,6 @@
                     "name": "MedicineConfirmation",
                     "slots": [
                         {
-                            "name": "number",
-                            "type": "AMAZON.NUMBER"
-                        },
-                        {
                             "name": "medicineName",
                             "type": "MEDICINE_COMMERCIAL_NAME"
                         },
@@ -274,9 +270,8 @@
                         }
                     ],
                     "samples": [
-                        "{medicineName} {firstIntensity} ",
-                        "{medicineName} {firstIntensity} {secondIntensity}",
-                        "{number} {number}"
+                        "{medicineName}  {firstIntensity} ",
+                        "{medicineName}  {firstIntensity} barra {secondIntensity}"
                     ]
                 }
             ],
@@ -657,13 +652,6 @@
                     "confirmationRequired": false,
                     "prompts": {},
                     "slots": [
-                        {
-                            "name": "number",
-                            "type": "AMAZON.NUMBER",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
                         {
                             "name": "medicineName",
                             "type": "MEDICINE_COMMERCIAL_NAME",

@@ -9,10 +9,9 @@ const FREQUENCY_TYPES = [
     'weekly',
 ]
 
-const lastMedicines = {
-    // userId: Array<Medicine>
-}
-
+/**
+ * 
+ */
 function buildTreatment(user, medicineName, frequency, momentOfDay) {
 
 
@@ -28,46 +27,32 @@ function buildTreatment(user, medicineName, frequency, momentOfDay) {
             sunday: []
         };
 
+    Object.keys(days).forEach(day => {
+        // Take the 'moments' array if exists,
+        // Create it if it doesn't
+        // the array holds the moments of the day in which a user should take
+        // the medicine
+        let moments = days[day].moments || [];
+        moments.push(momentOfDay);
 
-    return getMedicine(medicineName)
-        .then(medicines => {
-            if (medicines.length > 1) {
-                // Save the list of medicines to get it later
-                lastMedicines[user._id] = medicines;
-                temporaryMemory.saveTemporaryData(user._id, { medicines: medicines })
-                // Throw the medicines as error so to have them into the .catch in index.js
-                // Today I thought about a reason to NOT throw them, but I don't remember it.
-                throw medicines;
-            }
-
-            Object.keys(days).forEach(day => {
-                // Take the 'moments' array if exists,
-                // Create it if it doesn't
-                // the array holds the moments of the day in which a user should take
-                // the medicine
-                let moments = days[day].moments || [];
-                moments.push(momentOfDay);
-
-                days[day].push({
-                    medicine: medicineName, // <- medicine ID
-                    moments: moments
-                });
-
-            });
-
-            user.calendar = days;
-            return [user, medicines];
+        days[day].push({
+            medicine: medicineName, // <- medicine ID
+            moments: moments
         });
 
+    });
+
+    user.calendar = days;
+    return user;
 }
 
 function getMedicine(searchName) {
     utils.log("Searching", searchName);
-    return new Promise(async (resolve, reject) => {
-        let medicines = await medicineService.getMedicineByFormattedName(searchName);
-        utils.log("GOT MEDICINE(S)", medicines);
-        resolve(medicines);
-    });
+    return medicineService.getMedicineByFormattedName(searchName)
+        .then(medicines => {
+            utils.log("GOT MEDICINE(S)", medicines);
+            return medicines;
+        });
 }
 
 /**
@@ -79,10 +64,6 @@ function getMedicine(searchName) {
 const treatmentInsertion = new State({
     main: ([slots, user]) => {
 
-        console.log("SLOTS");
-
-        console.table(slots);
-
         let medicineName = slots.medicineName.value;
         let frequency = slots.frequency.value;
         let momentOfDay = slots.momentOfDay.value;
@@ -91,21 +72,20 @@ const treatmentInsertion = new State({
 
         let full_medicine_name = `${medicineName} ${first_intensity} ${second_intensity}`.trim();
 
-        let treatment = buildTreatment(user, full_medicine_name, frequency, momentOfDay)
-            .then( ([user, medicines]) => {
-                
+        return getMedicine(full_medicine_name)
+            .then(medicines => {
                 if (medicines.length > 1) {
                     temporaryMemory.saveTemporaryData(user._id, {
                         medicines: medicines,
                         momentOfDay: momentOfDay,
                         frequency: frequency
                     });
+                    throw medicines;
                 }
 
-                return user;
+                return buildTreatment(user, full_medicine_name, frequency, momentOfDay);
             });
 
-        return treatment;
     }
 
 })
@@ -120,12 +100,20 @@ const treatmentInsertion = new State({
             main: ([slots, user]) => {
                 let medicineName = slots.medicineName.value;
                 let firstIntensity = slots.firstIntensity.value;
-                let secondIntesity = slots.secondIntesity.value || '';
+                let secondIntensity = slots.secondIntensity.value || '';
 
-                let fullMedicineName = `${medicineName} ${firstIntensity} ${secondIntesity}`.trim();
-                let medicines = lastMedicines[user._id].medicines;
+                let fullMedicineName = `${medicineName} ${firstIntensity} ${secondIntensity}`.trim();
 
-                utils.log("Medicines from last call are", medicines);
+                // Get the data previously stored
+                let tempData = temporaryMemory.getTemporaryData(user._id);
+                let medicines = tempData.medicines;
+                let frequency = tempData.frequency;
+                let momentOfDay = tempData.momentOfDay;
+
+                // console.log("Medicines is ", typeof medicines, "Value", medicines);
+                utils.log("Medicines from last call are", medicines.map(x => x.formatted_name));
+                utils.log("FUll medicine name is", fullMedicineName);
+                return Promise.resolve(medicines.filter(x => x.formatted_name.startsWith(fullMedicineName)));
             }
         })
     );
