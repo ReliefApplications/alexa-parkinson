@@ -125,10 +125,13 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MedicineConfirmation', function (request, response) {
-        dialogue.navigateTo('medicine-choose-confirmation', request.slots, request.currentUser)
-            .then( ([medicine]) => {
-                utils.log("Got", medicine);
+        return dialogue.navigateTo('medicine-choose-confirmation', request.slots, request.currentUser)
+            .then( (user) => {
+                utils.log("Got", user);
                 response.say("Vale");
+                utils.log("On monday", user.calendar.monday);
+                utils.log("Timing", user.calendar.monday[0].moments);
+                
                 response.shouldEndSession(false);
             });
     });

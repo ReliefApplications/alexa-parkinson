@@ -12,8 +12,7 @@ const FREQUENCY_TYPES = [
 /**
  * 
  */
-function buildTreatment(user, medicineName, frequency, momentOfDay) {
-
+function buildTreatment(user, medicine, frequency, momentOfDay) {
 
     // Build the empty calendar if it wasn't already present
     let days =
@@ -36,10 +35,9 @@ function buildTreatment(user, medicineName, frequency, momentOfDay) {
         moments.push(momentOfDay);
 
         days[day].push({
-            medicine: medicineName, // <- medicine ID
+            medicine: medicine._id, // <- medicine ID
             moments: moments
         });
-
     });
 
     user.calendar = days;
@@ -74,16 +72,17 @@ const treatmentInsertion = new State({
 
         return getMedicine(full_medicine_name)
             .then(medicines => {
-                if (medicines.length > 1) {
+                if (medicines.length > 1 || medicines.length === 0) {
                     temporaryMemory.saveTemporaryData(user._id, {
                         medicines: medicines,
                         momentOfDay: momentOfDay,
                         frequency: frequency
                     });
                     throw medicines;
+                } else if (medicines.length === 1) {
+                    return buildTreatment(user, medicines[0], frequency, momentOfDay);
                 }
 
-                return buildTreatment(user, full_medicine_name, frequency, momentOfDay);
             });
 
     }
@@ -112,8 +111,9 @@ const treatmentInsertion = new State({
 
                 // console.log("Medicines is ", typeof medicines, "Value", medicines);
                 utils.log("Medicines from last call are", medicines.map(x => x.formatted_name));
-                utils.log("FUll medicine name is", fullMedicineName);
-                return Promise.resolve(medicines.filter(x => x.formatted_name.startsWith(fullMedicineName)));
+                let filteredMedicines = medicines.filter(x => x.formatted_name.startsWith(fullMedicineName));
+                let updatedUser = buildTreatment(user, filteredMedicines[0], frequency, momentOfDay);
+                return Promise.resolve(updatedUser);
             }
         })
     );
