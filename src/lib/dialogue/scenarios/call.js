@@ -2,7 +2,7 @@
 const State = require('../dialogue-tree').trees.State;
 
 const Utils = require('../../../Utils').Utils;
-const Constants = require('../../../Constants').Constants;
+const Constants = require('../../../Constants');
 
 const texts = Constants.TEXTS;
 const images = Constants.IMAGES;

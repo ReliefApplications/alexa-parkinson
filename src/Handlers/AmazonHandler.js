@@ -1,4 +1,4 @@
-const Constants = require('../Constants').Constants;
+const Constants = require('../Constants');
 const CoreHandler = require('./CoreHandler').CoreHandler;
 
 exports.AmazonHandler = {

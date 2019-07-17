@@ -1,4 +1,4 @@
-const Constants = require('../Constants').Constants;
+const Constants = require('../Constants');
 const Utils = require('../Utils').Utils;
 
 exports.CoreHandler = {

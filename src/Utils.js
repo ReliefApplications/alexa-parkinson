@@ -4,7 +4,7 @@ const amount = require('../amount.json');
 const spanishDay = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
 const spanishTime = ['mañana', 'mediodía', 'noche'];
 
-const constants = require('./Constants').Constants;
+const constants = require('./Constants');
 
 exports.Utils = {
 

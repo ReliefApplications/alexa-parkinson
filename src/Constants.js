@@ -1,5 +1,9 @@
-exports.Constants = {
+module.exports = {
   TEXTS: {
+    errors: {
+      no_medicine_found: "No tengo medicina con este nombre",
+      too_many_medicines: "Tengo mas de un medicamento con este nombre."
+    },
     //--- WELCOME ---
     welcomeTitle: "Bienvenido a la skill de Asistencia Parkinson.",
     welcomeText: "Queremos ofrecerte toda la información sobre tu medicación además de darte la posibilidad de consultar tus dudas con la Asociación Parkinson Madrid. \nDi “Mi Medicación” o “Llamar”",

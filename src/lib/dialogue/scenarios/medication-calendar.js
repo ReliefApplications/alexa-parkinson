@@ -1,7 +1,7 @@
 
 const State = require('../dialogue-tree').trees.State;
 
-const Constants = require('../../../Constants').Constants;
+const Constants = require('../../../Constants');
 const Utils = require('../../../Utils').Utils;
 
 const calendar = new State({

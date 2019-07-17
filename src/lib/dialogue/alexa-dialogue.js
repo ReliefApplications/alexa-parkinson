@@ -1,7 +1,7 @@
 const tree = require('./dialogue-tree').trees;
 
 const Utils = require('../../Utils').Utils;
-const Constants = require('../../Constants').Constants;
+const Constants = require('../../Constants');
 
 const call = require('./scenarios/call').callIntent;
 const medicationCalendar = require('./scenarios/medication-calendar').medicationCalendarIntent;

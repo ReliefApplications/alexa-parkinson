@@ -1,7 +1,7 @@
 
 const state = require('../dialogue-tree').trees;
 
-const constants = require('../../../Constants').Constants;
+const constants = require('../../../Constants');
 
 
 const left = new state.State({
