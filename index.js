@@ -27,7 +27,10 @@ exports.handler = function (alexaApp) {
         console.log("SLOTS");
         console.table(request.slots);
         
-        if (request.sessionDetails.application.applicationId !== applicationId) {
+        // If calling with some api tester (like Postman) the request object is different
+        let remoteApplicationID = request.sessionDetails.application.applicationId || request.applicationId;
+
+        if (remoteApplicationID !== applicationId) {
             // Fail ungracefully
             throw 'Invalid applicationId: ' + request.sessionDetails.application.applicationId;
         }
