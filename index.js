@@ -9,6 +9,8 @@ const utils = require('./src/Utils').Utils;
 
 const database = require('./src/lib/database/userdata');
 
+const constants = require('./src/Constants');
+
 function getUserIdFromRequest(request) {
     return request.sessionDetails.userId;
 }
@@ -132,6 +134,10 @@ exports.handler = function (alexaApp) {
                 utils.log("On monday", user.calendar.monday);
                 utils.log("Timing", user.calendar.monday[0].moments);
                 
+                response.shouldEndSession(false);
+            })
+            .catch(err => {
+                response.say(constants.TEXTS.errors[err.error]);
                 response.shouldEndSession(false);
             });
     });

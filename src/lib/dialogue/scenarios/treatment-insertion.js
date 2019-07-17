@@ -33,7 +33,7 @@ function buildTreatment(user, medicine, frequency, momentOfDay) {
         // the medicine
         let moments = days[day].moments || [];
         moments.push(momentOfDay);
-
+        utils.log("Medicine in buildTreatment", medicine);
         days[day].push({
             medicine: medicine._id, // <- medicine ID
             moments: moments
@@ -110,8 +110,15 @@ const treatmentInsertion = new State({
                 let momentOfDay = tempData.momentOfDay;
 
                 // console.log("Medicines is ", typeof medicines, "Value", medicines);
+                utils.log("Full medicine name", fullMedicineName);
                 utils.log("Medicines from last call are", medicines.map(x => x.formatted_name));
                 let filteredMedicines = medicines.filter(x => x.formatted_name.startsWith(fullMedicineName));
+                if (filteredMedicines.length === 0) {
+                    return Promise.reject({ error: "no_medicine_found" });
+                } else if (filteredMedicines.length > 1) {
+                    return Promise.reject({ error: "too_many_medicines" });
+                }
+                utils.log("Filtered medicines", filteredMedicines);
                 let updatedUser = buildTreatment(user, filteredMedicines[0], frequency, momentOfDay);
                 return Promise.resolve(updatedUser);
             }
