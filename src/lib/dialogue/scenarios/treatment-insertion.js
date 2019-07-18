@@ -1,16 +1,4 @@
-/**
- * BUONGIORNO.
- * 
- * Cosa fare oggi:
- * 
- * 2) Testare la seguente conversazione
- * 
- * tengo que tomar carbidopa levodopa genérica cada dia la noche
- *
- * carbidopa levodopa genérica 25 100
- * 
- * 3) Se i test hanno successo, scrivere qualcosa sul README per il settaggio del database e la formattazione dei dati
- */
+
 const State = require('../dialogue-tree').trees.State;
 const medicineService = require('../../database/medicinedata');
 const userService = require('../../database/userdata');
