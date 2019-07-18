@@ -2,7 +2,8 @@ module.exports = {
   TEXTS: {
     errors: {
       no_medicine_found: "No tengo medicina con este nombre",
-      too_many_medicines: "Tengo mas de un medicamento con este nombre."
+      too_many_medicines: "Tengo mas de un medicamento con este nombre.",
+      medicine_already_here: "Vale", // Does the user should be aware that the treatment is already there?
     },
     //--- WELCOME ---
     welcomeTitle: "Bienvenido a la skill de Asistencia Parkinson.",
