@@ -20,7 +20,7 @@ module.exports.trees = (function () {
             throw "Main function not specified!";
         }
 
-        this.actions = actions;
+        this.actions = actions; 
         this.children = {};
     }
 

@@ -70,3 +70,13 @@ This command is used to import data into the db from a csv file. Look at ``` mon
 ```
 mongoimport --db=parkinson --collection=medicine --username=<database_user> --password=<database_password> --authenticationDatabase=<database_for_auth> --type=csv --headerline parkinson.csv
 ```
+
+### Setup the database
+After importing the data you must create a new text index on the database that covers every needed field (for now it seems usless to cover the 'side_effects' field, but we never know).
+
+1. Access the database on the remote machine as shown above
+2. Move to the 'admin' database and autenticate with ``` db.auth(username, password)```
+3. Create the text index with the command 
+```
+
+```

@@ -10,39 +10,41 @@ module.exports = {
      * 
      * @param {string} searchInput - Commercial name of the medicine.
      */
-    getMedicineByCommercialName: async function(searchInput) {
+    getMedicineByCommercialName: async function (searchInput) {
         const connection = await databaseConnection.openDatabase();
 
         let data = await connection.db(configuration.database.dbname)
             .collection(configuration.database.schemas.medicine).find(
-            {'product': { '$regex': `${searchInput}`, '$options':'i'} }
-        ).toArray();
+                { 'product': { '$regex': `${searchInput}`, '$options': 'i' } }
+            ).toArray();
 
         connection.close();
 
         return data;
     },
 
-    getMedicineByFormattedName: async function(searchInput) {
+    getMedicineByFormattedName: async function (searchInput) {
         const connection = await databaseConnection.openDatabase();
-        let searchRegex = searchInput.replace(' ', '\\s');
+        let searchRegex = searchInput;
+        // let searchRegex = searchInput.replace(' ', '\\s');
         let data = await connection.db(configuration.database.dbname)
             .collection(configuration.database.schemas.medicine).find(
-            {'formatted_name': { '$regex': `${searchRegex}`, '$options':'i'} }
-        ).toArray();
+                { '$text': { '$search': `${searchRegex}` } }
+            ).project({ 'score': { '$meta': "textScore" } })
+            .sort({ 'score': {'$meta': "textScore"} }).toArray();
 
         connection.close();
 
         return data;
     },
 
-    getMedicineByActivePrinciple: async function(activePrinciple) {
+    getMedicineByActivePrinciple: async function (activePrinciple) {
         const connection = await databaseConnection.openDatabase();
-        
+
         let data = await connection.db(configuration.database.dbname)
             .collection(configuration.database.schemas.medicine).find(
-            {'active_principle': { '$regex': `${activePrinciple}`} }
-        );
+                { 'active_principle': { '$regex': `${activePrinciple}` } }
+            );
 
         connection.close();
 
@@ -55,11 +57,11 @@ module.exports = {
      * 
      * @param {string} searchInput - Generic definition or phrase to search the medicine
      */
-    getMedicineByRelativeDefinition: async function(searchInput) {
+    getMedicineByRelativeDefinition: async function (searchInput) {
         const connection = await databaseConnection.openDatabase();
-        
+
         let data = await connection.db(configuration.database.dbname).collection(configuration.database.schemas.medicine).find(
-            { '$text': {'$search': medicineName} },
+            { '$text': { '$search': medicineName } },
         );
 
         connection.close();
