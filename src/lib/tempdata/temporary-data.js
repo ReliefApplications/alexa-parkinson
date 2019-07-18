@@ -26,7 +26,10 @@ module.exports = {
         },
 
     removeTemporaryData:
-
+        /**
+         * 
+         * @param {string} key - the value's key to delete
+         */
         function (key) {
             delete memoryTempData[key];
         }

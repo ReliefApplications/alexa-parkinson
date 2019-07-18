@@ -38,7 +38,19 @@ module.exports = {
                 {
                     _id: askId,
                     name: name,
-                    medicines: []
+                    calendar: {
+                        monday: {
+                            // noche: [] // medicines array
+                            // manana: []
+                            // tarde: []
+                        },
+                        tuesday: {},
+                        wednesday: {},
+                        thursday: {},
+                        friday: {},
+                        saturday: {},
+                        sunday: {}
+                    }
                 }
             );
 

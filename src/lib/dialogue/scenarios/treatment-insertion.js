@@ -29,34 +29,51 @@ const FREQUENCY_TYPES = [
 function buildTreatment(user, medicine, frequency, momentOfDay) {
 
     // Build the empty calendar if it wasn't already present
-    let days =
+    let calendar =
         user.calendar !== undefined ? user.calendar : {
-            monday: [
-                {medicine: 10, moment: "noche"}
-            ],
-            tuesday: [],
-            wednesday: [],
-            thursday: [],
-            friday: [],
-            saturday: [],
-            sunday: []
+            monday: {
+                // noche: [] // medicines array
+                // manana: []
+                // tarde: []
+            },
+            tuesday: {},
+            wednesday: {},
+            thursday: {},
+            friday: {},
+            saturday: {},
+            sunday: {}
         };
 
-    Object.keys(days).forEach(day => {
-        // Take the 'moments' array if exists,
-        // Create it if it doesn't
-        // the array holds the moments of the day in which a user should take
-        // the medicine
-        let moments = days[day].moments || [];
-        moments.push(momentOfDay);
-        utils.log("Medicine in buildTreatment", medicine);
-        days[day].push({
-            medicine: medicine._id, // <- medicine ID
-            moments: moments
-        });
+    // Count how many times we find the medicine into the calendar
+    // Useful for future handling of the case in which the insertion is void
+    let medicinesFound = 0;
+
+    Object.keys(calendar).forEach(day => {
+        // Take the list of medicines to take in a certain moment
+        let medicines = calendar[day][momentOfDay] || [];
+        // utils.log("Medicine in buildTreatment", medicine);
+
+        utils.log(`Looking for ${medicine._id}`);
+        utils.log(medicine._id);
+
+        let isAlreadyThere = medicines.find(medicineInCalendar => {
+            // utils.log(`Scanning medicine ${medicineInCalendar}`);
+            // utils.log(`medicineInCalendar is a ${typeof medicineInCalendar}, medicine's id is ${typeof medicine._id}`);
+            return String(medicineInCalendar) === String(medicine._id);
+        }) !== undefined;
+
+        utils.log(`Do we already have the treatment?`, isAlreadyThere);
+
+        if (!isAlreadyThere) {
+            medicines.push(medicine._id);
+            calendar[day][momentOfDay] = medicines;
+            medicinesFound++;
+        }
     });
 
-    user.calendar = days;
+    // TODO do something when there were no new insertions
+
+    user.calendar = calendar;
     return user;
 }
 
@@ -64,7 +81,6 @@ function getMedicine(searchName) {
     utils.log("Searching", searchName);
     return medicineService.getMedicineByFormattedName(searchName)
         .then(medicines => {
-            utils.log("GOT MEDICINE(S)", medicines);
             return medicines;
         });
 }

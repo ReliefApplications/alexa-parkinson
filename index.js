@@ -15,11 +15,6 @@ function getUserIdFromRequest(request) {
     return request.sessionDetails.userId;
 }
 
-// Used to count and distinguish various calls when testing with the actual
-// device
-let instanceCounter = 0;
-
-
 exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
@@ -60,7 +55,6 @@ exports.handler = function (alexaApp) {
             response.say("Es esta la primera vez que nos encontramos. ¿Como te llamas?");
             response.shouldEndSession(false);
         } else {
-            response.say("Hola, " + request.currentUser.name + "!");
             return CoreHandler.LaunchRequest(request, response);
         }
     });
@@ -96,13 +90,6 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('CompleteTreatmentInsertion', function (request, response) {
-        instanceCounter++;
-        
-        // Debug purposes (see instanceCounter definition)
-        console.log("==========================================");
-        console.log(`========   ${instanceCounter}     ========`);
-        console.log("==========================================");
-        
         
         // console.table(request.slots);
         return dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
