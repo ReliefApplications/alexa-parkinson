@@ -45,6 +45,23 @@ module.exports = {
         connection.close();
 
         return result;
+    },
+
+
+    updateUser: async function (newUser) {
+        const connection = await generalDatabase.openDatabase();
+
+        let result = await connection.db(configuration.database.dbname)
+            .collection(configuration.database.schemas.user)
+            .updateOne(
+                { _id: newUser._id },
+                {
+                    '$set': { 'calendar': newUser.calendar },
+                    '$currentDate': { 'lastModified': true }
+                }
+            );
+
+        return newUser;
     }
 }
 

@@ -23,5 +23,11 @@ module.exports = {
          */
         function (key) {
             return memoryTempData[key];
+        },
+
+    removeTemporaryData:
+
+        function (key) {
+            delete memoryTempData[key];
         }
 }

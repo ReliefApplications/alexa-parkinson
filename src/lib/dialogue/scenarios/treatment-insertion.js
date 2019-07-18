@@ -13,6 +13,7 @@
  */
 const State = require('../dialogue-tree').trees.State;
 const medicineService = require('../../database/medicinedata');
+const userService = require('../../database/userdata');
 const utils = require('../../../Utils').Utils;
 
 const temporaryMemory = require('../../tempdata/temporary-data');
@@ -141,6 +142,8 @@ const treatmentInsertion = new State({
                     return Promise.reject({ error: "too_many_medicines" });
                 }
                 let updatedUser = buildTreatment(user, filteredMedicines[0], frequency, momentOfDay);
+                temporaryMemory.removeTemporaryData(updatedUser._id);
+                userService.updateUser(updatedUser);
                 return Promise.resolve(updatedUser);
             }
         })
