@@ -1,3 +1,16 @@
+/**
+ * BUONGIORNO.
+ * 
+ * Cosa fare oggi:
+ * 
+ * 2) Testare la seguente conversazione
+ * 
+ * tengo que tomar carbidopa levodopa genérica cada dia la noche
+ *
+ * carbidopa levodopa genérica 25 100
+ * 
+ * 3) Se i test hanno successo, scrivere qualcosa sul README per il settaggio del database e la formattazione dei dati
+ */
 const State = require('../dialogue-tree').trees.State;
 const medicineService = require('../../database/medicinedata');
 const utils = require('../../../Utils').Utils;
@@ -17,7 +30,9 @@ function buildTreatment(user, medicine, frequency, momentOfDay) {
     // Build the empty calendar if it wasn't already present
     let days =
         user.calendar !== undefined ? user.calendar : {
-            monday: [],
+            monday: [
+                {medicine: 10, moment: "noche"}
+            ],
             tuesday: [],
             wednesday: [],
             thursday: [],
@@ -110,15 +125,21 @@ const treatmentInsertion = new State({
                 let momentOfDay = tempData.momentOfDay;
 
                 // console.log("Medicines is ", typeof medicines, "Value", medicines);
-                utils.log("Full medicine name", fullMedicineName);
-                utils.log("Medicines from last call are", medicines.map(x => x.formatted_name));
+                utils.log("Full medicine name", fullMedicineName, Buffer.from(fullMedicineName));
+                utils.log("Medicines from last call are", medicines.map(x => {
+                    return { name: x.formatted_name, buff: Buffer.from(x.formatted_name) }
+
+                }));
                 let filteredMedicines = medicines.filter(x => x.formatted_name.startsWith(fullMedicineName));
+                utils.log("Filtered medicines", filteredMedicines.map(x => {
+                    return { name: x.formatted_name, buff: Buffer.from(x.formatted_name) };
+                }));
+
                 if (filteredMedicines.length === 0) {
                     return Promise.reject({ error: "no_medicine_found" });
                 } else if (filteredMedicines.length > 1) {
                     return Promise.reject({ error: "too_many_medicines" });
                 }
-                utils.log("Filtered medicines", filteredMedicines);
                 let updatedUser = buildTreatment(user, filteredMedicines[0], frequency, momentOfDay);
                 return Promise.resolve(updatedUser);
             }

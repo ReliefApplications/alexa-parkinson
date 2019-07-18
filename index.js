@@ -107,8 +107,6 @@ exports.handler = function (alexaApp) {
         // console.table(request.slots);
         return dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
             .then(updatedUser => {
-                utils.log("Into first THEN on Index");
-                utils.log("Updated user is", updatedUser);
                 Object.keys(updatedUser.calendar).forEach(x => {
                     utils.log(x);
                     utils.log("INTO FINAL FOR EACH");
