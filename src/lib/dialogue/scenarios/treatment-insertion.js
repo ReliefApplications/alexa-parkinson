@@ -37,7 +37,7 @@ function buildTreatment(user, medicine, frequency, momentOfDay) {
     let medicinesFound = 0;
 
     Object.keys(calendar).forEach(day => {
-        // Take the list of medicines to take in a certain moment
+        // Take the list of medicines to take in a certain moment of a certain day
         let medicines = calendar[day][momentOfDay] || [];
 
         let isAlreadyThere = medicines.find(medicineInCalendar => {
@@ -46,10 +46,12 @@ function buildTreatment(user, medicine, frequency, momentOfDay) {
             return String(medicineInCalendar) === String(medicine._id);
         }) !== undefined;
 
+        // If false + 0, if true + 1
+        medicineFound += isAlreadyThere;
+
         if (!isAlreadyThere) {
             medicines.push(medicine._id);
             calendar[day][momentOfDay] = medicines;
-            medicinesFound++;
         }
     });
 
