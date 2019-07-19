@@ -18,10 +18,10 @@ function getUserIdFromRequest(request) {
 exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
-        
+
         console.log("SLOTS");
         console.table(request.slots);
-        
+
         // If calling with some api tester (like Postman) the request object is different
         let remoteApplicationID = request.sessionDetails.application.applicationId || request.applicationId;
 
@@ -48,6 +48,7 @@ exports.handler = function (alexaApp) {
         response.say('Some error');
         utils.log(exception);
         // throw exception;
+        response.shouldEndSession(false);
     };
 
     alexaApp.launch(function (request, response) {
@@ -90,7 +91,7 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('CompleteTreatmentInsertion', function (request, response) {
-        
+
         // console.table(request.slots);
         return dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
             .then(updatedUser => {
@@ -116,12 +117,12 @@ exports.handler = function (alexaApp) {
 
     alexaApp.intent('MedicineConfirmation', function (request, response) {
         return dialogue.navigateTo('medicine-choose-confirmation', request.slots, request.currentUser)
-            .then( (user) => {
+            .then((user) => {
                 utils.log("Got", user);
                 response.say("Vale");
                 utils.log("On monday", user.calendar.monday);
                 utils.log("Timing", user.calendar.monday[0].moments);
-                
+
                 response.shouldEndSession(false);
             })
             .catch(err => {
@@ -131,8 +132,13 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
-        response.say("medication calendar intent");
-        response.shouldEndSession(false);
+        return dialogue.navigateTo('MedicationCalendar', request.currentUser, request.slots)
+            .then(result => {
+                utils.log("GOT", result);
+                let formattedMedicines = result[0].medicines.map(x => x.product).join(',');
+                response.say(formattedMedicines);
+                response.shouldEndSession(false);
+            });
     });
 
     alexaApp.intent('MedicationLeft', function (request, response) {

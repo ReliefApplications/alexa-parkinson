@@ -72,8 +72,32 @@ module.exports = {
                     '$currentDate': { 'lastModified': true }
                 }
             );
+        connection.close();
 
         return newUser;
+    },
+
+    /**
+     * 
+     * @param {any} user - the user
+     * @param {string} dayOfWeek - the day of the week
+     * @param {string} momentOfDay - the moment of the day such as 'mañana', 'tarde', 'noche'
+     */
+    getUserMedicines: async function (user, dayOfWeek, momentOfDay) {
+        const connection = await generalDatabase.openDatabase();
+        utils.log("Getting medicines of", user._id, "on", dayOfWeek, " ", momentOfDay);
+        let result = await connection.db(configuration.database.dbname)
+            .collection(configuration.database.schemas.user)
+            .aggregate([
+                { '$match': { '_id': user._id } },
+                { '$replaceRoot': { 'newRoot': '$calendar' } },
+                { '$replaceRoot': { 'newRoot': `$${dayOfWeek}` } },
+                // {'$unwind': momentOfDay},
+                { '$lookup': { 'from': 'medicine', 'localField': momentOfDay, 'foreignField': '_id', 'as': 'medicines' } },
+                {'$project': {'noche': 0}}
+            ]).toArray();
+        connection.close();
+
+        return result;
     }
 }
-

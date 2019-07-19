@@ -8,6 +8,14 @@ const constants = require('./Constants');
 
 exports.Utils = {
 
+    translator: {
+        momentOfDay: {
+            'mañana': 'morning',
+            'tarde': 'afternoon',
+            'noche': 'night'
+        }
+    },
+
     /**
      * Define a logging strategy
      * @param {Array<String>} - string array to be logged (same behavior as console.log)

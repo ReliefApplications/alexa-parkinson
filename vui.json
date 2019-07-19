@@ -23,10 +23,6 @@
                     "name": "MedicationCalendar",
                     "slots": [
                         {
-                            "name": "medicine",
-                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
-                        },
-                        {
                             "name": "day",
                             "type": "DAYOFWEEK"
                         },
@@ -43,15 +39,15 @@
                         }
                     ],
                     "samples": [
-                        "que {medicine} debo tomar {day} por la {time} ",
-                        "que {medicine} debo tomar {day} al {time}",
-                        "que {medicine} debo tomar {day}",
-                        "que {medicine} tomo {day} por la {time}",
-                        "que {medicine} tomo {day} al {time}",
-                        "que {medicine} tomo {day}",
-                        "que {medicine} tengo que tomar {day} por la {time}",
-                        "que {medicine} tengo que tomar {day} al {time}",
-                        "que {medicine} tengo que tomar {day} "
+                        "que debo tomar {day} por la {time} ",
+                        "que debo tomar {day} al {time}",
+                        "que debo tomar {day}",
+                        "que tomo {day} por la {time}",
+                        "que tomo {day} al {time}",
+                        "que tomo {day}",
+                        "que tengo que tomar {day} por la {time}",
+                        "que tengo que tomar {day} al {time}",
+                        "que tengo que tomar {day} "
                     ]
                 },
                 {
@@ -317,36 +313,43 @@
                             }
                         },
                         {
+                            "id": "sunday",
                             "name": {
                                 "value": "domingo"
                             }
                         },
                         {
+                            "id": "saturday",
                             "name": {
                                 "value": "sabado"
                             }
                         },
                         {
+                            "id": "friday",
                             "name": {
                                 "value": "viernes"
                             }
                         },
                         {
+                            "id": "thursday",
                             "name": {
                                 "value": "jueves"
                             }
                         },
                         {
+                            "id": "wednesday",
                             "name": {
                                 "value": "miercoles"
                             }
                         },
                         {
+                            "id": "tuesday",
                             "name": {
                                 "value": "martes"
                             }
                         },
                         {
+                            "id": "monday",
                             "name": {
                                 "value": "lunes"
                             }
@@ -405,7 +408,7 @@
                     "values": [
                         {
                             "name": {
-                                "value": "Carbidopa Levodopa genérica"
+                                "value": "carbidopa Levodopa generica"
                             }
                         },
                         {
@@ -516,13 +519,6 @@
                     "confirmationRequired": false,
                     "prompts": {},
                     "slots": [
-                        {
-                            "name": "medicine",
-                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
                         {
                             "name": "day",
                             "type": "DAYOFWEEK",
