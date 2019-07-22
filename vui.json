@@ -117,7 +117,12 @@
                 },
                 {
                     "name": "AMAZON.YesIntent",
-                    "samples": []
+                    "samples": [
+                        "okay",
+                        "ok",
+                        "si",
+                        "sì"
+                    ]
                 },
                 {
                     "name": "AMAZON.NoIntent",
