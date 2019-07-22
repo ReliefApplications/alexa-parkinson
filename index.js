@@ -87,6 +87,11 @@ exports.handler = function (alexaApp) {
                 console.log(output);
                 response.say(output.speak);
                 response.shouldEndSession(false);
+            })
+            .catch(err => {
+                console.log("Error on MedicineInformations ", err);
+                response.say("Perdona, puedes repetir por favor?")
+                response.shouldEndSession(false);
             });
     });
 

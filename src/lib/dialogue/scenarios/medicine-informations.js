@@ -1,5 +1,6 @@
 const medicineService = require('../../database/medicinedata');
 const states = require('../dialogue-tree').trees;
+const utils = require('../../../Utils').Utils;
 
 const slotToDbColumnMap = {
     forma: 'shape',
@@ -10,24 +11,27 @@ const slotToDbColumnMap = {
 const medicineInfoIntent = new states.State({
 
     main: async function ([slots]) {
+
         return new Promise(async (resolve, reject) => {
-            let info = slots.medicineInformation.value;
+            let info = slots.medicineInformation.value.replace(' ', '_');
             if (!Object.keys(slotToDbColumnMap).includes(info)) {
-                reject();
+                reject(`${info} is not into the mapping object`);
             }
             // console.log("RAW INFO", info);
-
-
+            
+            
             info = slotToDbColumnMap[info.replace(' ', '_')];
-
-            let name = slots.medicineBrandName.value;
+            
+            // let name = slots.medicineBrandName.value;
+            let name = `${slots.medicineBrandName.value} ${slots.intensity.value || ''} ${slots.secondIntensity.value || ''}`.trim();
+            utils.log("Full name is ", name);
             // If there is the "medicineInformation" slot, then replace the whitespaces with underscores,
             // otherwise take the side effects
             // let formattedInfo = info !== undefined ? info.replace(' ', '_') : 'efectos_secundarios';
+            let medicineResult = await medicineService.getMedicineByFormattedName(name);
+            medicineResult = medicineResult.slice(0, 3);
+            utils.log("List of medicines", medicineResult);
             // The results number can be greater than 1, so let's check
-            // console.log("INFO: ", info);
-            let medicineResult = await medicineService.getMedicineByCommercialName(name);
-            // console.log("Got medicine result", medicineResult);
             if (medicineResult.length > 1) {
                 // try {
                 medicineResult = medicineResult.map(x => x[info]);
@@ -41,15 +45,18 @@ const medicineInfoIntent = new states.State({
 
                 // console.log("Before resolve. L.O.M", listOfMedicines);
                 let out = "Tengo mas de 1 medicamentos con ese nombre. " + listOfMedicines;
-                // console.log(out);
+                
+
+                /**
+                 * Ask if the user wanted the first medicine.
+                 * If yes, say the side effects,
+                 * if not, say the list of medicines.
+                 */
+
 
                 resolve({
                     speak: out
                 });
-                // } catch (err) {
-                // console.log("ERROR", err);
-                // reject(err);
-                // }
 
             } else if (medicineResult.length === 1) {
                 // console.log("FOUND ONE!", medicineResult);

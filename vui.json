@@ -197,9 +197,20 @@
                         {
                             "name": "medicineInformation",
                             "type": "MEDICINE_INFORMATION"
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "secondIntensity",
+                            "type": "AMAZON.NUMBER"
                         }
                     ],
                     "samples": [
+                        "Qué {medicineInformation} tiene {medicineBrandName} {intensity} virgola {secondIntensity}",
+                        "Qué {medicineInformation} tiene {medicineBrandName} {intensity} comma {secondIntensity}",
+                        "Qué {medicineInformation} tiene {medicineBrandName} {intensity} barra {secondIntensity}",
                         "Qué {medicineInformation} tiene {medicineBrandName} "
                     ]
                 },
@@ -589,6 +600,20 @@
                         {
                             "name": "medicineInformation",
                             "type": "MEDICINE_INFORMATION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "secondIntensity",
+                            "type": "AMAZON.NUMBER",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
