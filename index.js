@@ -177,7 +177,7 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        dialogue.saidYes();
+        dialogue.saidYes(request, response);
         // response.say("yes intent");
         response.shouldEndSession(false);
     });
