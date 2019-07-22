@@ -47,7 +47,7 @@ function buildTreatment(user, medicine, frequency, momentOfDay) {
         }) !== undefined;
 
         // If false + 0, if true + 1
-        medicineFound += isAlreadyThere;
+        medicinesFound += isAlreadyThere;
 
         if (!isAlreadyThere) {
             medicines.push(medicine._id);
