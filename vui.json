@@ -282,6 +282,12 @@
                         }
                     ],
                     "samples": [
+                        "{medicineName}  {firstIntensity} punto {secondIntensity}",
+                        "{medicineName}  {firstIntensity} punto {secondIntensity} miligramos",
+                        "{medicineName}  {firstIntensity} comma {secondIntensity} miligramos",
+                        "{medicineName}  {firstIntensity} con {secondIntensity} miligramos",
+                        "{medicineName}  {firstIntensity} virgola {secondIntensity} miligramos",
+                        "{medicineName}  {firstIntensity} virgola {secondIntensity}",
                         "{medicineName}  {firstIntensity} con {secondIntensity}",
                         "{medicineName}  {firstIntensity} comma {secondIntensity}",
                         "{medicineName}  {firstIntensity} ",
@@ -522,29 +528,6 @@
                                 "synonyms": [
                                     "todos los dias"
                                 ]
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "Pokedex",
-                    "values": [
-                        {
-                            "id": "1",
-                            "name": {
-                                "value": "Eevee"
-                            }
-                        },
-                        {
-                            "id": "2",
-                            "name": {
-                                "value": "Pikachu"
-                            }
-                        },
-                        {
-                            "id": "3",
-                            "name": {
-                                "value": "Charizar"
                             }
                         }
                     ]
