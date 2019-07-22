@@ -525,6 +525,29 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "Pokedex",
+                    "values": [
+                        {
+                            "id": "1",
+                            "name": {
+                                "value": "Eevee"
+                            }
+                        },
+                        {
+                            "id": "2",
+                            "name": {
+                                "value": "Pikachu"
+                            }
+                        },
+                        {
+                            "id": "3",
+                            "name": {
+                                "value": "Charizar"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -758,6 +781,15 @@
                     {
                         "type": "PlainText",
                         "value": "En cuale momento del dia?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.15174113976.427378371265",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Que Pokemon quieres ?"
                     }
                 ]
             }
