@@ -84,6 +84,13 @@ const treatmentInsertion = new State({
         let first_intensity = slots.intensity.value || '';
         let second_intensity = slots.second_intensity.value || '';
 
+        // Quick workaround for the dot (.) problem
+        let parsedFirstIntensity = first_intensity.split('.');
+        if (parsedFirstIntensity.length > 1 && second_intensity === '') {
+            first_intensity = parsedFirstIntensity[0];
+            second_intensity = parsedFirstIntensity[1];
+        }
+
         let full_medicine_name = `${medicineName} ${first_intensity} ${second_intensity}`.trim();
 
         return getMedicine(full_medicine_name)
