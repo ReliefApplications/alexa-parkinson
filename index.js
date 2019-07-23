@@ -141,9 +141,16 @@ exports.handler = function (alexaApp) {
             .then(result => {
                 utils.log("GOT", result);
                 let formattedMedicines = result[0].medicines.map(x => x.product).join(',');
-                if ( formattedMedicines.length === 0) response.say('No debe tomar medication.');
+                if (formattedMedicines.length === 0) response.say('No debe tomar medication.');
                 else response.say(formattedMedicines);
                 response.shouldEndSession(false);
+            });
+    });
+
+    alexaApp.intent('Help', function (request, response) {
+        return dialogue.navigateTo('Help')
+            .then(message => {
+                response.say(message);
             });
     });
 

@@ -23,6 +23,10 @@
                     "name": "MedicationCalendar",
                     "slots": [
                         {
+                            "name": "medicine",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
+                        },
+                        {
                             "name": "day",
                             "type": "DAYOFWEEK"
                         },
@@ -39,15 +43,16 @@
                         }
                     ],
                     "samples": [
-                        "que debo tomar {day} por la {time} ",
-                        "que debo tomar {day} al {time}",
-                        "que debo tomar {day}",
-                        "que tomo {day} por la {time}",
-                        "que tomo {day} al {time}",
-                        "que tomo {day}",
-                        "que tengo que tomar {day} por la {time}",
-                        "que tengo que tomar {day} al {time}",
-                        "que tengo que tomar {day} "
+                        "Qué medicamentos tengo que tomar hoy",
+                        "que {medicine} debo tomar {day} por la {time} ",
+                        "que {medicine} debo tomar {day} al {time}",
+                        "que {medicine} debo tomar {day}",
+                        "que {medicine} tomo {day} por la {time}",
+                        "que {medicine} tomo {day} al {time}",
+                        "que {medicine} tomo {day}",
+                        "que {medicine} tengo que tomar {day} por la {time}",
+                        "que {medicine} tengo que tomar {day} al {time}",
+                        "que {medicine} tengo que tomar {day} "
                     ]
                 },
                 {
@@ -66,6 +71,7 @@
                     "name": "Call",
                     "slots": [],
                     "samples": [
+                        "Llamar a la Asociación",
                         "Llamar"
                     ]
                 },
@@ -117,12 +123,7 @@
                 },
                 {
                     "name": "AMAZON.YesIntent",
-                    "samples": [
-                        "okay",
-                        "ok",
-                        "si",
-                        "sì"
-                    ]
+                    "samples": []
                 },
                 {
                     "name": "AMAZON.NoIntent",
@@ -192,30 +193,16 @@
                     "name": "MedicineInformations",
                     "slots": [
                         {
-                            "name": "medicine",
-                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
-                        },
-                        {
                             "name": "medicineBrandName",
                             "type": "MEDICINE_COMMERCIAL_NAME"
                         },
                         {
                             "name": "medicineInformation",
                             "type": "MEDICINE_INFORMATION"
-                        },
-                        {
-                            "name": "intensity",
-                            "type": "AMAZON.NUMBER"
-                        },
-                        {
-                            "name": "secondIntensity",
-                            "type": "AMAZON.NUMBER"
                         }
                     ],
                     "samples": [
-                        "Qué {medicineInformation} tiene {medicineBrandName} {intensity} virgola {secondIntensity}",
-                        "Qué {medicineInformation} tiene {medicineBrandName} {intensity} comma {secondIntensity}",
-                        "Qué {medicineInformation} tiene {medicineBrandName} {intensity} barra {secondIntensity}",
+                        "{medicineInformation} del {medicineBrandName}",
                         "Qué {medicineInformation} tiene {medicineBrandName} "
                     ]
                 },
@@ -254,6 +241,7 @@
                         }
                     ],
                     "samples": [
+                        "tengo que añadir {medicineName}",
                         "tiene que tomar {medicineName} {intensity} barra {second_intensity}",
                         "tengo que tomar {medicineName}",
                         "tiene que tomar {medicineName}",
@@ -284,14 +272,20 @@
                     "samples": [
                         "{medicineName}  {firstIntensity} punto {secondIntensity}",
                         "{medicineName}  {firstIntensity} punto {secondIntensity} miligramos",
+                        "{medicineName}  {firstIntensity} miligramos ",
                         "{medicineName}  {firstIntensity} comma {secondIntensity} miligramos",
                         "{medicineName}  {firstIntensity} con {secondIntensity} miligramos",
-                        "{medicineName}  {firstIntensity} virgola {secondIntensity} miligramos",
-                        "{medicineName}  {firstIntensity} virgola {secondIntensity}",
                         "{medicineName}  {firstIntensity} con {secondIntensity}",
                         "{medicineName}  {firstIntensity} comma {secondIntensity}",
                         "{medicineName}  {firstIntensity} ",
                         "{medicineName}  {firstIntensity} barra {secondIntensity}"
+                    ]
+                },
+                {
+                    "name": "Help",
+                    "slots": [],
+                    "samples": [
+                        "Que puedo hacer"
                     ]
                 }
             ],
@@ -335,43 +329,36 @@
                             }
                         },
                         {
-                            "id": "sunday",
                             "name": {
                                 "value": "domingo"
                             }
                         },
                         {
-                            "id": "saturday",
                             "name": {
                                 "value": "sabado"
                             }
                         },
                         {
-                            "id": "friday",
                             "name": {
                                 "value": "viernes"
                             }
                         },
                         {
-                            "id": "thursday",
                             "name": {
                                 "value": "jueves"
                             }
                         },
                         {
-                            "id": "wednesday",
                             "name": {
                                 "value": "miercoles"
                             }
                         },
                         {
-                            "id": "tuesday",
                             "name": {
                                 "value": "martes"
                             }
                         },
                         {
-                            "id": "monday",
                             "name": {
                                 "value": "lunes"
                             }
@@ -431,6 +418,11 @@
                         {
                             "name": {
                                 "value": "carbidopa Levodopa generica"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "carbidopa Levodopa genérica"
                             }
                         },
                         {
@@ -542,6 +534,13 @@
                     "prompts": {},
                     "slots": [
                         {
+                            "name": "medicine",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
                             "name": "day",
                             "type": "DAYOFWEEK",
                             "confirmationRequired": false,
@@ -595,13 +594,6 @@
                     "prompts": {},
                     "slots": [
                         {
-                            "name": "medicine",
-                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
                             "name": "medicineBrandName",
                             "type": "MEDICINE_COMMERCIAL_NAME",
                             "confirmationRequired": false,
@@ -611,20 +603,6 @@
                         {
                             "name": "medicineInformation",
                             "type": "MEDICINE_INFORMATION",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "intensity",
-                            "type": "AMAZON.NUMBER",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "secondIntensity",
-                            "type": "AMAZON.NUMBER",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -764,15 +742,6 @@
                     {
                         "type": "PlainText",
                         "value": "En cuale momento del dia?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.Slot.15174113976.427378371265",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Que Pokemon quieres ?"
                     }
                 ]
             }
