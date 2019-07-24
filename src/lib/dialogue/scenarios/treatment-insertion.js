@@ -78,11 +78,21 @@ function getMedicine(searchName) {
 const treatmentInsertion = new State({
     main: ([slots, user]) => {
 
+        // Delete any possible 'yes' or 'no' said after a previous insertion
+        temporaryMemory.removeTemporaryData()
+
         let medicineName = slots.medicineName.value;
         let frequency = slots.frequency.value;
         let momentOfDay = slots.momentOfDay.value;
         let first_intensity = slots.intensity.value || '';
         let second_intensity = slots.second_intensity.value || '';
+
+        // Quick workaround for the dot (.) problem
+        let parsedFirstIntensity = first_intensity.split('.');
+        if (parsedFirstIntensity.length > 1 && second_intensity === '') {
+            first_intensity = parsedFirstIntensity[0];
+            second_intensity = parsedFirstIntensity[1];
+        }
 
         let full_medicine_name = `${medicineName} ${first_intensity} ${second_intensity}`.trim();
 
@@ -101,6 +111,31 @@ const treatmentInsertion = new State({
 
             });
 
+    },
+
+    yes: ([request, response]) => {
+        let alreadySaidNo = temporaryMemory.getTemporaryData("alreadySaidNo");
+        if (alreadySaidNo) {
+            response.say("¿Quieres información sobre tu medicación o llamar a la asociación?");
+            response.shouldEndSession(false);
+        } else {
+            response.say("Di el nombre del medicamento a añadir al calendario");
+            response.shouldEndSession(false);
+        }
+    },
+
+    no: ([request, response]) => {
+        let alreadySaidNo = temporaryMemory.getTemporaryData("alreadySaidNo");
+        if (alreadySaidNo) {
+            temporaryMemory.removeTemporaryData("alreadySaidNo");
+            response.say("Muchas gracias por utilizar la skill Parkinson Alexa, hasta pronto");
+            response.shouldEndSession(true);
+        } else {
+            // TODO implement multi user
+            temporaryMemory.saveTemporaryData("alreadySaidNo", true);
+            response.say("¿Deseas hacer algo más?");
+            response.shouldEndSession(false);
+        }
     }
 
 })
@@ -145,6 +180,31 @@ const treatmentInsertion = new State({
                 temporaryMemory.removeTemporaryData(updatedUser._id);
                 userService.updateUser(updatedUser);
                 return Promise.resolve(updatedUser);
+            },
+
+            yes: ([request, response]) => {
+                let alreadySaidNo = temporaryMemory.getTemporaryData("alreadySaidNo");
+                if (alreadySaidNo) {
+                    response.say("¿Quieres información sobre tu medicación o llamar a la asociación?");
+                    response.shouldEndSession(false);
+                } else {
+                    response.say("Di el nombre del medicamento a añadir al calendario");
+                    response.shouldEndSession(false);
+                }
+            },
+
+            no: ([request, response]) => {
+                let alreadySaidNo = temporaryMemory.getTemporaryData("alreadySaidNo");
+                if (alreadySaidNo) {
+                    temporaryMemory.removeTemporaryData("alreadySaidNo");
+                    response.say("Muchas gracias por utilizar la skill Parkinson Alexa, hasta pronto");
+                    response.shouldEndSession(true);
+                } else {
+                    // TODO implement multi user
+                    temporaryMemory.saveTemporaryData("alreadySaidNo", true);
+                    response.say("¿Deseas hacer algo más?");
+                    response.shouldEndSession(false);
+                }
             }
         })
     );

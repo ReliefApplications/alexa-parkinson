@@ -25,6 +25,7 @@ const medicationLeft = require('./scenarios/medication-left').medicationsLeftInt
 const registration = require('./scenarios/registration').registrationIntent;
 const medicineInformation = require('./scenarios/medicine-informations').medicineInfoIntent;
 const treatmentInsertion = require('./scenarios/treatment-insertion').treatmentInsertion;
+const help = require('./scenarios/help');
 
 // Utility variables
 const texts = Constants.TEXTS;
@@ -79,4 +80,6 @@ dialogue.addIntentAction('MedicationLeft', medicationLeft);
 dialogue.addIntentAction('registration', registration);
 dialogue.addIntentAction('MedicineInformations', medicineInformation);
 dialogue.addIntentAction('CompleteTreatmentInsertion', treatmentInsertion);
+dialogue.addIntentAction('Help', help);
+
 module.exports.dialogue = dialogue;

@@ -45,7 +45,7 @@ exports.handler = function (alexaApp) {
     };
 
     alexaApp.error = function (exception, request, response) {
-        response.say('Some error');
+        response.say('¿No te entendi, puedes repetir por favor?');
         utils.log(exception);
         // throw exception;
         response.shouldEndSession(false);
@@ -87,6 +87,11 @@ exports.handler = function (alexaApp) {
                 console.log(output);
                 response.say(output.speak);
                 response.shouldEndSession(false);
+            })
+            .catch(err => {
+                console.log("Error on MedicineInformations ", err);
+                response.say("Perdona, puedes repetir por favor?")
+                response.shouldEndSession(false);
             });
     });
 
@@ -100,7 +105,7 @@ exports.handler = function (alexaApp) {
                     utils.log("INTO FINAL FOR EACH");
                     utils.log(updatedUser.calendar[x]);
                 });
-                response.say("Vale");
+                response.say("Medicamento añadido a tu calendario ¿Quieres añadir otro?");
                 return updatedUser;
             })
             .then((updatedUser) => {
@@ -119,14 +124,16 @@ exports.handler = function (alexaApp) {
         return dialogue.navigateTo('medicine-choose-confirmation', request.slots, request.currentUser)
             .then((user) => {
                 utils.log("Got", user);
-                response.say("Vale");
+                response.say(constants.insertionText);
                 utils.log("On monday", user.calendar.monday);
                 utils.log("Timing", user.calendar.monday[0].moments);
+                response.say("Medicamento añadido a tu calendario ¿Quieres añadir otro?");
 
                 response.shouldEndSession(false);
             })
             .catch(err => {
-                response.say(constants.TEXTS.errors[err.error]);
+                response.say("Medicamento añadido a tu calendario ¿Quieres añadir otro?");
+                // response.say(constants.TEXTS.errors[err.error]);
                 response.shouldEndSession(false);
             });
     });
@@ -136,8 +143,27 @@ exports.handler = function (alexaApp) {
             .then(result => {
                 utils.log("GOT", result);
                 let formattedMedicines = result[0].medicines.map(x => x.product).join(',');
-                response.say(formattedMedicines);
+                if (formattedMedicines.length === 0) response.say('No debe tomar medication.');
+                else response.say(formattedMedicines);
                 response.shouldEndSession(false);
+            });
+    });
+
+    alexaApp.intent('Help', function (request, response) {
+        return dialogue.navigateTo('Help')
+            .then(([speech, title, text]) => {
+                
+                response.say(speech);
+
+                if (utils.supportsDisplay(request)) {
+                    utils.log("Display is supported");
+                    response.directive(utils.renderBodyTemplate(
+                        constants.IMAGES.defaultImage,
+                        title,
+                        text
+                    ));
+                }
+                response.shouldEndSession(false)
             });
     });
 
@@ -172,14 +198,16 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        dialogue.saidYes();
+        dialogue.saidYes(request, response);
+        console.log("YES");
         // response.say("yes intent");
         response.shouldEndSession(false);
     });
 
     alexaApp.intent('AMAZON.NoIntent', function (request, response) {
-        dialogue.saidNo();
+        dialogue.saidNo(request, response);
         response.shouldEndSession(false);
+
     });
 
     // Unhandled utterances
