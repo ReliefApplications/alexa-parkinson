@@ -30,14 +30,13 @@ module.exports = {
      * @param {string} askId - ASK Id of the user
      * @param {string} name - The name provided by the 'Registration' intent
      */
-    addNewUser: async function (askId, name) {
+    addNewUser: async function (askId) {
         const connection = await generalDatabase.openDatabase();
 
         let result = await connection.db(configuration.database.dbname)
             .collection(configuration.database.schemas.user).insertOne(
                 {
                     _id: askId,
-                    name: name,
                     calendar: {
                         monday: {
                             // noche: [] // medicines array
