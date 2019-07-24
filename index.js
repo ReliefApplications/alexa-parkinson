@@ -76,7 +76,6 @@ exports.handler = function (alexaApp) {
     alexaApp.intent('MedicineInformations', function (request, response) {
         return dialogue.navigateTo('MedicineInformations', request.slots)
             .then(output => {
-
                 console.log(output);
                 response.say(output.speak);
                 response.shouldEndSession(false);
@@ -108,7 +107,10 @@ exports.handler = function (alexaApp) {
             .catch((medicines) => {
                 utils.log("medicines in catch", medicines);
                 response.say("Tengo mas de un medicamento con este nombre. Puede ser mas specifico? Por ejemplo");
+                
+                // Take just the first 2, don't make ouput too long
                 response.say(medicines.slice(0, 2).map(x => x.product).join(', '));
+                
                 return response.shouldEndSession(false);
             });
     });
@@ -138,6 +140,7 @@ exports.handler = function (alexaApp) {
                 let formattedMedicines = result[0].medicines.map(x => x.product).join(',');
                 if (formattedMedicines.length === 0) response.say('No debe tomar medication.');
                 else response.say(formattedMedicines);
+                response.say("¿Te puedo ayudar de alguna otra manera?");
                 response.shouldEndSession(false);
             });
     });
