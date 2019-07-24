@@ -77,7 +77,6 @@ dialogue.addIntentAction('myMedication', myMedication);
 dialogue.addIntentAction('Call', call);
 dialogue.addIntentAction('MedicationCalendar', medicationCalendar);
 dialogue.addIntentAction('MedicationLeft', medicationLeft);
-dialogue.addIntentAction('registration', registration);
 dialogue.addIntentAction('MedicineInformations', medicineInformation);
 dialogue.addIntentAction('CompleteTreatmentInsertion', treatmentInsertion);
 dialogue.addIntentAction('Help', help);

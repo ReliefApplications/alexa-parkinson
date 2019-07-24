@@ -53,21 +53,14 @@ exports.handler = function (alexaApp) {
 
     alexaApp.launch(function (request, response) {
         if (!request.currentUser) {
-            response.say("Es esta la primera vez que nos encontramos. ¿Como te llamas?");
-            response.shouldEndSession(false);
+            let userId = request.context.System.user.userId;
+            database.addNewUser(userId)
+                .then(value => {
+                    response.shouldEndSession(false);
+                });
         } else {
             return CoreHandler.LaunchRequest(request, response);
         }
-    });
-
-    alexaApp.intent('Registration', function (request, response) {
-        let output = dialogue.navigateTo('registration', request.slots, getUserIdFromRequest(request));
-        if (output === undefined) {
-            response.say("Por favor, dime tu nombre");
-        } else {
-            return response.say("Encantada, " + output.name);
-        }
-        response.shouldEndSession(false);
     });
 
     alexaApp.intent('MyMedication', function (request, response) {
@@ -152,7 +145,7 @@ exports.handler = function (alexaApp) {
     alexaApp.intent('Help', function (request, response) {
         return dialogue.navigateTo('Help')
             .then(([speech, title, text]) => {
-                
+
                 response.say(speech);
 
                 if (utils.supportsDisplay(request)) {
