@@ -3,7 +3,7 @@ module.exports = {
     errors: {
       no_medicine_found: "No tengo medicina con este nombre",
       too_many_medicines: "Tengo mas de un medicamento con este nombre.",
-      medicine_already_here: "Vale", // Does the user should be aware that the treatment is already there?
+      medicine_already_here: "Medicamento añadido a tu calendario ¿Quieres añadir otro?"
     },
     //--- WELCOME ---
     welcomeTitle: "Bienvenido a la skill de Asistencia Parkinson.",
@@ -20,8 +20,13 @@ module.exports = {
     callText: "Informacion sobre la llamada. Quieres llamar?", // Do you want to call the association?
     callReprompt: "llamada repete", // Do you want to call the association?
 
+    //--- CompleteMedicineInserton ---
+    insertionText: "Medicamento añadido a tu calendario ¿Quieres añadir otro?",
+
     //--- Help ---
-    helpText: "Puedes crear un calendario de medicación. Di por ejemplo “Nueva medicación”. Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?”. También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemed”. Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.",
+    helpText: "Puedes crear un calendario de medicación. Di por ejemplo “Quiero añadir sinemet”. Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?”. También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemed”. Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.",
+    helpScreenTitle: "Que puede hacer",
+    helpScreenText: "\"Quiero añadir sinemet cada dia\" o \"¿Que tengo que tomar hoy?\"",
 
     //--- Unhandled DEFAULT ---
     unhandledDefaultTitle:"Solicitud desconocida.",

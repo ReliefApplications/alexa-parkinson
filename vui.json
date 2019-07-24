@@ -43,6 +43,7 @@
                         }
                     ],
                     "samples": [
+                        "Qué medicamentos tengo que tomar hoy por {time}",
                         "Qué medicamentos tengo que tomar hoy",
                         "que {medicine} debo tomar {day} por la {time} ",
                         "que {medicine} debo tomar {day} al {time}",
@@ -71,6 +72,7 @@
                     "name": "Call",
                     "slots": [],
                     "samples": [
+                        "Sí quiero llamar la asociación",
                         "Llamar a la Asociación",
                         "Llamar"
                     ]
@@ -79,6 +81,7 @@
                     "name": "MyMedication",
                     "slots": [],
                     "samples": [
+                        "información sobre mi medicación",
                         "medicacion",
                         "mi medicacion",
                         "Medicación",
@@ -123,7 +126,11 @@
                 },
                 {
                     "name": "AMAZON.YesIntent",
-                    "samples": []
+                    "samples": [
+                        "sí",
+                        "sì",
+                        "si"
+                    ]
                 },
                 {
                     "name": "AMAZON.NoIntent",
@@ -202,6 +209,8 @@
                         }
                     ],
                     "samples": [
+                        "{medicineInformation} de {medicineBrandName}",
+                        "Quiero saber los {medicineInformation} de {medicineBrandName}",
                         "{medicineInformation} del {medicineBrandName}",
                         "Qué {medicineInformation} tiene {medicineBrandName} "
                     ]
@@ -229,7 +238,16 @@
                         },
                         {
                             "name": "momentOfDay",
-                            "type": "TIMEOFDAY"
+                            "type": "TIMEOFDAY",
+                            "samples": [
+                                "en el {momentOfDay}",
+                                "en la {momentOfDay}",
+                                "el {momentOfDay}",
+                                "la {momentOfDay}",
+                                "por la {momentOfDay}",
+                                "por el {momentOfDay}",
+                                "{momentOfDay}"
+                            ]
                         },
                         {
                             "name": "intensity",
@@ -241,6 +259,12 @@
                         }
                     ],
                     "samples": [
+                        "sí me toca tomar {medicineName}  {frequency}  {momentOfDay}",
+                        "sí quiero incluir {medicineName} {frequency} {momentOfDay}",
+                        "sí quero añadir {medicineName} {frequency} {momentOfDay}",
+                        "me toca tomar {medicineName}  {frequency}  {momentOfDay}",
+                        "Quiero incluir {medicineName} {frequency} {momentOfDay}",
+                        "quiero añadir {medicineName}",
                         "tengo que añadir {medicineName}",
                         "tiene que tomar {medicineName} {intensity} barra {second_intensity}",
                         "tengo que tomar {medicineName}",
@@ -285,6 +309,9 @@
                     "name": "Help",
                     "slots": [],
                     "samples": [
+                        "ayúdame",
+                        "ayùdame",
+                        "ayudame",
                         "Que puedo hacer"
                     ]
                 }
