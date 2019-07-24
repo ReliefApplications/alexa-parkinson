@@ -43,8 +43,8 @@
                         }
                     ],
                     "samples": [
-                        "Qué medicamentos tengo que tomar hoy por {time}",
-                        "Qué medicamentos tengo que tomar hoy",
+                        "Qué medicamentos tengo que tomar {day} por {time}",
+                        "Qué medicamentos tengo que tomar {day}",
                         "que {medicine} debo tomar {day} por la {time} ",
                         "que {medicine} debo tomar {day} al {time}",
                         "que {medicine} debo tomar {day}",
