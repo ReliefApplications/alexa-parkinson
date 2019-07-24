@@ -177,26 +177,6 @@
                     "samples": []
                 },
                 {
-                    "name": "Registration",
-                    "slots": [
-                        {
-                            "name": "name",
-                            "type": "AMAZON.FirstName",
-                            "samples": [
-                                "{name}",
-                                "Mi nombre es {name}",
-                                "Me llamo {name}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "{name}",
-                        "Yo soy {name}",
-                        "Mi nombre es {name}",
-                        "Me llamo {name}"
-                    ]
-                },
-                {
                     "name": "MedicineInformations",
                     "slots": [
                         {
@@ -596,22 +576,6 @@
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
-                        }
-                    ]
-                },
-                {
-                    "name": "Registration",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "name",
-                            "type": "AMAZON.FirstName",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.1153800461089.793568973432"
-                            }
                         }
                     ]
                 },
