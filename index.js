@@ -45,7 +45,7 @@ exports.handler = function (alexaApp) {
     };
 
     alexaApp.error = function (exception, request, response) {
-        response.say('Some error');
+        response.say('¿No te entendi, puedes repetir por favor?');
         utils.log(exception);
         // throw exception;
         response.shouldEndSession(false);
