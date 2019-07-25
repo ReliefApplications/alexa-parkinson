@@ -1,5 +1,5 @@
 const State = require('../dialogue-tree').trees.State;
-const constants = require('../../../Constants').TEXTS;
+const constants = require('../../../Constants').texts;
 
 
 module.exports = new State({
