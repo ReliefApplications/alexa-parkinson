@@ -154,7 +154,7 @@ exports.handler = function (alexaApp) {
                 if (utils.supportsDisplay(request)) {
                     utils.log("Display is supported");
                     response.directive(utils.renderBodyTemplate(
-                        constants.IMAGES.defaultImage,
+                        constants.images.defaultImage,
                         title,
                         text
                     ));
