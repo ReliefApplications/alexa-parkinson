@@ -32,13 +32,14 @@ const texts = Constants.texts;
 const images = Constants.images;
 
 
+
 const State = tree.State;
 
 const myMedication = new State({
     // What to do after "Mi medicaciones"
     main: ([request, response]) => {
 
-        const myMedicationTexts = getText(Constants.texts.mymedication);
+        const myMedicationTexts = Utils.getText(Constants.texts.mymedication);
 
         response.say(myMedicationTexts.text);
         response.reprompt(myMedicationTexts.reprompt);
