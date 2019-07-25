@@ -10,9 +10,9 @@ exports.Utils = {
 
     getText: function(object) {
         return {
-            text: object.text.length === 0 ? '' : object.text[ Math.random()*objext.text.length ],
-            title: object.title.length === 0 ? '' : object.title[ Math.random()*objext.title.length ],
-            reprompt: object.reprompt.length === 0 ? '' : object.reprompt[ Math.random()*objext.reprompt.length ]
+            text: object.text.length === 0 ? '' : object.text[ Math.random()*object.text.length ],
+            title: object.title.length === 0 ? '' : object.title[ Math.random()*object.title.length ],
+            reprompt: object.reprompt.length === 0 ? '' : object.reprompt[ Math.random()*object.reprompt.length ]
         }
     },
 
