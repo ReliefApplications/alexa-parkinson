@@ -8,11 +8,18 @@ const constants = require('./Constants');
 
 exports.Utils = {
 
+    randomInt: function randomInt(max) {
+        return Math.floor( Math.random() * max );
+    },
+
     getText: function(object) {
+        console.table(object);
+        let i = Math.random()*object.text.length;
+        console.log(i);
         return {
-            text: object.text.length === 0 ? '' : object.text[ Math.random()*object.text.length ],
-            title: object.title.length === 0 ? '' : object.title[ Math.random()*object.title.length ],
-            reprompt: object.reprompt.length === 0 ? '' : object.reprompt[ Math.random()*object.reprompt.length ]
+            text: object.text.length === 0 ? '' : object.text[ this.randomInt(object.text.length) ],
+            title: object.title.length === 0 ? '' : object.title[ this.randomInt(object.title.length) ],
+            reprompt: object.reprompt.length === 0 ? '' : object.reprompt[ this.randomInt(object.reprompt.length) ]
         }
     },
 
