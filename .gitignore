@@ -49,3 +49,5 @@ data
 
 # Configuration
 src/configurations.json
+alexa-data.yml
+key
