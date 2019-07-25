@@ -28,8 +28,8 @@ const treatmentInsertion = require('./scenarios/treatment-insertion').treatmentI
 const help = require('./scenarios/help');
 
 // Utility variables
-const texts = Constants.TEXTS;
-const images = Constants.IMAGES;
+const texts = Constants.texts;
+const images = Constants.images;
 
 
 const State = tree.State;
@@ -37,14 +37,17 @@ const State = tree.State;
 const myMedication = new State({
     // What to do after "Mi medicaciones"
     main: ([request, response]) => {
-        response.say(texts.myMedicationText);
-        response.reprompt(texts.myMedicationReprompt);
+
+        const myMedicationTexts = getText(Constants.texts.mymedication);
+
+        response.say(myMedicationTexts.text);
+        response.reprompt(myMedicationTexts.reprompt);
         
         if (Utils.supportsDisplay(request)) {
             response.directive(Utils.renderBodyTemplate(
                 images.defaultImage,
-                texts.myMedicationTitle,
-                texts.myMedicationText)
+                myMedicationTexts.title,
+                myMedicationTexts.text)
                 );
             }
             response.shouldEndSession(false);
