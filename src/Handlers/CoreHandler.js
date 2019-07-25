@@ -8,10 +8,10 @@ exports.CoreHandler = {
 
             Utils.setDialogState(request, 'launch');
 
-            response.say(Constants.TEXTS.welcomeTitle + ' ' + Constants.TEXTS.welcomeText);
-            response.reprompt(Constants.TEXTS.welcomeReprompt)
+            response.say(Constants.texts.welcomeTitle + ' ' + Constants.texts.welcomeText);
+            response.reprompt(Constants.texts.welcomeReprompt)
             if (Utils.supportsDisplay(request)) {
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.welcomeImage, Constants.TEXTS.welcomeTitle, Constants.TEXTS.welcomeText));
+                response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Constants.texts.welcomeTitle, Constants.texts.welcomeText));
             }
             response.shouldEndSession(false);
             
@@ -20,10 +20,10 @@ exports.CoreHandler = {
         // This is triggered when the user says: 'Mi medicación' or 'Medicación'
         function (request, response) {
             Utils.setDialogState(request, 'myMedication');
-            response.say(Constants.TEXTS.myMedicationText);
-            response.reprompt(Constants.TEXTS.myMedicationReprompt);
+            response.say(Constants.texts.myMedicationText);
+            response.reprompt(Constants.texts.myMedicationReprompt);
             if (Utils.supportsDisplay(request)) {
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.myMedicationTitle, Constants.TEXTS.myMedicationText));
+                response.directive(Utils.renderBodyTemplate(Constants.images.defaultImage, Constants.texts.myMedicationTitle, Constants.texts.myMedicationText));
             }
             response.shouldEndSession(false);
             return response;
@@ -32,10 +32,10 @@ exports.CoreHandler = {
         // This is triggered when the user says: 'Llamar'
         function (request, response) {
             Utils.setDialogState(request, 'call');
-            response.say(Constants.TEXTS.callText);
-            response.reprompt(Constants.TEXTS.callReprompt);
+            response.say(Constants.texts.callText);
+            response.reprompt(Constants.texts.callReprompt);
             if (Utils.supportsDisplay(request)) {
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.callTitle, Constants.TEXTS.callText));
+                response.directive(Utils.renderBodyTemplate(Constants.images.defaultImage, Constants.texts.callTitle, Constants.texts.callText));
             }
             response.shouldEndSession(false);
             return response;
@@ -107,9 +107,9 @@ exports.CoreHandler = {
                         response.reprompt(result);
                         if (Utils.supportsDisplay(request)) {
                             if (itemsToDisplay.length > 0) {
-                                response.directive(Utils.renderListTemplate(Constants.IMAGES.defaultImage, 'Medicamentos que tomar', itemsToDisplay));
+                                response.directive(Utils.renderListTemplate(Constants.images.defaultImage, 'Medicamentos que tomar', itemsToDisplay));
                             } else {
-                                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Medicamentos que tomar', result));
+                                response.directive(Utils.renderBodyTemplate(Constants.images.defaultImage, 'Medicamentos que tomar', result));
                             }
                         }
                         response.shouldEndSession(false);
@@ -121,7 +121,7 @@ exports.CoreHandler = {
                         response.say(speechOutput);
                         response.reprompt(speechOutput);
                         if (Utils.supportsDisplay(request)) {
-                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Error!', speechOutput));
+                            response.directive(Utils.renderBodyTemplate(Constants.images.defaultImage, 'Error!', speechOutput));
                         }
                         response.shouldEndSession(true);
                     });
@@ -172,9 +172,9 @@ exports.CoreHandler = {
                     response.reprompt(result);
                     if (Utils.supportsDisplay(request)) {
                         if (itemsToDisplay.length > 0) {
-                            response.directive(Utils.renderListTemplate(Constants.IMAGES.defaultImage, 'Medicamentos', itemsToDisplay));
+                            response.directive(Utils.renderListTemplate(Constants.images.defaultImage, 'Medicamentos', itemsToDisplay));
                         } else {
-                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Medicamentos', result));
+                            response.directive(Utils.renderBodyTemplate(Constants.images.defaultImage, 'Medicamentos', result));
                         }
                     }
                     response.shouldEndSession(false);
@@ -185,7 +185,7 @@ exports.CoreHandler = {
                         response.say(speechOutput);
                         response.reprompt(speechOutput);
                         if (Utils.supportsDisplay(request)) {
-                            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, 'Error!', speechOutput));
+                            response.directive(Utils.renderBodyTemplate(Constants.images.defaultImage, 'Error!', speechOutput));
                         }
                         response.shouldEndSession(false);
                     });
@@ -195,83 +195,83 @@ exports.CoreHandler = {
         function (request, response) {
             let session = request.getSession();
             dialogState = session.get('dialogState');
-            let speechOutput = Constants.TEXTS.unhandledDefaultText + ' ';
+            let speechOutput = Constants.texts.unhandledDefaultText + ' ';
             let endSession = false;
 
             switch (dialogState) {
                 //--- lauch ---
                 case "launch":
                     session.set('dialogState', 'launchLoopBack1');
-                    speechOutput += Constants.TEXTS.unhandledLaunchText1;
+                    speechOutput += Constants.texts.unhandledLaunchText1;
                     endSession = false;
                     break;
                 case "launchLoopBack1":
                     session.set('dialogState', 'launchLoopBack2');
-                    speechOutput += Constants.TEXTS.unhandledLaunchText2;
+                    speechOutput += Constants.texts.unhandledLaunchText2;
                     endSession = false;
                     break;
                 case "launchLoopBack2":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 //--- my medication ---
                 case "myMedication":
                     session.set('dialogState', 'myMedicationLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMyMedicationText;
+                    speechOutput += Constants.texts.unhandledMyMedicationText;
                     endSession = false;
                     break;
                 case "myMedicationLoopBack":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 //--- medicationSchedule ---
                 case "medicationSchedule":
                     session.set('dialogState', 'medicationScheduleLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMedicationScheduleText;
+                    speechOutput += Constants.texts.unhandledMedicationScheduleText;
                     endSession = false;
                     break;
                 case "medicationScheduleLoopBack":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 //--- medicationLeft ---
                 case "medicationLeft":
                     session.set('dialogState', 'medicationLeftLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledMedicationLeftText;
+                    speechOutput += Constants.texts.unhandledMedicationLeftText;
                     endSession = false;
                     break;
                 case "medicationLeftLoopBack":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 //--- call ---
                 case "call":
                     session.set('dialogState', 'callLoopBack');
-                    speechOutput += Constants.TEXTS.unhandledCallText;
+                    speechOutput += Constants.texts.unhandledCallText;
                     endSession = false;
                     break;
                 case "callLoopBack":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 default:
-                    speechOutput = Constants.TEXTS.unhandledDefaultText;
+                    speechOutput = Constants.texts.unhandledDefaultText;
                     endSession = false;
             }
             response.say(speechOutput);
             //response.reprompt(Constants.TEXTS.unhandledReprompt);
             if (Utils.supportsDisplay(request)) {
-                response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.unhandledTitle, speechOutput));
+                response.directive(Utils.renderBodyTemplate(Constants.images.defaultImage, Constants.texts.unhandledTitle, speechOutput));
             }
             response.shouldEndSession(endSession);
 

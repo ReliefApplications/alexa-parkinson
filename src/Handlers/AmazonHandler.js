@@ -88,12 +88,12 @@ exports.AmazonHandler = {
                 //--- call ---
                 case "callLoopBack":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 default:
-                    speechOutput = Constants.TEXTS.invalidAnswer;
+                    speechOutput = Constants.texts.invalidAnswer;
                     endSession = false;
             }
             response.say(speechOutput);
@@ -112,38 +112,38 @@ exports.AmazonHandler = {
                 //--- lauch ---
                 case "launchLoopBack1":
                     session.set('dialogState', 'launchLoopBack2');
-                    speechOutput += Constants.TEXTS.unhandledLaunchText2;
+                    speechOutput += Constants.texts.unhandledLaunchText2;
                     endSession = false;
                     break;
                 case "launchLoopBack2":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 //--- medicationSchedule ---
                 case "medicationScheduleLoopBack":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 //--- medicationLeft ---
                 case "medicationLeftLoopBack":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 //--- call ---
                 case "callLoopBack":
                     session.set('dialogState', 'unhandledClose');
-                    speechOutput = Constants.TEXTS.unhandledClose;
+                    speechOutput = Constants.texts.unhandledClose;
                     endSession = true;
                     break;
 
                 default:
-                    speechOutput = Constants.TEXTS.invalidAnwer;
+                    speechOutput = Constants.texts.invalidAnwer;
                     endSession = false;
             }
            response.say(speechOutput);
