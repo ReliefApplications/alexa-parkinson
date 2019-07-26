@@ -14,7 +14,7 @@ const FREQUENCY_TYPES = [
 /**
  * 
  */
-function buildTreatment(user, medicine, frequency, momentOfDay) {
+function buildTreatment(user, medicine, frequency, momentOfDay, quantity) {
 
     // Build the empty calendar if it wasn't already present
     let calendar =
@@ -50,7 +50,7 @@ function buildTreatment(user, medicine, frequency, momentOfDay) {
         medicinesFound += isAlreadyThere;
 
         if (!isAlreadyThere) {
-            medicines.push(medicine._id);
+            medicines.push({medicine: medicine._id, quantity: quantity});
             calendar[day][momentOfDay] = medicines;
         }
     });
@@ -78,6 +78,7 @@ function getMedicine(searchName) {
 const treatmentInsertion = new State({
     main: ([slots, user]) => {
 
+        let quantity = slots.pillNumber.value
         let medicineName = slots.medicineName.value;
         let frequency = slots.frequency.value;
         let momentOfDay = slots.momentOfDay.value;
@@ -92,11 +93,12 @@ const treatmentInsertion = new State({
                     temporaryMemory.saveTemporaryData(user._id, {
                         medicines: medicines,
                         momentOfDay: momentOfDay,
-                        frequency: frequency
+                        frequency: frequency,
+                        quantity: quantity
                     });
                     throw medicines;
                 } else if (medicines.length === 1) {
-                    return buildTreatment(user, medicines[0], frequency, momentOfDay);
+                    return buildTreatment(user, medicines[0], frequency, momentOfDay, quantity);
                 }
 
             });
