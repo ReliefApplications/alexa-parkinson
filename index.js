@@ -78,11 +78,12 @@ exports.handler = function (alexaApp) {
             .then(output => {
                 console.log(output);
                 response.say(output.speak);
+                response.say("¿Puedo ayudarle de otra forma?")
                 response.shouldEndSession(false);
             })
             .catch(err => {
                 console.log("Error on MedicineInformations ", err);
-                response.say("Perdona, puedes repetir por favor?")
+                response.say("Perdona, puede repetir por favor?")
                 response.shouldEndSession(false);
             });
     });
@@ -106,11 +107,10 @@ exports.handler = function (alexaApp) {
             })
             .catch((medicines) => {
                 utils.log("medicines in catch", medicines);
-                response.say("Tengo mas de un medicamento con este nombre. Puede ser mas specifico? Por ejemplo");
-                
                 // Take just the first 2, don't make ouput too long
-                response.say(medicines.slice(0, 2).map(x => x.product).join(', '));
-                
+                let slicedMedicines = medicines.slice(0, 2).map(x => x.product).join(', ');
+
+                response.say(`Tengo mas de un medicamento con este nombre. Puede ser mas specifico? Por ejemplo ${slicedMedicines}`);
                 return response.shouldEndSession(false);
             });
     });
@@ -122,12 +122,12 @@ exports.handler = function (alexaApp) {
                 response.say(constants.insertionText);
                 utils.log("On monday", user.calendar.monday);
                 utils.log("Timing", user.calendar.monday[0].moments);
-                response.say("Medicamento añadido a tu calendario ¿Quieres añadir otro?");
-
+                response.say(utils.getText(constants.texts.medicineinsertion));
                 response.shouldEndSession(false);
             })
             .catch(err => {
-                response.say("Medicamento añadido a tu calendario ¿Quieres añadir otro?");
+                // Thrown when we have no medicine or more than one
+                response.say(utils.getText(constants.texts.medicineinsertion));
                 // response.say(constants.TEXTS.errors[err.error]);
                 response.shouldEndSession(false);
             });
@@ -139,7 +139,9 @@ exports.handler = function (alexaApp) {
                 utils.log("GOT", result);
                 let formattedMedicines = result[0].medicines.map(x => x.product).join(',');
                 if (formattedMedicines.length === 0) response.say('No debe tomar medication.');
-                else response.say(formattedMedicines);
+                else {
+                    response.say("Tienes que tomar " + formattedMedicines);
+                }
                 response.say("¿Te puedo ayudar de alguna otra manera?");
                 response.shouldEndSession(false);
             });

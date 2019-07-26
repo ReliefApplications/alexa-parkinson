@@ -174,6 +174,10 @@ const treatmentInsertion = new State({
                 if (filteredMedicines.length === 0) {
                     return Promise.reject({ error: "no_medicine_found" });
                 } else if (filteredMedicines.length > 1) {
+                    // TODO
+                    // If it still finds too many medicines we should navigate to the parent.
+                    // The only way I can think is adding a navigateToParent() function on the tree
+                    // and making it a singleton.
                     return Promise.reject({ error: "too_many_medicines" });
                 }
                 let updatedUser = buildTreatment(user, filteredMedicines[0], frequency, momentOfDay);
