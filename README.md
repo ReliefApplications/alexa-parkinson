@@ -141,3 +141,13 @@ Has any module that handles a branch of the dialogue tree
 Has any module that saves temporary data that doesn't need to be saved on the database. We could use the db itself for that, but an implementation with something like Redis would be interesting.
 
 For now (22/07/2019) it has only two simple wrapping functions to hold the medicines the user is dealing with between two requests.
+
+
+# Upcoming features
+- Possibility to add doses and quantities of a certain medicines
+- Closing phrases said by the device ("Thanks for using parkinson skill")
+- Different possible sentences (said randomly) to not be repetitive
+- (POSSIBLE) dashboard webapp for the caregiver
+- Call to the association or the neurologist
+- Take an appointment with association/neurologist (there are centers with proper API)
+

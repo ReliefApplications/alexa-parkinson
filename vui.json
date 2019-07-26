@@ -249,11 +249,19 @@
                         }
                     ],
                     "samples": [
+<<<<<<< HEAD
                         "Sí me toca tomar {pillNumber} {medicineName}  {frequency}  {momentOfDay}",
                         "Sí quiero incluir {pillNumber} {medicineName} {frequency} {momentOfDay}",
                         "Sí quero añadir {pillNumber} {medicineName} {frequency} {momentOfDay}",
                         "Me toca tomar {pillNumber} {medicineName}  {frequency}  {momentOfDay}",
                         "Quiero incluir {pillNumber} {medicineName} {frequency} {momentOfDay}",
+=======
+                        "sí me toca tomar {medicineName}  {frequency}  {momentOfDay}",
+                        "sí quiero incluir {medicineName} {frequency} {momentOfDay}",
+                        "sí quero añadir {medicineName} {frequency} {momentOfDay}",
+                        "me toca tomar {medicineName}  {frequency}  {momentOfDay}",
+                        "Quiero incluir {medicineName} {frequency} {momentOfDay}",
+>>>>>>> dev
                         "quiero añadir {medicineName}",
                         "tengo que añadir {medicineName}",
                         "tiene que tomar {medicineName} {intensity} barra {second_intensity}",

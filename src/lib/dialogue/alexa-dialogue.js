@@ -25,10 +25,12 @@ const medicationLeft = require('./scenarios/medication-left').medicationsLeftInt
 const registration = require('./scenarios/registration').registrationIntent;
 const medicineInformation = require('./scenarios/medicine-informations').medicineInfoIntent;
 const treatmentInsertion = require('./scenarios/treatment-insertion').treatmentInsertion;
+const help = require('./scenarios/help');
 
 // Utility variables
-const texts = Constants.TEXTS;
-const images = Constants.IMAGES;
+const texts = Constants.texts;
+const images = Constants.images;
+
 
 
 const State = tree.State;
@@ -36,14 +38,17 @@ const State = tree.State;
 const myMedication = new State({
     // What to do after "Mi medicaciones"
     main: ([request, response]) => {
-        response.say(texts.myMedicationText);
-        response.reprompt(texts.myMedicationReprompt);
+
+        const myMedicationTexts = Utils.getText(Constants.texts.mymedication);
+
+        response.say(myMedicationTexts.text);
+        response.reprompt(myMedicationTexts.reprompt);
         
         if (Utils.supportsDisplay(request)) {
             response.directive(Utils.renderBodyTemplate(
                 images.defaultImage,
-                texts.myMedicationTitle,
-                texts.myMedicationText)
+                myMedicationTexts.title,
+                myMedicationTexts.text)
                 );
             }
             response.shouldEndSession(false);
@@ -76,7 +81,8 @@ dialogue.addIntentAction('myMedication', myMedication);
 dialogue.addIntentAction('Call', call);
 dialogue.addIntentAction('MedicationCalendar', medicationCalendar);
 dialogue.addIntentAction('MedicationLeft', medicationLeft);
-dialogue.addIntentAction('registration', registration);
 dialogue.addIntentAction('MedicineInformations', medicineInformation);
 dialogue.addIntentAction('CompleteTreatmentInsertion', treatmentInsertion);
+dialogue.addIntentAction('Help', help);
+
 module.exports.dialogue = dialogue;

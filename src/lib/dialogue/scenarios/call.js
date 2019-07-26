@@ -2,19 +2,22 @@
 const State = require('../dialogue-tree').trees.State;
 
 const Utils = require('../../../Utils').Utils;
-const Constants = require('../../../Constants');
+const constants = require('../../../Constants');
 
-const texts = Constants.TEXTS;
-const images = Constants.IMAGES;
+const texts = Utils.getText(constants.texts.call) ;
+const images = constants.images;
 
 // console.log(texts);
 
 const call = new State({
     main: ([request, response]) => {
-        response.say(texts.callText);
-        response.reprompt(texts.callReprompt);
+        
+        
+        response.say(texts.text);
+        response.reprompt(texts.reprompt);
+
         if (Utils.supportsDisplay(request)) {
-            response.directive(Utils.renderBodyTemplate(Constants.IMAGES.defaultImage, Constants.TEXTS.callTitle, Constants.TEXTS.callText));
+            response.directive(Utils.renderBodyTemplate(constants.images.defaultImage, texts.title, texts.text));
         }
         response.shouldEndSession(false);
         return response;

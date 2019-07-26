@@ -16,4 +16,4 @@ configurations.json
 package-lock.json
 README.md
 
-docker-compose.yml.dist
+docker-compose.yml

@@ -8,6 +8,21 @@ const constants = require('./Constants');
 
 exports.Utils = {
 
+    randomInt: function randomInt(max) {
+        return Math.floor( Math.random() * max );
+    },
+
+    getText: function(object) {
+        console.table(object);
+        let i = Math.random()*object.text.length;
+        console.log(i);
+        return {
+            text: object.text.length === 0 ? '' : object.text[ this.randomInt(object.text.length) ],
+            title: object.title.length === 0 ? '' : object.title[ this.randomInt(object.title.length) ],
+            reprompt: object.reprompt.length === 0 ? '' : object.reprompt[ this.randomInt(object.reprompt.length) ]
+        }
+    },
+
     translator: {
         momentOfDay: {
             'mañana': 'morning',
@@ -44,7 +59,7 @@ exports.Utils = {
      */
     displayIfSupported: function (request, response, title, text, image) {
         if (image === undefined)
-            image = constants.IMAGES.defaultImage;
+            image = constants.images.defaultImage;
 
         if (this.supportsDisplay(request)) {
             response.directive(this.renderBodyTemplate(image, title, text));

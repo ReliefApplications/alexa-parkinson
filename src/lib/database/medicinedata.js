@@ -28,9 +28,9 @@ module.exports = {
         let searchRegex = searchInput;
         // let searchRegex = searchInput.replace(' ', '\\s');
         let data = await connection.db(configuration.database.dbname)
-            .collection(configuration.database.schemas.medicine).find(
-                { '$text': { '$search': `${searchRegex}` } }
-            ).project({ 'score': { '$meta': "textScore" } })
+            .collection(configuration.database.schemas.medicine)
+            .find({ '$text': { '$search': `${searchRegex}` } })
+            .project({ 'score': { '$meta': "textScore" } })
             .sort({ 'score': {'$meta': "textScore"} }).toArray();
 
         connection.close();

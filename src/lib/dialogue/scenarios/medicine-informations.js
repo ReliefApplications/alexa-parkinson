@@ -1,5 +1,8 @@
 const medicineService = require('../../database/medicinedata');
 const states = require('../dialogue-tree').trees;
+const utils = require('../../../Utils').Utils;
+
+const tempData = require('../../tempdata/temporary-data')
 
 const slotToDbColumnMap = {
     forma: 'shape',
@@ -10,46 +13,50 @@ const slotToDbColumnMap = {
 const medicineInfoIntent = new states.State({
 
     main: async function ([slots]) {
-        return new Promise(async (resolve, reject) => {
-            let info = slots.medicineInformation.value;
-            if (!Object.keys(slotToDbColumnMap).includes(info)) {
-                reject();
-            }
-            // console.log("RAW INFO", info);
 
+        return new Promise(async (resolve, reject) => {
+            let info = slots.medicineInformation.value.replace(' ', '_');
+            if (!Object.keys(slotToDbColumnMap).includes(info)) {
+                reject(`${info} is not into the mapping object`);
+            }
 
             info = slotToDbColumnMap[info.replace(' ', '_')];
 
-            let name = slots.medicineBrandName.value;
+            // let name = slots.medicineBrandName.value;
+            let name = `${slots.medicineBrandName.value} ${slots.intensity.value || ''} ${slots.secondIntensity.value || ''}`.trim();
+            utils.log("Full name is ", name);
             // If there is the "medicineInformation" slot, then replace the whitespaces with underscores,
             // otherwise take the side effects
             // let formattedInfo = info !== undefined ? info.replace(' ', '_') : 'efectos_secundarios';
+            let medicineResult = await medicineService.getMedicineByFormattedName(name);
+            medicineResult = medicineResult.slice(0, 3);
+            utils.log("List of medicines", medicineResult);
             // The results number can be greater than 1, so let's check
-            // console.log("INFO: ", info);
-            let medicineResult = await medicineService.getMedicineByCommercialName(name);
-            // console.log("Got medicine result", medicineResult);
             if (medicineResult.length > 1) {
-                // try {
+                let firstMedicine = medicineResult[0];
+
                 medicineResult = medicineResult.map(x => x[info]);
-                // console.log("MAPPED MEDICINES", medicineResult);
                 let resultLength = medicineResult.length;
-                // console.log("BEFORE SLICE TRICK");
 
-                // Produces a string similar to "medicine1, medicine2, medicine3, ... y medicine n"
-                let listOfMedicines = medicineResult.slice(0, resultLength - 1).join(',')
-                    + " y " + medicineResult.slice(resultLength - 1);
+                /**
+                 * Ask if the user wanted the first medicine.
+                 * If yes, say the side effects,
+                 * if not, say the list of medicines.
+                 */
 
-                // console.log("Before resolve. L.O.M", listOfMedicines);
-                let out = "Tengo mas de 1 medicamentos con ese nombre. " + listOfMedicines;
-                // console.log(out);
+                // let firstMedicine = medicine.slice(0, 1)[0];
+
+                let out = `Tengo mas de 1 medicamento con ese nombre. Querìas decir ${firstMedicine.product}?`;
+
+                tempData.saveTemporaryData(`medicineForInfo`, {
+                    medicine: firstMedicine,
+                    info: info
+                });
+
 
                 resolve({
                     speak: out
                 });
-                // } catch (err) {
-                // console.log("ERROR", err);
-                // reject(err);
-                // }
 
             } else if (medicineResult.length === 1) {
                 // console.log("FOUND ONE!", medicineResult);
@@ -67,7 +74,16 @@ const medicineInfoIntent = new states.State({
 
     },
 
-    yes: (request, response) => { response.shouldEndSession(false); },
+    yes: ([request, response]) => {
+
+        let savedData = tempData.getTemporaryData('medicineForInfo');
+        let medicine = savedData.medicine;
+        let info = savedData.info;
+
+        response.say(medicine[info]);
+        response.shouldEndSession(false);
+
+    },
 
     no: (request, response) => { response.shouldEndSession(false); },
 
