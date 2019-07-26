@@ -38,11 +38,12 @@ module.exports = {
 
     medicineinsertion: {
       title: [],
-      text: ["Medicamento añadido a tu calendario ¿Quieres añadir otro?"],
+      text: ["Medicamento añadido a tu calendario. ¿Quieres añadir otro?"],
       reprompt: [],
     },
     //--- CompleteMedicineInserton ---
     insertionText: "Medicamento añadido a tu calendario ¿Quieres añadir otro?",
+
 
     help: {
       speech: [],
@@ -50,6 +51,13 @@ module.exports = {
       text: ["Puedes crear un calendario de medicación. Di por ejemplo “Quiero añadir sinemet”. Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?”. También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemed”. Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”."],
       reprompt: [],
     },
+
+    medicationCalendar: {
+      text: [],
+      title: [],
+      reprompt: []
+    },
+
     //--- Help ---
     helpText: "Puedes crear un calendario de medicación. Di por ejemplo “Quiero añadir sinemet”. Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?”. También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemed”. Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.",
     helpScreenTitle: "Que puede hacer",
