@@ -24,8 +24,6 @@ module.exports.trees = (function () {
         this.children = {};
     }
 
-
-
     State.prototype.setAction =
         /**
          * @param {Function} callback - change the main function of the node

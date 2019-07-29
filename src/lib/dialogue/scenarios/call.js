@@ -4,7 +4,7 @@ const State = require('../dialogue-tree').trees.State;
 const Utils = require('../../../Utils').Utils;
 const constants = require('../../../Constants');
 
-const texts = Utils.getText(constants.texts.call) ;
+const texts = Utils.getText(constants.texts.call);
 const images = constants.images;
 
 // console.log(texts);

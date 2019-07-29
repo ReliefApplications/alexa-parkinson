@@ -19,8 +19,8 @@ exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
 
-        console.log("SLOTS");
-        console.table(request.slots);
+        //console.log("SLOTS");
+        //console.table(request.slots);
 
         // If calling with some api tester (like Postman) the request object is different
         let remoteApplicationID = request.sessionDetails.application.applicationId || request.applicationId;
@@ -76,13 +76,13 @@ exports.handler = function (alexaApp) {
     alexaApp.intent('MedicineInformations', function (request, response) {
         return dialogue.navigateTo('MedicineInformations', request.slots)
             .then(output => {
-                console.log(output);
+                //console.log(output);
                 response.say(output.speak);
                 response.say("¿Puedo ayudarle de otra forma?")
                 response.shouldEndSession(false);
             })
             .catch(err => {
-                console.log("Error on MedicineInformations ", err);
+                //console.log("Error on MedicineInformations ", err);
                 response.say("Perdona, puede repetir por favor?")
                 response.shouldEndSession(false);
             });
@@ -90,44 +90,52 @@ exports.handler = function (alexaApp) {
 
     alexaApp.intent('CompleteTreatmentInsertion', function (request, response) {
 
-        // console.table(request.slots);
+        console.log("\n // ===== Complete Treatment Insertion ===== // \n")
+        console.log(request.slots);
+        console.log("// ===== // \n");
+        
         return dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
-            .then(updatedUser => {
-                Object.keys(updatedUser.calendar).forEach(x => {
-                    utils.log(x);
-                    utils.log("INTO FINAL FOR EACH");
-                    utils.log(updatedUser.calendar[x]);
-                });
-                response.say("Medicamento añadido a tu calendario ¿Quieres añadir otro?");
-                return updatedUser;
-            })
-            .then((updatedUser) => {
-                utils.log(JSON.stringify(updatedUser))
-                return response.shouldEndSession(false);
-            })
-            .catch((medicines) => {
-                utils.log("medicines in catch", medicines);
-                // Take just the first 2, don't make ouput too long
-                let slicedMedicines = medicines.slice(0, 2).map(x => x.product).join(', ');
-
-                response.say(`Tengo mas de un medicamento con este nombre. Puede ser mas specifico? Por ejemplo ${slicedMedicines}`);
-                return response.shouldEndSession(false);
+        .then(updatedUser => {
+            Object.keys(updatedUser.calendar).forEach(x => {
+                utils.log(x);
+                utils.log("INTO FINAL FOR EACH");
+                utils.log(updatedUser.calendar[x]);
             });
+            response.say("Medicamento añadido a tu calendario ¿Quieres añadir otro?");
+            return updatedUser;
+        })
+        .then((updatedUser) => {
+            utils.log(JSON.stringify(updatedUser))
+            return response.shouldEndSession(false);
+        })
+        .catch((medicines) => {
+            utils.log("medicines in catch", medicines);
+            // Take just the first 2, don't make ouput too long
+            let slicedMedicines = medicines.slice(0, 2).map(x => x.product).join(', ');
+
+            response.say(`Tengo mas de un medicamento con este nombre. Puede ser mas specifico? Por ejemplo ${slicedMedicines}`);
+            return response.shouldEndSession(false);
+        });
     });
 
     alexaApp.intent('MedicineConfirmation', function (request, response) {
+
+        console.log("\n\n // ===== Medicine Confirmation ===== // \n")
+        console.log(request.slots);
+        console.log("// ===== // \n");
+
         return dialogue.navigateTo('medicine-choose-confirmation', request.slots, request.currentUser)
             .then((user) => {
                 utils.log("Got", user);
                 response.say(constants.insertionText);
                 utils.log("On monday", user.calendar.monday);
                 utils.log("Timing", user.calendar.monday[0].moments);
-                response.say(utils.getText(constants.texts.medicineinsertion));
+                response.say(utils.getText(constants.texts.medicineinsertion).text);
                 response.shouldEndSession(false);
             })
             .catch(err => {
                 // Thrown when we have no medicine or more than one
-                response.say(utils.getText(constants.texts.medicineinsertion));
+                response.say(utils.getText(constants.texts.medicineinsertion).text);
                 // response.say(constants.TEXTS.errors[err.error]);
                 response.shouldEndSession(false);
             });

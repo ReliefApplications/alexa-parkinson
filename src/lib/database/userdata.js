@@ -91,10 +91,15 @@ module.exports = {
                 { '$match': { '_id': user._id } },
                 { '$replaceRoot': { 'newRoot': '$calendar' } },
                 { '$replaceRoot': { 'newRoot': `$${dayOfWeek}` } },
-                // {'$unwind': momentOfDay},
-                { '$lookup': { 'from': 'medicine', 'localField': momentOfDay, 'foreignField': '_id', 'as': 'medicines' } },
-                {'$project': {'noche': 0}}
+                { '$addFields' : { 'quantity': `$${momentOfDay}.quantity`} },
+                { '$lookup' : { from: 'medicine', localField: `${momentOfDay}.medicine`, foreignField: '_id', 'as': 'noche.medicine' } },
+                {'$project': {'noche': 0 }}
             ]).toArray();
+
+        //console.log(result);
+
+        db.user.aggregate([ { $lookup: { from: "medicine", localField: "noche.medicine", foreignField: "_id", "as": "noche.medicine" } } ])
+
         connection.close();
 
         return result;

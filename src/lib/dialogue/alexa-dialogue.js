@@ -49,23 +49,23 @@ const myMedication = new State({
                 images.defaultImage,
                 myMedicationTexts.title,
                 myMedicationTexts.text)
-                );
-            }
-            response.shouldEndSession(false);
-            
-        },
-        
-        yes: (request, response) => {
-            response.shouldEndSession(false);
-        },
-        
-        no: (request, response) => {
-            response.shouldEndSession(false);
-        },
-        
-        didNotUnderstand: (request, response) => {
-            response.shouldEndSession(false);
+            );
         }
+        response.shouldEndSession(false);
+            
+    },
+    
+    yes: (request, response) => {
+        response.shouldEndSession(false);
+    },
+    
+    no: (request, response) => {
+        response.shouldEndSession(false);
+    },
+    
+    didNotUnderstand: (request, response) => {
+        response.shouldEndSession(false);
+    }
 });
 
 
