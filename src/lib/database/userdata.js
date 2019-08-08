@@ -1,4 +1,4 @@
-const mongo = require('mongodb');
+const Mongo = require('mongodb').MongoClient;
 const configuration = require('../../configurations');
 const utils = require('../../Utils').Utils;
 const generalDatabase = require('./general');
@@ -82,26 +82,42 @@ module.exports = {
      * @param {string} dayOfWeek - the day of the week
      * @param {string} momentOfDay - the moment of the day such as 'mañana', 'tarde', 'noche'
      */
-    getUserMedicines: async function (user, dayOfWeek, momentOfDay) {
-        const connection = await generalDatabase.openDatabase();
-        utils.log("Getting medicines of", user._id, "on", dayOfWeek, " ", momentOfDay);
-        let result = await connection.db(configuration.database.dbname)
-            .collection(configuration.database.schemas.user)
-            .aggregate([
-                { '$match': { '_id': user._id } },
-                { '$replaceRoot': { 'newRoot': '$calendar' } },
-                { '$replaceRoot': { 'newRoot': `$${dayOfWeek}` } },
-                { '$addFields' : { 'quantity': `$${momentOfDay}.quantity`} },
-                { '$lookup' : { from: 'medicine', localField: `${momentOfDay}.medicine`, foreignField: '_id', 'as': 'noche.medicine' } },
-                {'$project': {'noche': 0 }}
-            ]).toArray();
+    getUserMedicines: function(user, dayOfWeek, momentOfDay) {
+        return new Promise(async function (resolve, reject) {
+            try {
+                // Read data from the database
+                const connection = await generalDatabase.openDatabase();
+                const data = await connection.db(configuration.database.dbname)
+                .collection(configuration.database.schemas.user)
+                .aggregate([
+                    { '$match': { '_id': user._id } },
+                    { '$replaceRoot': { 'newRoot': '$calendar' } },
+                    { '$replaceRoot': { 'newRoot': `$${dayOfWeek}` } },
+                    { '$lookup': {
+                        from: `medicine`,
+                        localField: `${momentOfDay}.medicine`,
+                        foreignField: '_id',
+                        as: `medicines`
+                    }}
+                ])
+                .toArray();
 
-        //console.log(result);
+                // Map data to change medicine id with the medicine data in the treatment array
+                treatments = data[0][momentOfDay] || [];
+                treatments.map(treatment => {
+                    treatment.medicine = data[0].medicines.find( dicoMedic => dicoMedic._id.toString() === treatment.medicine.toString());
+                })
 
-        db.user.aggregate([ { $lookup: { from: "medicine", localField: "noche.medicine", foreignField: "_id", "as": "noche.medicine" } } ])
-
-        connection.close();
-
-        return result;
+                // Return the result
+                connection.close();
+                resolve(treatments);
+            } catch {
+                reject( Error("Cannot get user's medicines from the database.") );
+            }
+        });
     }
+    
+    
 }
+
+// db.user.aggregate([ { $lookup: { from: "medicine", localField: "noche.medicine", foreignField: "_id", "as": "noche.medicine" } } ])

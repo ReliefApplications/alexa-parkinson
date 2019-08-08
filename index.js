@@ -11,6 +11,10 @@ const database = require('./src/lib/database/userdata');
 
 const constants = require('./src/Constants');
 
+const SkillDictionary = require('./src/lib');
+const SkillMemory = require('./src/lib/models/skill-memory');
+const MemoryHandler = require('./src/lib/services/memory-handler');
+
 function getUserIdFromRequest(request) {
     return request.sessionDetails.userId;
 }
@@ -19,8 +23,7 @@ exports.handler = function (alexaApp) {
 
     alexaApp.pre = function (request, response, type) {
 
-        //console.log("SLOTS");
-        //console.table(request.slots);
+        MemoryHandler.updateHotMemory();
 
         // If calling with some api tester (like Postman) the request object is different
         let remoteApplicationID = request.sessionDetails.application.applicationId || request.applicationId;
@@ -33,15 +36,15 @@ exports.handler = function (alexaApp) {
         let userId = request.context.System.user.userId;
         // Use it to take the user from the database
         return database.getUser(userId)
-            .then(user => {
-                if (user !== null) {
-                    // Store the user into the request object
-                    request.currentUser = user;
-                }
-            })
-            .catch(res => {
-                utils.log(res);
-            });
+        .then(user => {
+            if (user !== null) {
+                // Store the user into the request object
+                request.currentUser = user;
+            }
+        })
+        .catch(res => {
+            utils.log(res);
+        });
     };
 
     alexaApp.error = function (exception, request, response) {
@@ -74,18 +77,7 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MedicineInformations', function (request, response) {
-        return dialogue.navigateTo('MedicineInformations', request.slots)
-            .then(output => {
-                //console.log(output);
-                response.say(output.speak);
-                response.say("¿Puedo ayudarle de otra forma?")
-                response.shouldEndSession(false);
-            })
-            .catch(err => {
-                //console.log("Error on MedicineInformations ", err);
-                response.say("Perdona, puede repetir por favor?")
-                response.shouldEndSession(false);
-            });
+        return SkillDictionary.medicine.information(request, response);
     });
 
     alexaApp.intent('CompleteTreatmentInsertion', function (request, response) {
@@ -142,35 +134,11 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
-        return dialogue.navigateTo('MedicationCalendar', request.currentUser, request.slots)
-            .then(result => {
-                utils.log("GOT", result);
-                let formattedMedicines = result[0].medicines.map(x => x.product).join(',');
-                if (formattedMedicines.length === 0) response.say('No debe tomar medication.');
-                else {
-                    response.say("Tienes que tomar " + formattedMedicines);
-                }
-                response.say("¿Te puedo ayudar de alguna otra manera?");
-                response.shouldEndSession(false);
-            });
+        return SkillDictionary.medication.calendar(request, response);
     });
 
     alexaApp.intent('Help', function (request, response) {
-        return dialogue.navigateTo('Help')
-            .then(([speech, title, text]) => {
-
-                response.say(speech);
-
-                if (utils.supportsDisplay(request)) {
-                    utils.log("Display is supported");
-                    response.directive(utils.renderBodyTemplate(
-                        constants.images.defaultImage,
-                        title,
-                        text
-                    ));
-                }
-                response.shouldEndSession(false)
-            });
+        return SkillDictionary.help(request, response);
     });
 
     alexaApp.intent('MedicationLeft', function (request, response) {
@@ -184,8 +152,7 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.HelpIntent', function (request, response) {
-        response.say("help intent");
-        response.shouldEndSession(false);
+        return SkillDictionary.help(request, response);
     });
 
     alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
@@ -199,26 +166,26 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.RepeatIntent', function (request, response) {
-        response.say("repeat intent");
-        response.shouldEndSession(false);
+        return MemoryHandler.onRepeat(request, response);
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        dialogue.saidYes(request, response);
-        console.log("YES");
-        // response.say("yes intent");
-        response.shouldEndSession(false);
+        return MemoryHandler.onYes(request, response);
     });
 
     alexaApp.intent('AMAZON.NoIntent', function (request, response) {
-        dialogue.saidNo(request, response);
-        response.shouldEndSession(false);
-
+        return MemoryHandler.onNo(request, response);
     });
 
-    // Unhandled utterances
     alexaApp.intent('DidNotUnderstand', function (request, response) {
-        // return CoreHandler.DidNotUnderstand(request,response);
-        return dialogue.didNotUnderstand(request, response);
+        response.say('Perdona. No he podido encontrar la respuesta a lo que me has preguntado. Quieres ayuda ?');
+
+        MemoryHandler.setMemory(new SkillMemory(
+            'MedecineCalendar', 'No tenia la respuesta a lo que me había preguntado. Di "ayudame" si quieres saber lo que puedes hacer.',
+            (req, res) => { return SkillDictionary.help(req, res); },
+            (req, res) => { return SkillDictionary.end(req, res); })
+        );
+
+        response.shouldEndSession(false);
     })
 };

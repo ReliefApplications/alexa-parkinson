@@ -139,11 +139,9 @@ module.exports.trees = (function () {
     StateTree.prototype.setRootAction = function (callback) {
         this.rootNode.setAction(callback);
     }
-
     StateTree.prototype.start = function () {
         this.rootNode.mainAction();
     }
-
     StateTree.prototype.saidYes = function (...params) { this.currentNode.saidYes(params); }
     StateTree.prototype.saidNo = function (...params) { this.currentNode.saidNo(params); }
     StateTree.prototype.didNotUnderstand = function (...params) { this.currentNode.didNotUnderstand(params); }

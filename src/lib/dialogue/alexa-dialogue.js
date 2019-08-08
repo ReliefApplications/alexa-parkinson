@@ -52,7 +52,6 @@ const myMedication = new State({
             );
         }
         response.shouldEndSession(false);
-            
     },
     
     yes: (request, response) => {

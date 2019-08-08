@@ -158,73 +158,73 @@ const treatmentInsertion = new State({
 
             let fullMedicineName = `${medicineName} ${firstIntensity} ${secondIntensity}`.trim();
 
-        // Get the data previously stored
-        let tempData = temporaryMemory.getTemporaryData(user._id);
-        let medicines = tempData.medicines;
-        let frequency = tempData.frequency;
-        let momentOfDay = tempData.momentOfDay;
-        let quantity = tempData.quantity;
+            // Get the data previously stored
+            let tempData = temporaryMemory.getTemporaryData(user._id);
+            let medicines = tempData.medicines;
+            let frequency = tempData.frequency;
+            let momentOfDay = tempData.momentOfDay;
+            let quantity = tempData.quantity;
 
-        console.log("// === 1 === // \n");
+            console.log("// === 1 === // \n");
 
-        utils.log("Full medicine name", fullMedicineName, Buffer.from(fullMedicineName));
-        utils.log("Medicines from last call are", medicines.map(x => {
-            return { name: x.formatted_name, buff: Buffer.from(x.formatted_name) }
-        }));
+            utils.log("Full medicine name", fullMedicineName, Buffer.from(fullMedicineName));
+            utils.log("Medicines from last call are", medicines.map(x => {
+                return { name: x.formatted_name, buff: Buffer.from(x.formatted_name) }
+            }));
 
-        let filteredMedicines = medicines.filter(x => x.formatted_name.startsWith(fullMedicineName));
-        utils.log("Filtered medicines", filteredMedicines.map(x => {
-            return { name: x.formatted_name, buff: Buffer.from(x.formatted_name) };
-        }));
+            let filteredMedicines = medicines.filter(x => x.formatted_name.startsWith(fullMedicineName));
+            utils.log("Filtered medicines", filteredMedicines.map(x => {
+                return { name: x.formatted_name, buff: Buffer.from(x.formatted_name) };
+            }));
 
-        console.log("// === 2 === // \n");
+            console.log("// === 2 === // \n");
 
-        if (filteredMedicines.length === 0) {
-            console.log("// === no_medicine_found === // \n");
-            return Promise.reject({ error: "no_medicine_found" });
-        } else if (filteredMedicines.length > 1) {
-            // TODO
-            // If it still finds too many medicines we should navigate to the parent.
-            // The only way I can think is adding a navigateToParent() function on the tree
-            // and making it a singleton.
-            console.log("// === too_many_medicines === // \n");
-            for( let medicine of filteredMedicines) {
-                console.log(medicine);
+            if (filteredMedicines.length === 0) {
+                console.log("// === no_medicine_found === // \n");
+                return Promise.reject({ error: "no_medicine_found" });
+            } else if (filteredMedicines.length > 1) {
+                // TODO
+                // If it still finds too many medicines we should navigate to the parent.
+                // The only way I can think is adding a navigateToParent() function on the tree
+                // and making it a singleton.
+                console.log("// === too_many_medicines === // \n");
+                for( let medicine of filteredMedicines) {
+                    console.log(medicine);
+                }
+                return Promise.reject({ error: "too_many_medicines" });
             }
-            return Promise.reject({ error: "too_many_medicines" });
-        }
 
-        console.log("// === 3 === // \n");
-        let updatedUser = buildTreatment(user, filteredMedicines[0], frequency, momentOfDay, quantity);
-        temporaryMemory.removeTemporaryData(updatedUser._id);
-        userService.updateUser(updatedUser);
-        return Promise.resolve(updatedUser);
-    },
+            console.log("// === 3 === // \n");
+            let updatedUser = buildTreatment(user, filteredMedicines[0], frequency, momentOfDay, quantity);
+            temporaryMemory.removeTemporaryData(updatedUser._id);
+            userService.updateUser(updatedUser);
+            return Promise.resolve(updatedUser);
+        },
 
-    yes: ([request, response]) => {
-        let alreadySaidNo = temporaryMemory.getTemporaryData("alreadySaidNo");
-        if (alreadySaidNo) {
-            response.say("¿Quieres información sobre tu medicación o llamar a la asociación?");
-            response.shouldEndSession(false);
-        } else {
-            response.say("Di el nombre del medicamento a añadir al calendario");
-            response.shouldEndSession(false);
-        }
-    },
+        yes: ([request, response]) => {
+            let alreadySaidNo = temporaryMemory.getTemporaryData("alreadySaidNo");
+            if (alreadySaidNo) {
+                response.say("¿Quieres información sobre tu medicación o llamar a la asociación?");
+                response.shouldEndSession(false);
+            } else {
+                response.say("Di el nombre del medicamento a añadir al calendario");
+                response.shouldEndSession(false);
+            }
+        },
 
-    no: ([request, response]) => {
-        let alreadySaidNo = temporaryMemory.getTemporaryData("alreadySaidNo");
-        if (alreadySaidNo) {
-            temporaryMemory.removeTemporaryData("alreadySaidNo");
-            response.say("Muchas gracias por utilizar la skill Parkinson Alexa, hasta pronto");
-            response.shouldEndSession(true);
-        } else {
-            // TODO implement multi user
-            temporaryMemory.saveTemporaryData("alreadySaidNo", true);
-            response.say("¿Deseas hacer algo más?");
-            response.shouldEndSession(false);
+        no: ([request, response]) => {
+            let alreadySaidNo = temporaryMemory.getTemporaryData("alreadySaidNo");
+            if (alreadySaidNo) {
+                temporaryMemory.removeTemporaryData("alreadySaidNo");
+                response.say("Muchas gracias por utilizar la skill Parkinson Alexa, hasta pronto");
+                response.shouldEndSession(true);
+            } else {
+                // TODO implement multi user
+                temporaryMemory.saveTemporaryData("alreadySaidNo", true);
+                response.say("¿Deseas hacer algo más?");
+                response.shouldEndSession(false);
+            }
         }
-    }
     })
 );
 

@@ -31,28 +31,28 @@
                             "type": "DAYOFWEEK"
                         },
                         {
-                            "name": "time",
+                            "name": "momentOfDay",
                             "type": "TIMEOFDAY",
                             "samples": [
-                                "{time}",
-                                "por el {time}",
-                                "al {time}",
-                                "en la {time}",
-                                "por la {time}"
+                                "{momentOfDay}",
+                                "por el {momentOfDay}",
+                                "al {momentOfDay}",
+                                "en la {momentOfDay}",
+                                "por la {momentOfDay}"
                             ]
                         }
                     ],
                     "samples": [
-                        "Qué medicamentos tengo que tomar {day} por {time}",
+                        "Qué medicamentos tengo que tomar {day} por {momentOfDay}",
                         "Qué medicamentos tengo que tomar {day}",
-                        "que {medicine} debo tomar {day} por la {time} ",
-                        "que {medicine} debo tomar {day} al {time}",
+                        "que {medicine} debo tomar {day} por la {momentOfDay} ",
+                        "que {medicine} debo tomar {day} al {momentOfDay}",
                         "que {medicine} debo tomar {day}",
-                        "que {medicine} tomo {day} por la {time}",
-                        "que {medicine} tomo {day} al {time}",
+                        "que {medicine} tomo {day} por la {momentOfDay}",
+                        "que {medicine} tomo {day} al {momentOfDay}",
                         "que {medicine} tomo {day}",
-                        "que {medicine} tengo que tomar {day} por la {time}",
-                        "que {medicine} tengo que tomar {day} al {time}",
+                        "que {medicine} tengo que tomar {day} por la {momentOfDay}",
+                        "que {medicine} tengo que tomar {day} al {momentOfDay}",
                         "que {medicine} tengo que tomar {day} "
                     ]
                 },
@@ -90,7 +90,14 @@
                 },
                 {
                     "name": "AMAZON.RepeatIntent",
-                    "samples": []
+                    "samples": [
+                        "puede repetir",
+                        "No he comprendido",
+                        "Repite por favor",
+                        "Repetir",
+                        "Repite",
+                        "Puede repetir por favor"
+                    ]
                 },
                 {
                     "name": "DidNotUnderstand",
@@ -128,6 +135,7 @@
                 {
                     "name": "AMAZON.YesIntent",
                     "samples": [
+                        "vale",
                         "sí",
                         "sì",
                         "si"
@@ -190,10 +198,11 @@
                         }
                     ],
                     "samples": [
-                        "{medicineInformation} de {medicineBrandName}",
-                        "Quiero saber los {medicineInformation} de {medicineBrandName}",
+                        "{medicineInformation} sobre {medicineBrandName}",
+                        "Qué {medicineInformation} sabes sobre {medicineBrandName}",
+                        "De qué {medicineInformation} es el {medicineBrandName}",
                         "{medicineInformation} del {medicineBrandName}",
-                        "Qué {medicineInformation} tiene {medicineBrandName} "
+                        "Cuales son las {medicineInformation} que tienes sombre el {medicineBrandName}"
                     ]
                 },
                 {
@@ -311,21 +320,25 @@
                     "name": "TIMEOFDAY",
                     "values": [
                         {
+                            "id": "EVENING",
                             "name": {
                                 "value": "tarde"
                             }
                         },
                         {
+                            "id": "NIGHT",
                             "name": {
                                 "value": "noche"
                             }
                         },
                         {
+                            "id": "AFTERNOON",
                             "name": {
                                 "value": "mediodía"
                             }
                         },
                         {
+                            "id": "MORNING",
                             "name": {
                                 "value": "mañana"
                             }
@@ -336,46 +349,55 @@
                     "name": "DAYOFWEEK",
                     "values": [
                         {
+                            "id": "TOMORROW",
                             "name": {
                                 "value": "mañana"
                             }
                         },
                         {
+                            "id": "TODAY",
                             "name": {
                                 "value": "hoy"
                             }
                         },
                         {
+                            "id": "SUNDAY",
                             "name": {
                                 "value": "domingo"
                             }
                         },
                         {
+                            "id": "SATURDAY",
                             "name": {
                                 "value": "sabado"
                             }
                         },
                         {
+                            "id": "FRIDAY",
                             "name": {
                                 "value": "viernes"
                             }
                         },
                         {
+                            "id": "THRUSDAY",
                             "name": {
                                 "value": "jueves"
                             }
                         },
                         {
+                            "id": "WEDNESDAY",
                             "name": {
                                 "value": "miercoles"
                             }
                         },
                         {
+                            "id": "TUESDAY",
                             "name": {
                                 "value": "martes"
                             }
                         },
                         {
+                            "id": "MONDAY",
                             "name": {
                                 "value": "lunes"
                             }
@@ -483,18 +505,41 @@
                     "name": "MEDICINE_INFORMATION",
                     "values": [
                         {
+                            "id": "ACTIVE_PRINCIPLE",
+                            "name": {
+                                "value": "principios activos"
+                            }
+                        },
+                        {
+                            "id": "INFO",
+                            "name": {
+                                "value": "informacion",
+                                "synonyms": [
+                                    "informaciones",
+                                    "dato",
+                                    "todo"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "FORM",
                             "name": {
                                 "value": "forma"
                             }
                         },
                         {
+                            "id": "COLOR",
                             "name": {
                                 "value": "color"
                             }
                         },
                         {
+                            "id": "EFFECT",
                             "name": {
-                                "value": "efectos secundarios"
+                                "value": "efecto",
+                                "synonyms": [
+                                    "efecto secundario"
+                                ]
                             }
                         }
                     ]
@@ -561,17 +606,31 @@
                             "name": "day",
                             "type": "DAYOFWEEK",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.139223907227.1045014137321"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.139223907227.1045014137321.361342124695"
+                                }
+                            ]
                         },
                         {
-                            "name": "time",
+                            "name": "momentOfDay",
                             "type": "TIMEOFDAY",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.124652868308.201745808056"
-                            }
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.139223907227.832446630205.1507105436992"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -598,15 +657,31 @@
                             "name": "medicineBrandName",
                             "type": "MEDICINE_COMMERCIAL_NAME",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.660925052570.301525314804"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.660925052570.301525314804.13391232874"
+                                }
+                            ]
                         },
                         {
                             "name": "medicineInformation",
                             "type": "MEDICINE_INFORMATION",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.403627644697.471740820855"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.403627644697.471740820855.294782337333"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -777,6 +852,77 @@
                     {
                         "type": "PlainText",
                         "value": "Perdona, pero supongo que debe tomar una pildora o más cada vez. Pues, cuantes ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.403627644697.471740820855",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Qué quires saber exactamente ?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.403627644697.471740820855.294782337333",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Sólo conozco sus efectos sucundarios, su forma o su color. Pues... dime."
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.660925052570.301525314804",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Sobre que medicamento ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Sobre que medicina ?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.660925052570.301525314804.13391232874",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "No conozco este marca, pero tengo un buen conocimiento de la medicación adecuada para tratar el Parkinson. Dime una marca."
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "No reconozco este medicina, pude repetir por favor."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.139223907227.1045014137321.361342124695",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "No he comprendido en qué dia debe buscarlo. Puedes repetir por favor ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.139223907227.1045014137321",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "En qué dia ?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.139223907227.832446630205.1507105436992",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "No he comprendido en que momento del dia debe buscarlo. Puesdes repetir por favor ?"
                     }
                 ]
             }
