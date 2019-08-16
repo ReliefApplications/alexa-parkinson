@@ -6,7 +6,6 @@ const generalDatabase = require('./general');
 module.exports = {
     /**
      * Takes a user from his ASK Id
-     * 
      * @param {number} askId - the ASK ID of the user (taken from the request object)
      * @returns {Promise}
      */
@@ -58,7 +57,10 @@ module.exports = {
         return result;
     },
 
-
+    /**
+     * Update user data
+     * @param {*} newUser 
+     */
     updateUser: async function (newUser) {
         const connection = await generalDatabase.openDatabase();
 
@@ -77,7 +79,7 @@ module.exports = {
     },
 
     /**
-     * 
+     * Get user's medicines
      * @param {any} user - the user
      * @param {string} dayOfWeek - the day of the week
      * @param {string} momentOfDay - the moment of the day such as 'mañana', 'tarde', 'noche'
@@ -115,9 +117,5 @@ module.exports = {
                 reject( Error("Cannot get user's medicines from the database.") );
             }
         });
-    }
-    
-    
+    }   
 }
-
-// db.user.aggregate([ { $lookup: { from: "medicine", localField: "noche.medicine", foreignField: "_id", "as": "noche.medicine" } } ])

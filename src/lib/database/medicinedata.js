@@ -50,7 +50,6 @@ module.exports = {
         return data;
     },
 
-
     /**
      * Function that takes a medicine from a relative definition.
      * 

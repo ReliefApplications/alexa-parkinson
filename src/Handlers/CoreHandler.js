@@ -118,7 +118,6 @@ exports.CoreHandler = {
                         return response;
                     },
                     (error) => {
-                        //console.log('error', error);
                         speechOutput = 'Lo siento, hubo un problema con la solicitud';
                         response.say(speechOutput);
                         response.reprompt(speechOutput);

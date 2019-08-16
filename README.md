@@ -127,24 +127,18 @@ medicinedata.js - service that holds the function to get medicine informations
 
 userdata.js - service that holds the function to get user's informations
 
-### /lib/dialogue
-Has any file to handle the dialogue with alexa
+### /lib/models
+Moidels of data used in this application
 
-- alexa-dialogue.js - puts together all the dialogue branches into "scenarios"
-- dialogue-tree.js - has the definitions for the dialogue tree, the basic structure that handles a full dialogue
-
-### /lib/dialogue/scenarios
-Has any module that handles a branch of the dialogue tree
-
+### /lib/scenarios
+Has any module that handles an intent : one file correcpond to one intent
 
 ### /lib/tempdata
 Has any module that saves temporary data that doesn't need to be saved on the database. We could use the db itself for that, but an implementation with something like Redis would be interesting.
 
 For now (22/07/2019) it has only two simple wrapping functions to hold the medicines the user is dealing with between two requests.
 
-
 # Upcoming features
-- Possibility to add doses and quantities of a certain medicines
 - Closing phrases said by the device ("Thanks for using parkinson skill")
 - Different possible sentences (said randomly) to not be repetitive
 - (POSSIBLE) dashboard webapp for the caregiver
