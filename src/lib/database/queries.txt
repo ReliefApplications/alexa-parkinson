@@ -1,5 +1,0 @@
-db.user.aggregate([ {$match: { _id: 'amzn1.ask.account.AE3RLCRDEZX5UI3M3KBE2IBEVZK4CTHJLC2RWVBSQ5VSUZABCRZN2S3OJVYK46TEBAHIA3ILZPYYBKBZOJA6N2KDYAEK3RPIMXRAZV6GR7OU3I4KDQ22QYEKHQOUCS2U4K25H6LCBA24EPA66TLXPNROAUKZY7FB2X62ARTPZXVFQVP3QNQQVB6N43QFQSFFL3TR6YTWVY25HWA'}}, {$replaceRoot: { newRoot: "$calendar" }}, {$replaceRoot: { newRoot: "$monday" }}, { $lookup: { from: "medicine", localField: "noche.medicine", foreignField: "_id", "as": "noche.medicine" } } ])
-
-db.user.aggregate([ {$match: { _id: 'amzn1.ask.account.AE3RLCRDEZX5UI3M3KBE2IBEVZK4CTHJLC2RWVBSQ5VSUZABCRZN2S3OJVYK46TEBAHIA3ILZPYYBKBZOJA6N2KDYAEK3RPIMXRAZV6GR7OU3I4KDQ22QYEKHQOUCS2U4K25H6LCBA24EPA66TLXPNROAUKZY7FB2X62ARTPZXVFQVP3QNQQVB6N43QFQSFFL3TR6YTWVY25HWA'}}, {$replaceRoot: { newRoot: "$calendar" }}, {$replaceRoot: { newRoot: "$monday" }}, { $addFields : {"quantity": "$noche.quantity"} }, { $lookup: { from: "medicine", localField: "noche.medicine", foreignField: "_id", "as": "noche.medicine" } } ])
-
-"5d37128f9fb8033a5843594d"
