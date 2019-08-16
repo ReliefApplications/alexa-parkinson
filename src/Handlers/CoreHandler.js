@@ -6,12 +6,23 @@ exports.CoreHandler = {
         // This is triggered when the user says: 'Open parkison' or 'Abre parkinson' 
         function (request, response) {
 
+<<<<<<< HEAD
             Utils.setDialogState(request, 'launch');
 
             response.say(Constants.texts.welcomeTitle + ' ' + Constants.texts.welcomeText);
             response.reprompt(Constants.texts.welcomeReprompt)
             if (Utils.supportsDisplay(request)) {
                 response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Constants.texts.welcomeTitle, Constants.texts.welcomeText));
+=======
+            let welcomeText = Utils.getText(Constants.texts.welcome);
+
+            Utils.setDialogState(request, 'launch');
+
+            response.say(welcomeText.title + ' ' + welcomeText.text);
+            response.reprompt(welcomeText.reprompt)
+            if (Utils.supportsDisplay(request)) {
+                response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, welcomeText.title, welcomeText.text));
+>>>>>>> master
             }
             response.shouldEndSession(false);
             
@@ -116,7 +127,11 @@ exports.CoreHandler = {
                         return response;
                     },
                     (error) => {
+<<<<<<< HEAD
                         console.log('error', error);
+=======
+                        //console.log('error', error);
+>>>>>>> master
                         speechOutput = 'Lo siento, hubo un problema con la solicitud';
                         response.say(speechOutput);
                         response.reprompt(speechOutput);

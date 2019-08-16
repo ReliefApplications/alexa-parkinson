@@ -13,9 +13,7 @@ exports.Utils = {
     },
 
     getText: function(object) {
-        console.table(object);
         let i = Math.random()*object.text.length;
-        console.log(i);
         return {
             text: object.text.length === 0 ? '' : object.text[ this.randomInt(object.text.length) ],
             title: object.title.length === 0 ? '' : object.title[ this.randomInt(object.title.length) ],

@@ -26,7 +26,8 @@ module.exports = {
                     }
                     // let db = client.db(configuration.dbname);
                     resolve(client);
-                });
+                }
+            );
         });
     }
 }
