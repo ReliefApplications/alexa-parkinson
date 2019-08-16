@@ -5,7 +5,16 @@
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
-                    "samples": []
+                    "samples": [
+                        "aborta",
+                        "abortar",
+                        "anula",
+                        "anular",
+                        "cancela",
+                        "cancelar",
+                        "revoca",
+                        "revocar"
+                    ]
                 },
                 {
                     "name": "AMAZON.HelpIntent",
@@ -91,6 +100,7 @@
                 {
                     "name": "AMAZON.RepeatIntent",
                     "samples": [
+                        "repetir por favor",
                         "puede repetir",
                         "No he comprendido",
                         "Repite por favor",
@@ -258,6 +268,7 @@
                         }
                     ],
                     "samples": [
+                        "Tengo que tomar {pillNumber} {medicineName} {intensity} barra {second_intensity} milligramos {frequency} {momentOfDay}",
                         "Sí me toca tomar {pillNumber} {medicineName}  {frequency}  {momentOfDay}",
                         "Sí quiero incluir {pillNumber} {medicineName} {frequency} {momentOfDay}",
                         "Sí quero añadir {pillNumber} {medicineName} {frequency} {momentOfDay}",
@@ -295,12 +306,9 @@
                     "samples": [
                         "{medicineName}  {firstIntensity} punto {secondIntensity}",
                         "{medicineName}  {firstIntensity} punto {secondIntensity} miligramos",
-                        "{medicineName}  {firstIntensity} miligramos ",
-                        "{medicineName}  {firstIntensity} comma {secondIntensity} miligramos",
                         "{medicineName}  {firstIntensity} con {secondIntensity} miligramos",
                         "{medicineName}  {firstIntensity} con {secondIntensity}",
                         "{medicineName}  {firstIntensity} comma {secondIntensity}",
-                        "{medicineName}  {firstIntensity} ",
                         "{medicineName}  {firstIntensity} barra {secondIntensity}"
                     ]
                 },
@@ -722,7 +730,13 @@
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.498924128818.1357504562792"
-                            }
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.563331485162.1093500326066.136967414441"
+                                }
+                            ]
                         },
                         {
                             "name": "intensity",
@@ -820,7 +834,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Quantes vezes a semana?"
+                        "value": "Quantes vezes a semana ?"
                     }
                 ]
             },
@@ -923,6 +937,15 @@
                     {
                         "type": "PlainText",
                         "value": "No he comprendido en que momento del dia debe buscarlo. Puesdes repetir por favor ?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.563331485162.1093500326066.136967414441",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Perdona. No entendi en cuales momento del día quires tomar tu medication. Mañana, mediodia,tarde o noche ?"
                     }
                 ]
             }

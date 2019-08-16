@@ -3,8 +3,6 @@ const AmazonHandler = require('./src/Handlers/AmazonHandler').AmazonHandler;
 const CoreHandler = require('./src/Handlers/CoreHandler').CoreHandler;
 const applicationId = 'amzn1.ask.skill.c671c665-5983-4ca9-ba1b-317809409a26';
 
-const dialogue = require('./src/lib/dialogue/alexa-dialogue.js').dialogue;
-
 const utils = require('./src/Utils').Utils;
 
 const database = require('./src/lib/database/userdata');
@@ -67,13 +65,11 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MyMedication', function (request, response) {
-        // return CoreHandler.MyMedication(request, response);
-        return dialogue.navigateTo('myMedication', request, response);
+        return SkillDictionary.medication.menu(request, response);
     });
 
     alexaApp.intent('Call', function (request, response) {
-        return dialogue.navigateTo('Call', request, response);
-        // response.say("Hey");
+        return SkillDictionary.call(request, response);
     });
 
     alexaApp.intent('MedicineInformations', function (request, response) {
@@ -81,56 +77,11 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('CompleteTreatmentInsertion', function (request, response) {
-
-        console.log("\n // ===== Complete Treatment Insertion ===== // \n")
-        console.log(request.slots);
-        console.log("// ===== // \n");
-        
-        return dialogue.navigateTo('CompleteTreatmentInsertion', request.slots, request.currentUser)
-        .then(updatedUser => {
-            Object.keys(updatedUser.calendar).forEach(x => {
-                utils.log(x);
-                utils.log("INTO FINAL FOR EACH");
-                utils.log(updatedUser.calendar[x]);
-            });
-            response.say("Medicamento añadido a tu calendario ¿Quieres añadir otro?");
-            return updatedUser;
-        })
-        .then((updatedUser) => {
-            utils.log(JSON.stringify(updatedUser))
-            return response.shouldEndSession(false);
-        })
-        .catch((medicines) => {
-            utils.log("medicines in catch", medicines);
-            // Take just the first 2, don't make ouput too long
-            let slicedMedicines = medicines.slice(0, 2).map(x => x.product).join(', ');
-
-            response.say(`Tengo mas de un medicamento con este nombre. Puede ser mas specifico? Por ejemplo ${slicedMedicines}`);
-            return response.shouldEndSession(false);
-        });
+        return SkillDictionary.medication.insertion.insertion(request, response);
     });
 
     alexaApp.intent('MedicineConfirmation', function (request, response) {
-
-        console.log("\n\n // ===== Medicine Confirmation ===== // \n")
-        console.log(request.slots);
-        console.log("// ===== // \n");
-
-        return dialogue.navigateTo('medicine-choose-confirmation', request.slots, request.currentUser)
-            .then((user) => {
-                utils.log("Got", user);
-                response.say(constants.insertionText);
-                utils.log("On monday", user.calendar.monday);
-                utils.log("Timing", user.calendar.monday[0].moments);
-                response.say(utils.getText(constants.texts.medicineinsertion).text);
-                response.shouldEndSession(false);
-            })
-            .catch(err => {
-                // Thrown when we have no medicine or more than one
-                response.say(utils.getText(constants.texts.medicineinsertion).text);
-                // response.say(constants.TEXTS.errors[err.error]);
-                response.shouldEndSession(false);
-            });
+        return SkillDictionary.medication.insertion.confirmation(request, response);
     });
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
@@ -142,8 +93,7 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('MedicationLeft', function (request, response) {
-        response.say("medication left intent");
-        response.shouldEndSession(false);
+        return SkillDictionary.medication.inventory(request, response);
     });
 
     alexaApp.intent('AMAZON.FallbackIntent', function (request, response) {
@@ -156,13 +106,11 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
-        response.say("cancel intent");
-        response.shouldEndSession(true);
+        return SkillDictionary.alexa.cancel(request, response);
     });
 
     alexaApp.intent('AMAZON.StopIntent', function (request, response) {
-        response.say("stop intent");
-        response.shouldEndSession(true);
+        return SkillDictionary.alexa.stop(request, response);
     });
 
     alexaApp.intent('AMAZON.RepeatIntent', function (request, response) {
@@ -170,6 +118,7 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
+        console.log(request, response);
         return MemoryHandler.onYes(request, response);
     });
 
@@ -181,9 +130,9 @@ exports.handler = function (alexaApp) {
         response.say('Perdona. No he podido encontrar la respuesta a lo que me has preguntado. Quieres ayuda ?');
 
         MemoryHandler.setMemory(new SkillMemory(
-            'MedecineCalendar', 'No tenia la respuesta a lo que me había preguntado. Di "ayudame" si quieres saber lo que puedes hacer.',
+            'MedecineCalendar', 'No tenia la respuesta a lo que me había preguntado. Di "ayudame" si quieres saber lo que puedes hacer.', {},
             (req, res) => { return SkillDictionary.help(req, res); },
-            (req, res) => { return SkillDictionary.end(req, res); })
+            (req, res) => { return SkillDictionary.alexa.stop(req, res); })
         );
 
         response.shouldEndSession(false);

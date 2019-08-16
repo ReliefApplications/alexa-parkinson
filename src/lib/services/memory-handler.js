@@ -58,8 +58,8 @@ module.exports = {
      * @param {*} response
      */
     onYes(request, response) {
-        if( !hotMemory ) {
-            response.say('A mi me gusta tu positivismo !');
+        if( !hotMemory || !hotMemory.onYes() ) {
+            response.say('Me gusta tu positivismo !');
             return response.shouldEndSession(false);
         } else {
             return hotMemory.onYes(request, response);
@@ -73,8 +73,8 @@ module.exports = {
      * @param {*} response
      */
     onNo(request, response) {
-        if( !hotMemory ) {
-            response.say('No ? Porqué');
+        if( !hotMemory || !hotMemory.onNo() ) {
+            response.say('Ok... Si quieres.');
             return response.shouldEndSession(false);
         } else {
             return hotMemory.onNo(request, response);

@@ -5,8 +5,9 @@
  */
 module.exports = function (request, response) {
     return new Promise( function (resolve, reject) {
-        response.say('Vale. Hasta pronto.');
+        response.say('Vale. Detengo la Skill.');
         response.send();
         response.shouldEndSession(true);
+        resolve();
     });
 };
