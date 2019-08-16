@@ -1,0 +1,24 @@
+{
+    "stock": [
+        {
+            "medicine": "amantadina",
+            "cantidad": "10",
+            "tipo": "píldora"
+        },
+        {
+            "medicine": "ibuprofen",
+            "cantidad": "0.1",
+            "tipo": "gramo"
+        },
+        {
+            "medicine": "levodopa",
+            "cantidad": "10",
+            "tipo": "píldora"
+        },
+        {
+            "medicine": "pergolida",
+            "cantidad": "10",
+            "tipo": "píldora"
+        }
+    ]
+}

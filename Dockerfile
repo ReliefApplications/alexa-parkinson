@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:11-alpine
 
 # ARGS
 ARG PROJECT_NAME=alexa-parkinson
@@ -8,11 +8,11 @@ ARG USER=node
 ARG WORKSPACE=/usr/dockers/devapp
 
 # update system
-RUN apt-get update
-
+RUN apk update && \
+    apk add bash git && \
+    npm -g config set user root
 # allow npm to install as root user
 #other solution : RUN npm -g install nodegit --unsafe-perm
-RUN npm -g config set user root
 
 # Create app directory
 WORKDIR $WORKSPACE
@@ -28,9 +28,6 @@ RUN npm -v
 
 # Bundle app source
 COPY . .
-
-# copy the check script : do what you want. see below for the call
-COPY ./Docker/check-project.sh ./Docker/check-project.sh
 
 ##
 # Since we are not creating any user here, you need to add the default docker's user
@@ -58,4 +55,4 @@ RUN npm -g config set user $USER
 RUN ls -la
 RUN bash Docker/check-project.sh $PROJECT_NAME
 
-EXPOSE 12113
+EXPOSE 12118

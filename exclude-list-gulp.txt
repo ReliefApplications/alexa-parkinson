@@ -5,3 +5,15 @@ node_modules
 .gitignore
 gulpfile.js
 exclude-list-gulp.txt
+data
+
+
+testing.js
+webpack.config.js
+configurations.js
+configurations.json
+
+package-lock.json
+README.md
+
+docker-compose.yml

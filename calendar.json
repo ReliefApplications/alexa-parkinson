@@ -3,35 +3,35 @@
         "mañana": [
             {
                 "medicamento": "Pergolida",
-                "cantidad": "2 píldoras"
+                "cantidad": "200 píldoras"
             },
             {
                 "medicamento": "Ibuprofen",
-                "cantidad": "1 gramo"
+                "cantidad": "100 gramo"
             },
             {
                 "medicamento": "Levodopa",
-                "cantidad": "1 píldora"
+                "cantidad": "100 píldora"
             }
         ],
         "mediodía": [
             {
                 "medicamento": "Pergolida",
-                "cantidad": "2 píldoras"
+                "cantidad": "200 píldoras"
             },
             {
                 "medicamento": "Levodopa",
-                "cantidad": "1 píldora"
+                "cantidad": "100 píldora"
             }
         ],
         "noche": [
             {
                 "medicamento": "Pergolida",
-                "cantidad": "1 píldora"
+                "cantidad": "100 píldora"
             },
             {
                 "medicamento": "Amantadina",
-                "cantidad": "1 píldora"
+                "cantidad": "100 píldora"
             },
             {
                 "medicamento": "Tolcapone",
@@ -43,35 +43,35 @@
         "mañana": [
             {
                 "medicamento": "Pergolida",
-                "cantidad": "2 píldoras"
+                "cantidad": "200 píldoras"
             },
             {
                 "medicamento": "Ibuprofen",
-                "cantidad": "1 gramo"
+                "cantidad": "100 gramo"
             },
             {
                 "medicamento": "Levodopa",
-                "cantidad": "1 píldora"
+                "cantidad": "100 píldora"
             }
         ],
         "mediodía": [
             {
                 "medicamento": "Pergolida",
-                "cantidad": "2 píldoras"
+                "cantidad": "200 píldoras"
             },
             {
                 "medicamento": "Levodopa",
-                "cantidad": "1 píldora"
+                "cantidad": "100 píldora"
             }
         ],
         "noche": [
             {
                 "medicamento": "Pergolida",
-                "cantidad": "1 píldora"
+                "cantidad": "100 píldora"
             },
             {
                 "medicamento": "Amantadina",
-                "cantidad": "1 píldora"
+                "cantidad": "100 píldora"
             },
             {
                 "medicamento": "Tolcapone",

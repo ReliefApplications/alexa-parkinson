@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+/.data
 /dist
 /tmp
 /out-tsc
@@ -41,3 +42,13 @@ Thumbs.db
 
 # Docker
 /Docker/docker-entrypoint.sh
+docker-compose.yml
+
+# Database
+data
+
+# Configuration
+src/configurations.json
+alexa-data.yml
+key
+HELP.md

@@ -5,7 +5,16 @@
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
-                    "samples": []
+                    "samples": [
+                        "aborta",
+                        "abortar",
+                        "anula",
+                        "anular",
+                        "cancela",
+                        "cancelar",
+                        "revoca",
+                        "revocar"
+                    ]
                 },
                 {
                     "name": "AMAZON.HelpIntent",
@@ -24,34 +33,293 @@
                     "slots": [
                         {
                             "name": "medicine",
-                            "type": "MEDICINE"
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
                         },
                         {
                             "name": "day",
                             "type": "DAYOFWEEK"
                         },
                         {
-                            "name": "time",
+                            "name": "momentOfDay",
                             "type": "TIMEOFDAY",
                             "samples": [
-                                "{time}",
-                                "por el {time}",
-                                "al {time}",
-                                "en la {time}",
-                                "por la {time}"
+                                "{momentOfDay}",
+                                "por el {momentOfDay}",
+                                "al {momentOfDay}",
+                                "en la {momentOfDay}",
+                                "por la {momentOfDay}"
                             ]
                         }
                     ],
                     "samples": [
-                        "que {medicine} debo tomar {day} por la {time} ",
-                        "que {medicine} debo tomar {day} al {time}",
+                        "Qué medicamentos tengo que tomar {day} por {momentOfDay}",
+                        "Qué medicamentos tengo que tomar {day}",
+                        "que {medicine} debo tomar {day} por la {momentOfDay} ",
+                        "que {medicine} debo tomar {day} al {momentOfDay}",
                         "que {medicine} debo tomar {day}",
-                        "que {medicine} tomo {day} por la {time}",
-                        "que {medicine} tomo {day} al {time}",
+                        "que {medicine} tomo {day} por la {momentOfDay}",
+                        "que {medicine} tomo {day} al {momentOfDay}",
                         "que {medicine} tomo {day}",
-                        "que {medicine} tengo que tomar {day} por la {time}",
-                        "que {medicine} tengo que tomar {day} al {time}",
+                        "que {medicine} tengo que tomar {day} por la {momentOfDay}",
+                        "que {medicine} tengo que tomar {day} al {momentOfDay}",
                         "que {medicine} tengo que tomar {day} "
+                    ]
+                },
+                {
+                    "name": "MedicationLeft",
+                    "slots": [
+                        {
+                            "name": "medicine",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
+                        }
+                    ],
+                    "samples": [
+                        "Cuantos {medicine} me quedan"
+                    ]
+                },
+                {
+                    "name": "Call",
+                    "slots": [],
+                    "samples": [
+                        "Sí quiero llamar la asociación",
+                        "Llamar a la Asociación",
+                        "Llamar"
+                    ]
+                },
+                {
+                    "name": "MyMedication",
+                    "slots": [],
+                    "samples": [
+                        "información sobre mi medicación",
+                        "medicacion",
+                        "mi medicacion",
+                        "Medicación",
+                        "Mi Medicación"
+                    ]
+                },
+                {
+                    "name": "AMAZON.RepeatIntent",
+                    "samples": [
+                        "repetir por favor",
+                        "puede repetir",
+                        "No he comprendido",
+                        "Repite por favor",
+                        "Repetir",
+                        "Repite",
+                        "Puede repetir por favor"
+                    ]
+                },
+                {
+                    "name": "DidNotUnderstand",
+                    "slots": [],
+                    "samples": [
+                        "No te entendí podrías repetir",
+                        "z",
+                        "y",
+                        "x",
+                        "w",
+                        "v",
+                        "u",
+                        "t",
+                        "s",
+                        "r",
+                        "q",
+                        "p",
+                        "o",
+                        "n",
+                        "m",
+                        "l",
+                        "k",
+                        "j",
+                        "i",
+                        "h",
+                        "g",
+                        "f",
+                        "e",
+                        "d",
+                        "c",
+                        "b",
+                        "a"
+                    ]
+                },
+                {
+                    "name": "AMAZON.YesIntent",
+                    "samples": [
+                        "vale",
+                        "sí",
+                        "sì",
+                        "si"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NoIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.MoreIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateSettingsIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NextIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PreviousIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollRightIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollLeftIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "MedicineInformations",
+                    "slots": [
+                        {
+                            "name": "medicineBrandName",
+                            "type": "MEDICINE_COMMERCIAL_NAME"
+                        },
+                        {
+                            "name": "medicineInformation",
+                            "type": "MEDICINE_INFORMATION"
+                        }
+                    ],
+                    "samples": [
+                        "{medicineInformation} sobre {medicineBrandName}",
+                        "Qué {medicineInformation} sabes sobre {medicineBrandName}",
+                        "De qué {medicineInformation} es el {medicineBrandName}",
+                        "{medicineInformation} del {medicineBrandName}",
+                        "Cuales son las {medicineInformation} que tienes sombre el {medicineBrandName}"
+                    ]
+                },
+                {
+                    "name": "CompleteTreatmentInsertion",
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "AMAZON.FirstName"
+                        },
+                        {
+                            "name": "medicineName",
+                            "type": "MEDICINE_COMMERCIAL_NAME",
+                            "samples": [
+                                "{medicineName}"
+                            ]
+                        },
+                        {
+                            "name": "frequency",
+                            "type": "TREATMENT_FREQUENCY",
+                            "samples": [
+                                "{frequency}"
+                            ]
+                        },
+                        {
+                            "name": "momentOfDay",
+                            "type": "TIMEOFDAY",
+                            "samples": [
+                                "en el {momentOfDay}",
+                                "en la {momentOfDay}",
+                                "el {momentOfDay}",
+                                "la {momentOfDay}",
+                                "por la {momentOfDay}",
+                                "por el {momentOfDay}",
+                                "{momentOfDay}"
+                            ]
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "second_intensity",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "pillNumber",
+                            "type": "AMAZON.NUMBER",
+                            "samples": [
+                                "{pillNumber} pildora",
+                                "{pillNumber} pildoras",
+                                "{pillNumber}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Tengo que tomar {pillNumber} {medicineName} {intensity} barra {second_intensity} milligramos {frequency} {momentOfDay}",
+                        "Sí me toca tomar {pillNumber} {medicineName}  {frequency}  {momentOfDay}",
+                        "Sí quiero incluir {pillNumber} {medicineName} {frequency} {momentOfDay}",
+                        "Sí quero añadir {pillNumber} {medicineName} {frequency} {momentOfDay}",
+                        "Me toca tomar {pillNumber} {medicineName}  {frequency}  {momentOfDay}",
+                        "Quiero incluir {pillNumber} {medicineName} {frequency} {momentOfDay}",
+                        "quiero añadir {medicineName}",
+                        "tengo que añadir {medicineName}",
+                        "tiene que tomar {medicineName} {intensity} barra {second_intensity}",
+                        "tengo que tomar {medicineName}",
+                        "tiene que tomar {medicineName}",
+                        "tiene que tomar {medicineName} {intensity} barra {second_intensity} {frequency} {momentOfDay}",
+                        "tiene que tomar {pillNumber} píldoras {medicineName} {intensity} barra {second_intensity} miligramos {frequency} {momentOfDay}",
+                        "tiene que tomar {medicineName} {intensity}  miligramos {frequency} {momentOfDay}",
+                        "tiene que tomar {medicineName} {intensity}  {frequency} {momentOfDay}",
+                        "tiene que tomar {medicineName} {frequency} {momentOfDay}",
+                        "{name} tiene que tomar {medicineName} {frequency}   {momentOfDay}"
+                    ]
+                },
+                {
+                    "name": "MedicineConfirmation",
+                    "slots": [
+                        {
+                            "name": "medicineName",
+                            "type": "MEDICINE_COMMERCIAL_NAME"
+                        },
+                        {
+                            "name": "firstIntensity",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "secondIntensity",
+                            "type": "AMAZON.NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{medicineName}  {firstIntensity} punto {secondIntensity}",
+                        "{medicineName}  {firstIntensity} punto {secondIntensity} miligramos",
+                        "{medicineName}  {firstIntensity} con {secondIntensity} miligramos",
+                        "{medicineName}  {firstIntensity} con {secondIntensity}",
+                        "{medicineName}  {firstIntensity} comma {secondIntensity}",
+                        "{medicineName}  {firstIntensity} barra {secondIntensity}"
+                    ]
+                },
+                {
+                    "name": "Help",
+                    "slots": [],
+                    "samples": [
+                        "ayúdame",
+                        "ayùdame",
+                        "ayudame",
+                        "Que puedo hacer"
                     ]
                 }
             ],
@@ -60,16 +328,25 @@
                     "name": "TIMEOFDAY",
                     "values": [
                         {
+                            "id": "EVENING",
+                            "name": {
+                                "value": "tarde"
+                            }
+                        },
+                        {
+                            "id": "NIGHT",
                             "name": {
                                 "value": "noche"
                             }
                         },
                         {
+                            "id": "AFTERNOON",
                             "name": {
                                 "value": "mediodía"
                             }
                         },
                         {
+                            "id": "MORNING",
                             "name": {
                                 "value": "mañana"
                             }
@@ -80,46 +357,55 @@
                     "name": "DAYOFWEEK",
                     "values": [
                         {
+                            "id": "TOMORROW",
                             "name": {
                                 "value": "mañana"
                             }
                         },
                         {
+                            "id": "TODAY",
                             "name": {
                                 "value": "hoy"
                             }
                         },
                         {
+                            "id": "SUNDAY",
                             "name": {
                                 "value": "domingo"
                             }
                         },
                         {
+                            "id": "SATURDAY",
                             "name": {
                                 "value": "sabado"
                             }
                         },
                         {
+                            "id": "FRIDAY",
                             "name": {
                                 "value": "viernes"
                             }
                         },
                         {
+                            "id": "THRUSDAY",
                             "name": {
                                 "value": "jueves"
                             }
                         },
                         {
+                            "id": "WEDNESDAY",
                             "name": {
                                 "value": "miercoles"
                             }
                         },
                         {
+                            "id": "TUESDAY",
                             "name": {
                                 "value": "martes"
                             }
                         },
                         {
+                            "id": "MONDAY",
                             "name": {
                                 "value": "lunes"
                             }
@@ -127,46 +413,182 @@
                     ]
                 },
                 {
-                    "name": "MEDICINE",
+                    "name": "MEDICINE_ACTIVE_PRINCIPLE",
                     "values": [
                         {
                             "name": {
-                                "value": "tolcapone"
+                                "value": "Comtan"
                             }
                         },
                         {
                             "name": {
-                                "value": "amantadina"
+                                "value": "Carbidopa"
                             }
                         },
                         {
                             "name": {
-                                "value": "levodopa"
+                                "value": "Levodopa"
                             }
                         },
                         {
                             "name": {
-                                "value": "ibuprofen"
+                                "value": "Bromocriptina"
                             }
                         },
                         {
                             "name": {
-                                "value": "pergolida"
+                                "value": "Pergolide"
                             }
                         },
                         {
                             "name": {
-                                "value": "medicamentos",
+                                "value": "Pramipexol"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "medicamento",
                                 "synonyms": [
+                                    "medicinas",
+                                    "medicina",
+                                    "medicacion",
+                                    "medicación",
                                     "medicamento"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "MEDICINE_COMMERCIAL_NAME",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "carbidopa Levodopa generica"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "carbidopa Levodopa genérica"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Stalevo"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Requip"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Mirapex"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Permax"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Parlodel"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Carbidopa/Levodopa"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Sinemet"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "MEDICINE_INFORMATION",
+                    "values": [
+                        {
+                            "id": "ACTIVE_PRINCIPLE",
+                            "name": {
+                                "value": "principios activos"
+                            }
+                        },
+                        {
+                            "id": "INFO",
+                            "name": {
+                                "value": "informacion",
+                                "synonyms": [
+                                    "informaciones",
+                                    "dato",
+                                    "todo"
                                 ]
                             }
                         },
                         {
+                            "id": "FORM",
                             "name": {
-                                "value": "medicinas",
+                                "value": "forma"
+                            }
+                        },
+                        {
+                            "id": "COLOR",
+                            "name": {
+                                "value": "color"
+                            }
+                        },
+                        {
+                            "id": "EFFECT",
+                            "name": {
+                                "value": "efecto",
                                 "synonyms": [
-                                    "medicina"
+                                    "efecto secundario"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "TREATMENT_FREQUENCY",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "cada ora"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cada dos horas"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cada cuatro horas"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cada mes"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "cada semana",
+                                "synonyms": [
+                                    "una vez a semana"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "daily",
+                            "name": {
+                                "value": "cada dia",
+                                "synonyms": [
+                                    "todos los dias"
                                 ]
                             }
                         }
@@ -183,7 +605,7 @@
                     "slots": [
                         {
                             "name": "medicine",
-                            "type": "MEDICINE",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
@@ -192,17 +614,187 @@
                             "name": "day",
                             "type": "DAYOFWEEK",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.139223907227.1045014137321"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.139223907227.1045014137321.361342124695"
+                                }
+                            ]
                         },
                         {
-                            "name": "time",
+                            "name": "momentOfDay",
                             "type": "TIMEOFDAY",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
                                 "elicitation": "Elicit.Slot.124652868308.201745808056"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.139223907227.832446630205.1507105436992"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "MedicationLeft",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "medicine",
+                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                },
+                {
+                    "name": "MedicineInformations",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "medicineBrandName",
+                            "type": "MEDICINE_COMMERCIAL_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.660925052570.301525314804"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.660925052570.301525314804.13391232874"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "medicineInformation",
+                            "type": "MEDICINE_INFORMATION",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.403627644697.471740820855"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.403627644697.471740820855.294782337333"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "CompleteTreatmentInsertion",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "name",
+                            "type": "AMAZON.FirstName",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "medicineName",
+                            "type": "MEDICINE_COMMERCIAL_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.150008431373.601593372374"
                             }
+                        },
+                        {
+                            "name": "frequency",
+                            "type": "TREATMENT_FREQUENCY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.498924128818.260363941920"
+                            }
+                        },
+                        {
+                            "name": "momentOfDay",
+                            "type": "TIMEOFDAY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.498924128818.1357504562792"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.563331485162.1093500326066.136967414441"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "second_intensity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "pillNumber",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.403347241858.94973332413"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isGreaterThan",
+                                    "prompt": "Slot.Validation.1019948084315.380954601171.74343862619",
+                                    "value": "0"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "MedicineConfirmation",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "medicineName",
+                            "type": "MEDICINE_COMMERCIAL_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "firstIntensity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "secondIntensity",
+                            "type": "AMAZON.NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 }
@@ -216,6 +808,144 @@
                     {
                         "type": "PlainText",
                         "value": "En qué momento del día?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1153800461089.793568973432",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Como te llamas?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.150008431373.601593372374",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Cuale medicamento?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.498924128818.260363941920",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Quantes vezes a semana ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.498924128818.1357504562792",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Manana, tarde o noche?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "En cuale momento del dia?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.403347241858.94973332413",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Cuantes pildoras cada vez?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1019948084315.380954601171.74343862619",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Perdona, pero supongo que debe tomar una pildora o más cada vez. Pues, cuantes ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.403627644697.471740820855",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Qué quires saber exactamente ?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.403627644697.471740820855.294782337333",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Sólo conozco sus efectos sucundarios, su forma o su color. Pues... dime."
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.660925052570.301525314804",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Sobre que medicamento ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Sobre que medicina ?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.660925052570.301525314804.13391232874",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "No conozco este marca, pero tengo un buen conocimiento de la medicación adecuada para tratar el Parkinson. Dime una marca."
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "No reconozco este medicina, pude repetir por favor."
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.139223907227.1045014137321.361342124695",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "No he comprendido en qué dia debe buscarlo. Puedes repetir por favor ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.139223907227.1045014137321",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "En qué dia ?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.139223907227.832446630205.1507105436992",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "No he comprendido en que momento del dia debe buscarlo. Puesdes repetir por favor ?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.563331485162.1093500326066.136967414441",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Perdona. No entendi en cuales momento del día quires tomar tu medication. Mañana, mediodia,tarde o noche ?"
                     }
                 ]
             }

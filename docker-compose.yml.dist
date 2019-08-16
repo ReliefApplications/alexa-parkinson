@@ -1,0 +1,38 @@
+version: '3.7'
+
+networks:
+  # Network to bind the connection between the two services
+  database:
+    internal: true
+  # Network to bind the connection with the 'outside world'
+  backend:
+
+
+services:
+
+  devapp:
+    image: alexa-parkinson
+    build: .
+    depends_on:
+      - db
+      #db:
+      #  condition: service_healthy
+    ports:
+        - '12118:12118'
+    volumes:
+        - './:/usr/dockers/devapp/'
+    entrypoint: Docker/docker-entrypoint.sh
+    restart: always
+    networks:
+      - database
+      - backend
+
+  db:
+    image: mongo:latest
+    environment:
+      - MONGO_DATA_DIR=/data/db #### Change as you prefer
+    volumes:
+      - ./data/db:/data/db #### Change accordingly to MONGO_DATA_DIR. Needed to make the data persistent
+    restart: always
+    networks:
+      - database

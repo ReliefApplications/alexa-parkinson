@@ -5,14 +5,18 @@
     "private": true,
     "dependencies": {
         "alexa-app": "^4.2.2",
+        "ask-sdk": "^2.7.0",
         "dotenv": "^6.1.0",
         "express": "^4.16.3",
+        "mongodb": "^3.2.7",
         "ssml-builder": "^0.4.3"
     },
     "main": "index.js",
     "devDependencies": {
         "gulp": "^3.9.1",
-        "gulp-shell": "latest"
+        "gulp-shell": "latest",
+        "webpack-cli": "^3.3.5",
+        "webpack-node-externals": "^1.7.2"
     },
     "scripts": {
         "build": "rm -rf dist && tsc",
