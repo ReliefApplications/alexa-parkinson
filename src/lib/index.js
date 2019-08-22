@@ -2,6 +2,7 @@ module.exports = {
     help: require('./scenarios/help'),
     call: require('./scenarios/call'),
     alexa: {
+        launch: require('./scenarios/alexa-launch'),
         stop: require('./scenarios/alexa-stop'),
         cancel: require('./scenarios/alexa-cancel'),
     },

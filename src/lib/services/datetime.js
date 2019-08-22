@@ -25,14 +25,14 @@ module.exports = {
             case 'AFTERNOON': { return momentsOfday[1]; }
             case 'EVENING': { return momentsOfday[2]; }
             case 'NIGHT': { return momentsOfday[3]; }
-            default: { throw new Error('No reconozco este momento del dia. Puede repetir por favor.') }
+            default: { throw new Error(`Could not associate moment to the given moment_of_day type : ${moment}`); }
         }
     },
     
     /** 
      * Return a standard value for the moment of the day
      * @param {string} day value to pipe, with must be an Alexa's DAY_OF_WEEK id
-     * @throw if the day is not recognised, probably because it's not an Alexa's DAY_OF_WEEK id
+     * @throws {Error} if the day is not recognised, probably because it's not an Alexa's DAY_OF_WEEK id
      * @returns {string} standard day's name
      */
     pipeDay: function(day) {
@@ -44,5 +44,25 @@ module.exports = {
                 else throw new Error('No reconozco este dia. Puede repetir por favor.')
             }
         }
+    },
+
+    /**
+     * Parse a TREATMENT_FREQUENCY to return return corresponding days
+     * @param {string} slot
+     * @throws {Error} if the frequency id doesn't match
+     * @return {string[]} array or selected days
+     */
+    pipeFrequency: function(frequencyId) {
+        // If the type is EACH_######, can return directly a corresponding day
+        if ( frequencyId.includes('EACH_') ) return [ frequencyId.split('_')[1].toLowerCase() ];
+
+        // If the type is ######_TIMES_A_DAY or 'DAILY', can include all days
+        if ( frequencyId === 'DAILY') return days;
+
+        // If the type is WEEKLY, choose the current day
+        if ( frequencyId === 'WEEKLY' ) return [days[new Date().getDay()]];
+
+        // Else, throw an exception
+        throw new Error(`Could not associate days to the given frequency type : ${frequencyId}`);
     }
 }

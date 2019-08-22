@@ -216,31 +216,16 @@ exports.Utils = {
         };
         return template;
     },
-    renderListTemplate(url, title, itemsToDisplay) {
-        let listItems = [];
-        for (i in itemsToDisplay) {
-            templateItems.push({ "token": "string", "textContent": itemsToDisplay[i].medicine });
-        }
-
+    renderListTemplate(url, title, listTexts) {
         let template = {
-            "type": "ListTemplate1",
-            "token": "string",
-            "backButton": "HIDDEN",
-            "backgroundImage": url,
-            "title": title,
-            "listItems": [{
-                "token": "string",
-                "textContent": "Item 1"
-            },
-            {
-                "token": "string",
-                "textContent": "Item 2"
-            },
-            {
-                "token": "string",
-                "textContent": "Item 3"
-            }]
+            type: "ListTemplate1",
+            token: "string",
+            backButton: "HIDDEN",
+            backgroundImage: url,
+            title: title,
+            listItems: listTexts.map( text => { return { "token": "string", "textContent": text }; })
         };
+        console.log(template);
         return template;
     }
 };
