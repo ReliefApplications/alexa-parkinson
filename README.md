@@ -113,30 +113,29 @@ It's important to know that with a text index it is possible to easily get a que
 
 ## Source code structure
 
---
+- ```src/lib/``` : contains applications' code
+    - ```database/``` : services used to perform requests to the database
+        - ```general.js``` : just a function to open the database connection and return a reference to it.
+        - ```medicinedata.js``` : service that holds the function to get medicine informations
+        - ```userdata.js``` : service that holds the function to get user's informations
+    - ```locale/``` : services used to generate sentences depending on application's locale. Allows multilingualism
+    - ```models/``` : interfaces for standard objects
+    - ```scenarios/``` : executes user's intents and say result. Each file correspond to one intent or one purpose
+    - ```services/``` : other miscellneous services
+- ```src/asset/``` : contains resources used for display
 
-### /lib/database
-Has any service that has to do with the database.
+## How this skill handle a request ? (Exemple of process)
 
-general.js - just a function to open the database connection and return a reference to it.
-
-medicinedata.js - service that holds the function to get medicine informations
-
-userdata.js - service that holds the function to get user's informations
-
-### /lib/models
-Moidels of data used in this application
-
-### /lib/scenarios
-Has any module that handles an intent : one file correcpond to one intent
-
-### /lib/tempdata
-Has any module that saves temporary data that doesn't need to be saved on the database. We could use the db itself for that, but an implementation with something like Redis would be interesting.
-
-For now (22/07/2019) it has only two simple wrapping functions to hold the medicines the user is dealing with between two requests.
+1. User says an intent its Alexa devise, that converts it into a request object.
+2. This request trigger its corresponding intent in the ```index.js``` file, at the root of the project.
+3. Application's memory is updated to set as current memory the memory saved during the previous request.
+4. The request is redirected to the corresponding scenario, in the ```src/lib/scenarios``` folder.
+5. The scenario does its stuff (may call database services) and ask for its locale service to construct a sentence (that may be based on given data).
+6. The scenarion calls the ```Memory Handler``` service to save the results for the next request. (Some requests are based on its previous one, so it's important to save the last response and prepare handling mesures).
+7. The scenario return the sentences by running ```response.say()``` that Alexa can register the sentence, then ```response.send()``` to push the result.
+8. The scenario ends by running ```response.shouldEndSession(false)``` to not close this skill when the request ends.
 
 # Upcoming features
-- Closing phrases said by the device ("Thanks for using parkinson skill")
 - Different possible sentences (said randomly) to not be repetitive
 - (POSSIBLE) dashboard webapp for the caregiver
 - Call to the association or the neurologist
