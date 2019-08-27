@@ -4,6 +4,9 @@ const RequestHandler = require('./../services/request-handler');
 const MemoryHandler = require('./../services/memory-handler');
 const Datetime = require('../services/datetime');
 const Locale = require('../locale/es').MedicationCalendar;
+const LocaleGeneral = require('../locale/es').General;
+
+const skillName = 'MedecineCalendar';
 
 /**
  * Retrun entries in the calendar
@@ -34,35 +37,35 @@ module.exports = function (request, response) {
             else message += Locale.noMedicationOnMoment(moment);
         } else {
             ['morning', 'afternoon', 'night'].forEach( m => {
-                if ( calendar[m] ) message += Locale.dayMedication(m, calendar);
+                if ( calendar[m] ) message += Locale.momentMedication(m, calendar);
             });
             if ( message === '' ) message += Locale.noMedicationOnDay();
         }
 
-        message += 'Quieres hacer algo más ?';
+        message += LocaleGeneral.continue();
 
         MemoryHandler.setMemory(new SkillMemory(
-            'MedecineCalendar', message, {},
+            skillName, message, {},
             (req, res) => { return require('./help')(req, res); },
             (req, res) => { return require('./alexa-stop')(req, res); }
         ));
 
         response.say( message );
-        response.reprompt( 'Comó puedo ayudarte ?' );
+        response.reprompt( LocaleGeneral.continue() );
         response.send();
         return response.shouldEndSession(false);
     })
     .catch( function(err) {
-        const msg = 'No puedo leer tu calendario. Te puedo ayudar de alguna otra manera ?';
+        const msg = Locale.error();
         response.say(msg);
 
         MemoryHandler.setMemory(new SkillMemory(
-            'MedecineCalendar', msg, {},
+            skillName, msg, {},
             (req, res) => { return require('./help')(req, res); },
             (req, res) => { return require('./alexa-stop')(req, res); }
         ));
 
-        response.reprompt('Qué quieres hacer ?');
+        response.reprompt( LocaleGeneral.continue() );
         response.send();
         return response.shouldEndSession(false);
     });

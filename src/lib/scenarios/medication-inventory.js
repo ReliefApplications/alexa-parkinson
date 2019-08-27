@@ -7,7 +7,7 @@ const MemoryHandler = require('./../services/memory-handler');
  * @param {*} response
  */
 module.exports = function (request, response) {
-    const msg = 'Todavía no lo sé. Cómo puedo ser más útil?'
+    const msg = 'Todavía no lo sé. Cómo puedo ser más útil ?';
     response.say(msg);
     response.send();
     MemoryHandler.setMemory(new SkillMemory('MedicationLeft', msg, {}, 

@@ -2,6 +2,7 @@ const SkillMemory = require('./../models/skill-memory');
 const MemoryHandler = require('./../services/memory-handler');
 const Utils = require('./../../Utils').Utils;
 const Constants = require('./../../Constants');
+const Locale = require('../locale/es').AlexaLaunch;
 
 /**
  * Start session with a welcome message
@@ -9,16 +10,15 @@ const Constants = require('./../../Constants');
  * @param {*} response
  */
 module.exports = function (request, response) {
-	return new Promise( function (resolve, reject) {
-		const msg = Utils.getText(Constants.texts.welcome);
-		response.say(msg.title + ' ' + msg.text);
-		response.reprompt("Di “Mi Medicación”, “Llamar” o pregúntame “¿Qué puedo hacer?”");
+	return new Promise( function (resolve, reject) {;
+		response.say( Locale.title() + ' ' + Locale.text() );
+		response.reprompt( Locale.reprompt() );
 
 		if ( Utils.supportsDisplay(request) ) {
-			response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, msg.title, msg.text));
+			response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), Locale.text() ));
 		}
 
-		MemoryHandler.setMemory( new SkillMemory('AlexaLaunch', msg, {}, undefined, undefined ));
+		MemoryHandler.setMemory( new SkillMemory('AlexaLaunch', Locale.title() + ' ' + Locale.text(), {}, undefined, undefined ));
 
 		response.send();
 		response.shouldEndSession(false);
