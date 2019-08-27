@@ -1,7 +1,6 @@
 const SkillMemory = require('./../models/skill-memory');
 const MemoryHandler = require('./../services/memory-handler');
-const Utils = require('./../../Utils').Utils;
-const Constants = require('./../../Constants');
+const Locale = require('../locale/es').AlexaHelp;
 
 /**
  * Display an help message
@@ -10,15 +9,10 @@ const Constants = require('./../../Constants');
  */
 module.exports = function (request, response) {
     return new Promise( function (resolve, reject) {
-        let msg = 'Puedes crear un calendario de medicación. Di por ejemplo “Tengo que tomar medicación” \n ';
-        msg += 'Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?” \n';
-        msg += 'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” \n';
-        msg += 'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”';
+        MemoryHandler.setMemory(new SkillMemory('Help', Locale.help(), {}, undefined, undefined));
 
-        MemoryHandler.setMemory(new SkillMemory('Help', msg, {}, undefined, undefined));
-
-        response.say(msg);
-        response.reprompt("Dime lo que quieres hacer");
+        response.say( Locale.help() );
+        response.reprompt( Locale.reprompt() );
         response.send();
         response.shouldEndSession(false);
         resolve();

@@ -4,6 +4,8 @@ const RequestHandler = require('./../services/request-handler');
 const MedicineService = require('./../database/medicinedata');
 const UserService = require('./../database/userdata');
 const Datetime = require('./../services/datetime');
+const Locale = require('../locale/es').MedicationInsertion;
+const LocaleGeneral = require('../locale/es').General;
 
 const skillName = 'MedicationInsertion';
 
@@ -26,7 +28,7 @@ module.exports = {
     confirmation: function(request, response) {
         // Check that the hot memory is about a medication insertion. Else, this intent should not be handled here
         if( !MemoryHandler.getHotMemory() || MemoryHandler.getHotMemory().name !== skillName ) {
-            let msg = `Quires que hace una búsqueda sobre "${request.slots.medicineName.value}" ? `;
+            let msg = Locale.doSearch(request.slots.medicineName.value);
             response.say(msg);
             response.send();
 
@@ -53,26 +55,23 @@ module.exports = {
  */
 function tryAddTreatment(user, treatment, response) {
 
-    console.log(treatment);
-
     return MedicineService.getMedicineByCommercialName(`${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}`)
     .then(medicines => {
         let msg;
         if ( medicines.length > 1 ) {
-            msg = `Tengo mas de un medicamento que se llaman "${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}". Puede ser mas specifico ? `;
-            msg += `Por ejamplo, conozco el ${medicines[0].product}, o el ${medicines[1].product}.`.split('/').join(' barra ');
+            msg = Locale.medicineMultipleFound(treatment.medicine + ' ' + (treatment.intensity ? treatment.intensity : ''), medicines);
             MemoryHandler.setMemory( new SkillMemory(skillName, msg, {treatment, medicines: medicines.length}) );
         } else if ( medicines.length === 1 ) {
             treatment.medicine = medicines[0];
             UserService.updateUser(buildTreatment(user, treatment));
-            msg = `Medicamento añadido a tu calendario . Quieres hacer algo más ? `;
+            msg = Locale.addedToCalendar() + LocaleGeneral.continue();
             MemoryHandler.setMemory( new SkillMemory(
                 skillName, msg, {treatment},
                 (req, res) => { return require('./help')(req, res); },
                 (req, res) => { return require('./alexa-stop')(req, res); }
             ));
         } else if ( medicines.length === 0 ) {
-            msg = `Después de buscar, no pude encontrar un medicamento que se llama "${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}". Dime el nombre de la medication, por favor.`;
+            msg = Locale.medicineNotFound(treatment.medicine + ' ' + (treatment.intensity ? treatment.intensity : ''));
             MemoryHandler.setMemory( new SkillMemory(skillName, msg, {treatment}) );
         }
         response.say(msg);

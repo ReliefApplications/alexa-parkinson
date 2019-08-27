@@ -1,5 +1,7 @@
 const SkillMemory = require('./../models/skill-memory');
 const MemoryHandler = require('./../services/memory-handler');
+const Locale = require('../locale/es').Call;
+const LocaleGeneral = require('../locale/es').General;
 
 /**
  * Call someone
@@ -7,10 +9,9 @@ const MemoryHandler = require('./../services/memory-handler');
  * @param {*} response
  */
 module.exports = function (request, response) {
-    const msg = 'Este functionalidad no es lista. Quieres hacer otra cosa?'
-    response.say(msg);
+    response.say( LocaleGeneral.workInProgress() );
     response.send();
-    MemoryHandler.setMemory(new SkillMemory('Call', msg, {}, 
+    MemoryHandler.setMemory(new SkillMemory('Call', LocaleGeneral.workInProgress(), {}, 
         (req, res) => { return require('./help')(req, res); },
         (req, res) => { return require('./alexa-stop')(req, res); }
     ));

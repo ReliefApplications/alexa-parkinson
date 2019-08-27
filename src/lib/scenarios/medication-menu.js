@@ -2,6 +2,7 @@ const SkillMemory = require('./../models/skill-memory');
 const MemoryHandler = require('./../services/memory-handler');
 const Utils = require('./../../Utils').Utils;
 const Constants = require('./../../Constants');
+const Locale = require('../locale/es').MedicationMenu;
 
 /**
  * Display 'Mi Medication' menu
@@ -10,17 +11,16 @@ const Constants = require('./../../Constants');
  */
 module.exports = function (request, response) {
     return new Promise( function (resolve, reject) {
-        const msg = Utils.getText(Constants.texts.mymedication);
-        response.say(msg.text);
-        response.reprompt("Qué quires hacer. Puedes preguntar “¿Qué puedo hacer?”.")
+        response.say( Locale.text() );
+        response.reprompt( Locale.reprompt() )
 
         if ( Utils.supportsDisplay(request) ) {
-            response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, msg.title, msg.text));
+            response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), Locale.text() ));
         }
 
         response.send();
 
-        MemoryHandler.setMemory(new SkillMemory('MiMedication', msg, {}, 
+        MemoryHandler.setMemory(new SkillMemory('MiMedication', Locale.text(), {}, 
             (req, res) => { return require('./help')(req, res); },
             (req, res) => { return require('./alexa-stop')(req, res); }
         ));
