@@ -1,21 +1,13 @@
 /** import handlers */
-const AmazonHandler = require('./src/Handlers/AmazonHandler').AmazonHandler;
-const CoreHandler = require('./src/Handlers/CoreHandler').CoreHandler;
 const applicationId = 'amzn1.ask.skill.c671c665-5983-4ca9-ba1b-317809409a26';
 
 const utils = require('./src/Utils').Utils;
 
 const database = require('./src/lib/database/userdata');
 
-const constants = require('./src/Constants');
-
 const SkillDictionary = require('./src/lib');
 const SkillMemory = require('./src/lib/models/skill-memory');
 const MemoryHandler = require('./src/lib/services/memory-handler');
-
-function getUserIdFromRequest(request) {
-    return request.sessionDetails.userId;
-}
 
 exports.handler = function (alexaApp) {
 
@@ -56,11 +48,11 @@ exports.handler = function (alexaApp) {
         if (!request.currentUser) {
             let userId = request.context.System.user.userId;
             database.addNewUser(userId)
-                .then(value => {
-                    response.shouldEndSession(false);
-                });
+            .then(value => {
+                response.shouldEndSession(false);
+            });
         } else {
-            return CoreHandler.LaunchRequest(request, response);
+            return SkillDictionary.alexa.launch(request, response);
         }
     });
 
@@ -86,10 +78,6 @@ exports.handler = function (alexaApp) {
 
     alexaApp.intent('MedicationCalendar', function (request, response) {
         return SkillDictionary.medication.calendar(request, response);
-    });
-
-    alexaApp.intent('Help', function (request, response) {
-        return SkillDictionary.help(request, response);
     });
 
     alexaApp.intent('MedicationLeft', function (request, response) {
@@ -118,7 +106,6 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        console.log(request, response);
         return MemoryHandler.onYes(request, response);
     });
 

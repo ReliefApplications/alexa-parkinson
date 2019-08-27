@@ -26,6 +26,7 @@ module.exports = {
     setMemory: function(newMemory) {
         memory = newMemory;
     },
+    
     /**
      * Return the last memory saved
      * @returns {SkillMemory}
@@ -59,12 +60,10 @@ module.exports = {
      */
     onYes(request, response) {
         if( !hotMemory || !hotMemory.onYes() ) {
-            response.say('Me gusta tu positivismo !');
             return response.shouldEndSession(false);
         } else {
             return hotMemory.onYes(request, response);
         }
-        
     },
 
     /** 
@@ -74,7 +73,6 @@ module.exports = {
      */
     onNo(request, response) {
         if( !hotMemory || !hotMemory.onNo() ) {
-            response.say('Ok... Si quieres.');
             return response.shouldEndSession(false);
         } else {
             return hotMemory.onNo(request, response);
