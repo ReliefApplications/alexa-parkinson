@@ -3,6 +3,7 @@ const SkillMemory = require('./../models/skill-memory');
 const RequestHandler = require('./../services/request-handler');
 const MemoryHandler = require('./../services/memory-handler');
 const Datetime = require('../services/datetime');
+const Locale = require('../locale/es').MedicationCalendar;
 
 /**
  * Retrun entries in the calendar
@@ -11,43 +12,43 @@ const Datetime = require('../services/datetime');
  */
 module.exports = function (request, response) {
 
-    let moment, day;
-    
     // Define on which moment it should look
-    try {
-        moment = Datetime.pipeMomentOfDay( RequestHandler.getSlotId(request.slots.momentOfDay) );
-        day = Datetime.pipeDay( RequestHandler.getSlotId(request.slots.day) );
-    } catch(err) {
-        const msg = "No puedo interpretar el día que debe leer. Quiere hacer otra cosa ?";
-        response.say(msg);
-
-        MemoryHandler.setMemory(new SkillMemory(
-            'MedecineCalendar', msg, {},
-            (req, res) => { return require('./help')(req, res); },
-            (req, res) => { return require('./alexa-stop')(req, res); }
-        ));
-
-        response.reprompt('Qué quieres hacer ?');
-        response.send();
-        return response.shouldEndSession(false);
-    }
+    const day = Datetime.pipeDay( RequestHandler.getSlotId(request.slots.day) );
+    const moment = RequestHandler.getSlotId(request.slots.day) === 'NOW' ?
+        Datetime.getCurrentMomentOfDay(): Datetime.pipeMomentOfDay( RequestHandler.getSlotId(request.slots.momentOfDay) );
 
     // Get medecines from and say result
-    return UserService.getUserMedicines(request.currentUser, day, moment)
-    .then( function(treatments) {
-        const msg = treatments.map( t => t.quantity + ' ' + t.medicine.product ).join(', ');
-        const fullmsg = msg.length > 0 ? 'Tienes que tomar ' + msg + '.': 'No tienes nada en el calendario para este momento.'
-            
-        response.say(fullmsg);
-        response.say('\n Quieres hacer algo más ?');
-        
+    return UserService.getUserMedicines(request.currentUser, day)
+    .then( function(calendar) {
+        Object.keys(calendar).forEach( moment => {
+            calendar[moment] = calendar[moment].map( t => t.quantity + ' ' + t.medicine.product );
+            const lastMedicine = calendar[moment].pop();
+            calendar[moment] = calendar[moment].join(', ');
+            calendar[moment] = calendar[moment] !== '' ? [calendar[moment], lastMedicine].join(', y ') : lastMedicine;
+        });
+
+        let message = '';
+
+        if ( moment ) {
+            if ( calendar[moment] ) message += Locale.momentMedication(moment, calendar);
+            else message += Locale.noMedicationOnMoment(moment);
+        } else {
+            ['morning', 'afternoon', 'night'].forEach( m => {
+                if ( calendar[m] ) message += Locale.dayMedication(m, calendar);
+            });
+            if ( message === '' ) message += Locale.noMedicationOnDay();
+        }
+
+        message += 'Quieres hacer algo más ?';
+
         MemoryHandler.setMemory(new SkillMemory(
-            'MedecineCalendar', fullmsg, {},
+            'MedecineCalendar', message, {},
             (req, res) => { return require('./help')(req, res); },
             (req, res) => { return require('./alexa-stop')(req, res); }
         ));
 
-        response.reprompt('Comó puedo ayudarte ?');
+        response.say( message );
+        response.reprompt( 'Comó puedo ayudarte ?' );
         response.send();
         return response.shouldEndSession(false);
     })

@@ -1,5 +1,5 @@
 const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-const momentsOfday = ['mañana', 'mediodia', 'tarde', 'noche'];
+const momentsOfday = ['morning', 'afternoon', 'night'];
 
 module.exports = {
     /**
@@ -23,9 +23,8 @@ module.exports = {
         switch( moment ) {
             case 'MORNING': { return momentsOfday[0]; }
             case 'AFTERNOON': { return momentsOfday[1]; }
-            case 'EVENING': { return momentsOfday[2]; }
-            case 'NIGHT': { return momentsOfday[3]; }
-            default: { throw new Error(`Could not associate moment to the given moment_of_day type : ${moment}`); }
+            case 'NIGHT': { return momentsOfday[2]; }
+            default: { return undefined; }
         }
     },
     
@@ -39,9 +38,10 @@ module.exports = {
         switch( day ) {
             case 'TODAY': { return days[ (new Date()).getDay() - 1]; }
             case 'TOMORROW': { return days[ (new Date()).getDay() % 7]; }
+            case 'NOW': { return days[ (new Date()).getDay() - 1]; }
             default: {
                 if( days.includes( day.toLowerCase() )) return day.toLowerCase();
-                else throw new Error('No reconozco este dia. Puede repetir por favor.')
+                else return undefined;
             }
         }
     },

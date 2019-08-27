@@ -64,7 +64,7 @@ module.exports = {
     updateUser: async function (newUser) {
         const connection = await generalDatabase.openDatabase();
 
-        let result = await connection.db(configuration.database.dbname)
+        await connection.db(configuration.database.dbname)
             .collection(configuration.database.schemas.user)
             .updateOne(
                 { _id: newUser._id },
@@ -84,35 +84,32 @@ module.exports = {
      * @param {string} dayOfWeek - the day of the week
      * @param {string} momentOfDay - the moment of the day such as 'mañana', 'tarde', 'noche'
      */
-    getUserMedicines: function(user, dayOfWeek, momentOfDay) {
+    getUserMedicines: function(user, dayOfWeek) {
         return new Promise(async function (resolve, reject) {
             try {
-                // Read data from the database
+                // Read data from the database to get both calendar and medicines
                 const connection = await generalDatabase.openDatabase();
-                const data = await connection.db(configuration.database.dbname)
-                .collection(configuration.database.schemas.user)
-                .aggregate([
-                    { '$match': { '_id': user._id } },
-                    { '$replaceRoot': { 'newRoot': '$calendar' } },
-                    { '$replaceRoot': { 'newRoot': `$${dayOfWeek}` } },
-                    { '$lookup': {
-                        from: `medicine`,
-                        localField: `${momentOfDay}.medicine`,
-                        foreignField: '_id',
-                        as: `medicines`
-                    }}
-                ])
-                .toArray();
+                let calendar = await connection.db(configuration.database.dbname)
+                    .collection(configuration.database.schemas.user)
+                    .aggregate([
+                        { '$match': { '_id': user._id } },
+                        { '$replaceRoot': { 'newRoot': '$calendar' } },
+                        { '$replaceRoot': { 'newRoot': `$${dayOfWeek}` } }
+                    ])
+                    .toArray();
+                calendar = calendar[0];
+                const medicines = await connection.db(configuration.database.dbname)
+                    .collection(configuration.database.schemas.medicine)
+                    .find()
+                    .toArray();
 
-                // Map data to change medicine id with the medicine data in the treatment array
-                treatments = data[0][momentOfDay] || [];
-                treatments.map(treatment => {
-                    treatment.medicine = data[0].medicines.find( dicoMedic => dicoMedic._id.toString() === treatment.medicine.toString());
+                Object.keys(calendar).forEach( moment => {
+                    calendar[moment].map( treatment => { treatment.medicine = medicines.find( m => m._id.toString() === treatment.medicine.toString() ) });
                 })
 
                 // Return the result
                 connection.close();
-                resolve(treatments);
+                resolve(calendar);
             } catch {
                 reject( Error("Cannot get user's medicines from the database.") );
             }

@@ -18,11 +18,7 @@ module.exports = function (request, response) {
 			response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, msg.title, msg.text));
 		}
 
-		MemoryHandler.setMemory(new SkillMemory(
-            'AlexaLaunch', msg, {},
-            (req, res) => { return require('./help')(req, res); },
-            (req, res) => { return require('./alexa-stop')(req, res); }
-        ));
+		MemoryHandler.setMemory( new SkillMemory('AlexaLaunch', msg, {}, undefined, undefined ));
 
 		response.send();
 		response.shouldEndSession(false);

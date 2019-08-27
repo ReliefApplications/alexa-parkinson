@@ -106,7 +106,6 @@ exports.handler = function (alexaApp) {
     });
 
     alexaApp.intent('AMAZON.YesIntent', function (request, response) {
-        console.log(request, response);
         return MemoryHandler.onYes(request, response);
     });
 

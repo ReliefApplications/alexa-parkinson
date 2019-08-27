@@ -18,7 +18,11 @@
                 },
                 {
                     "name": "AMAZON.HelpIntent",
-                    "samples": []
+                    "samples": [
+                        "Qué puedo hacer",
+                        "ayudame",
+                        "ayúdame"
+                    ]
                 },
                 {
                     "name": "AMAZON.StopIntent",
@@ -34,37 +38,21 @@
                     "name": "MedicationCalendar",
                     "slots": [
                         {
-                            "name": "medicine",
-                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
-                        },
-                        {
                             "name": "day",
                             "type": "DAYOFWEEK"
                         },
                         {
                             "name": "momentOfDay",
-                            "type": "TIMEOFDAY",
-                            "samples": [
-                                "{momentOfDay}",
-                                "por el {momentOfDay}",
-                                "al {momentOfDay}",
-                                "en la {momentOfDay}",
-                                "por la {momentOfDay}"
-                            ]
+                            "type": "TIMEOFDAY"
                         }
                     ],
                     "samples": [
-                        "Qué medicamentos tengo que tomar {day} por {momentOfDay}",
+                        "Qué medicamentos tengo que tomar {day} {momentOfDay}",
                         "Qué medicamentos tengo que tomar {day}",
-                        "que {medicine} debo tomar {day} por la {momentOfDay} ",
-                        "que {medicine} debo tomar {day} al {momentOfDay}",
-                        "que {medicine} debo tomar {day}",
-                        "que {medicine} tomo {day} por la {momentOfDay}",
-                        "que {medicine} tomo {day} al {momentOfDay}",
-                        "que {medicine} tomo {day}",
-                        "que {medicine} tengo que tomar {day} por la {momentOfDay}",
-                        "que {medicine} tengo que tomar {day} al {momentOfDay}",
-                        "que {medicine} tengo que tomar {day} "
+                        "que debe tomar {day} {momentOfDay}",
+                        "que debe tomar {day}",
+                        "que tengo que tomar {day} {momentOfDay}",
+                        "que tengo que tomar {day} "
                     ]
                 },
                 {
@@ -112,39 +100,6 @@
                     ]
                 },
                 {
-                    "name": "DidNotUnderstand",
-                    "slots": [],
-                    "samples": [
-                        "No te entendí podrías repetir",
-                        "z",
-                        "y",
-                        "x",
-                        "w",
-                        "v",
-                        "u",
-                        "t",
-                        "s",
-                        "r",
-                        "q",
-                        "p",
-                        "o",
-                        "n",
-                        "m",
-                        "l",
-                        "k",
-                        "j",
-                        "i",
-                        "h",
-                        "g",
-                        "f",
-                        "e",
-                        "d",
-                        "c",
-                        "b",
-                        "a"
-                    ]
-                },
-                {
                     "name": "AMAZON.YesIntent",
                     "samples": [
                         "vale",
@@ -155,7 +110,9 @@
                 },
                 {
                     "name": "AMAZON.NoIntent",
-                    "samples": []
+                    "samples": [
+                        "no"
+                    ]
                 },
                 {
                     "name": "AMAZON.MoreIntent",
@@ -232,10 +189,6 @@
                             ]
                         },
                         {
-                            "name": "intensity",
-                            "type": "MEDICINE_INTENCITY"
-                        },
-                        {
                             "name": "frequency",
                             "type": "TREATMENT_FREQUENCY",
                             "samples": [
@@ -263,9 +216,16 @@
                                 "{pillNumber} pildoras",
                                 "{pillNumber}"
                             ]
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "MEDICINE_INTENCITY"
                         }
                     ],
                     "samples": [
+                        "Tengo que tomar una nueva medication",
+                        "Quiero incluir una nueva medication",
+                        "Quiero añadir una nueva medication",
                         "Quiero incluir {medicineName} a mi calendario",
                         "Quiero ańadir {medicineName} a mi calendario",
                         "Para {name}  quiero ańadir {medicineName}",
@@ -301,16 +261,6 @@
                     "samples": [
                         "{medicineName}  {intensity}"
                     ]
-                },
-                {
-                    "name": "Help",
-                    "slots": [],
-                    "samples": [
-                        "ayúdame",
-                        "ayùdame",
-                        "ayudame",
-                        "Que puedo hacer"
-                    ]
                 }
             ],
             "types": [
@@ -318,7 +268,7 @@
                     "name": "TIMEOFDAY",
                     "values": [
                         {
-                            "id": "EVENING",
+                            "id": "AFTERNOON",
                             "name": {
                                 "value": "tarde",
                                 "synonyms": [
@@ -340,17 +290,6 @@
                             }
                         },
                         {
-                            "id": "AFTERNOON",
-                            "name": {
-                                "value": "mediodía",
-                                "synonyms": [
-                                    "durante el mediodía",
-                                    "por el mediodía",
-                                    "en el mediodía"
-                                ]
-                            }
-                        },
-                        {
                             "id": "MORNING",
                             "name": {
                                 "value": "mañana",
@@ -366,6 +305,12 @@
                 {
                     "name": "DAYOFWEEK",
                     "values": [
+                        {
+                            "id": "NOW",
+                            "name": {
+                                "value": "ahora"
+                            }
+                        },
                         {
                             "id": "TOMORROW",
                             "name": {
@@ -405,7 +350,7 @@
                         {
                             "id": "WEDNESDAY",
                             "name": {
-                                "value": "miercoles"
+                                "value": "miércoles"
                             }
                         },
                         {
@@ -559,28 +504,11 @@
                     "name": "TREATMENT_FREQUENCY",
                     "values": [
                         {
-                            "id": "THREE_TIMES_A_DAY",
-                            "name": {
-                                "value": "tres veces al día",
-                                "synonyms": [
-                                    "tres veces cada día"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "TWO_TIMES_A_DAY",
-                            "name": {
-                                "value": "dos veces al día",
-                                "synonyms": [
-                                    "dos veces cada día"
-                                ]
-                            }
-                        },
-                        {
                             "id": "EACH_SUNDAY",
                             "name": {
                                 "value": "cada domindo",
                                 "synonyms": [
+                                    "el domingo",
                                     "todos los domingos"
                                 ]
                             }
@@ -590,6 +518,7 @@
                             "name": {
                                 "value": "cada sabado",
                                 "synonyms": [
+                                    "el sabado",
                                     "todos los sabados"
                                 ]
                             }
@@ -599,6 +528,7 @@
                             "name": {
                                 "value": "cada viernes",
                                 "synonyms": [
+                                    "el viernes",
                                     "todos los viernes"
                                 ]
                             }
@@ -608,6 +538,7 @@
                             "name": {
                                 "value": "cada jueves",
                                 "synonyms": [
+                                    "el jueves",
                                     "todos les jueves"
                                 ]
                             }
@@ -617,6 +548,7 @@
                             "name": {
                                 "value": "cada miércoles",
                                 "synonyms": [
+                                    "el miércoles",
                                     "todos les miécoles"
                                 ]
                             }
@@ -626,6 +558,7 @@
                             "name": {
                                 "value": "cada martes",
                                 "synonyms": [
+                                    "el martes",
                                     "todos les martes"
                                 ]
                             }
@@ -635,16 +568,8 @@
                             "name": {
                                 "value": "cada lunes",
                                 "synonyms": [
+                                    "el lunes",
                                     "todos los lunes"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "MONTHLY",
-                            "name": {
-                                "value": "cada mes",
-                                "synonyms": [
-                                    "una vez a mes"
                                 ]
                             }
                         },
@@ -660,8 +585,11 @@
                         {
                             "id": "DAILY",
                             "name": {
-                                "value": "cada dia",
+                                "value": "cada día",
                                 "synonyms": [
+                                    "una vez al día",
+                                    "todos los días",
+                                    "cada dia",
                                     "una vez al día",
                                     "todos los dias"
                                 ]
@@ -815,19 +743,12 @@
                     "prompts": {},
                     "slots": [
                         {
-                            "name": "medicine",
-                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
                             "name": "day",
                             "type": "DAYOFWEEK",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.139223907227.1045014137321"
+                                "elicitation": "Elicit.Slot.905119297815.572678952558"
                             },
                             "validations": [
                                 {
@@ -840,10 +761,8 @@
                             "name": "momentOfDay",
                             "type": "TIMEOFDAY",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.124652868308.201745808056"
-                            },
+                            "elicitationRequired": false,
+                            "prompts": {},
                             "validations": [
                                 {
                                     "type": "hasEntityResolutionMatch",
@@ -932,21 +851,6 @@
                             ]
                         },
                         {
-                            "name": "intensity",
-                            "type": "MEDICINE_INTENCITY",
-                            "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.216728899364.983726830362"
-                            },
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.216728899364.983726830362.648041865012"
-                                }
-                            ]
-                        },
-                        {
                             "name": "frequency",
                             "type": "TREATMENT_FREQUENCY",
                             "confirmationRequired": false,
@@ -991,6 +895,13 @@
                                     "value": "0"
                                 }
                             ]
+                        },
+                        {
+                            "name": "intensity",
+                            "type": "MEDICINE_INTENCITY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 },
@@ -1191,7 +1102,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Perdona. No entendido con qué frecuencia debe tomar el medicamento ?"
+                        "value": "Perdona. No entendido con qué frecuencia debe tomar el medicamento"
                     }
                 ]
             },
@@ -1263,6 +1174,19 @@
                     {
                         "type": "PlainText",
                         "value": "Soló conozco la medicación para el Parkinson. Por favor, puede decirme un medicamento de este categoria ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.905119297815.572678952558",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "En qué día de la semana ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "En qué día ?"
                     }
                 ]
             }

@@ -19,7 +19,7 @@ module.exports = {
             frequency: Datetime.pipeFrequency( RequestHandler.getSlotId(request.slots.frequency) ),
             momentOfDay: Datetime.pipeMomentOfDay( RequestHandler.getSlotId(request.slots.momentOfDay) ),
             quantity: parseInt(request.slots.pillNumber.value, 10),
-            intensity: RequestHandler.getIntensity(request.slots.intensity),
+            intensity:RequestHandler.getIntensity(request.slots.intensity),
         }
         return tryAddTreatment(request.currentUser, newTreatment, response);
     },
@@ -34,6 +34,7 @@ module.exports = {
                 (req, res) => { return require('./medicine-information')(req, res); },
                 (req, res) => { return require('./alexa-stop')(req, res); } )
             );
+
             return response.shouldEndSession(false);
         }
         // Update the treatment with received data
@@ -51,24 +52,27 @@ module.exports = {
  * @param {*} response 
  */
 function tryAddTreatment(user, treatment, response) {
-    return MedicineService.getMedicineByCommercialName(`${treatment.medicine} ${treatment.intensity}`)
+
+    console.log(treatment);
+
+    return MedicineService.getMedicineByCommercialName(`${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}`)
     .then(medicines => {
         let msg;
         if ( medicines.length > 1 ) {
-            msg = `Tengo mas de un medicamento que se llaman "${treatment.medicine} ${treatment.intensity}". Puede ser mas specifico ? `;
+            msg = `Tengo mas de un medicamento que se llaman "${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}". Puede ser mas specifico ? `;
             msg += `Por ejamplo, conozco el ${medicines[0].product}, o el ${medicines[1].product}.`.split('/').join(' barra ');
             MemoryHandler.setMemory( new SkillMemory(skillName, msg, {treatment, medicines: medicines.length}) );
         } else if ( medicines.length === 1 ) {
             treatment.medicine = medicines[0];
             UserService.updateUser(buildTreatment(user, treatment));
-            msg = `Medicamento añadido a tu calendario ¿Quieres añadir otro? `;
+            msg = `Medicamento añadido a tu calendario . Quieres hacer algo más ? `;
             MemoryHandler.setMemory( new SkillMemory(
                 skillName, msg, {treatment},
                 (req, res) => { return require('./help')(req, res); },
                 (req, res) => { return require('./alexa-stop')(req, res); }
             ));
         } else if ( medicines.length === 0 ) {
-            msg = `Después de buscar, no pude encontrar un medicamento que se llama "${treatment.medicine} ${treatment.intensity}". Dime el nombre de la medication, por favor.`;
+            msg = `Después de buscar, no pude encontrar un medicamento que se llama "${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}". Dime el nombre de la medication, por favor.`;
             MemoryHandler.setMemory( new SkillMemory(skillName, msg, {treatment}) );
         }
         response.say(msg);
@@ -84,18 +88,8 @@ function tryAddTreatment(user, treatment, response) {
  */
 function buildTreatment(user, treatment) {
 
-    console.log(treatment);
-
     // Build the empty calendar if it wasn't already present
-    let calendar = user.calendar !== undefined ? user.calendar : {
-        monday: {},
-        tuesday: {},
-        wednesday: {},
-        thursday: {},
-        friday: {},
-        saturday: {},
-        sunday: {}
-    };
+    let calendar = user.calendar !== undefined ? user.calendar : {};
 
     treatment.frequency.forEach( day => {
         let medicines = calendar[day][treatment.momentOfDay] || [];

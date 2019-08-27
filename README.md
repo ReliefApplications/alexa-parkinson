@@ -113,10 +113,7 @@ It's important to know that with a text index it is possible to easily get a que
 
 ## Source code structure
 
-The conversation with alexa is handled with a tree. Whenever the user enters an intent, the tree of the user navigates to a specific child node. If the node we're looking for does not exists, it tries to find it from the root of the tree. If it doesn't exists, it throws an error.
-
-For now the tree is shared among the users. 
-In a future implementation every user should have its own tree.
+--
 
 ### /lib/database
 Has any service that has to do with the database.

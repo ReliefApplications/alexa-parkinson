@@ -5,7 +5,7 @@ module.exports = {
      * @returns {string} slot's id
      */
     getSlotId: function(slot) {
-        return slot.resolutions[0].values[0].id;
+        return slot.resolutions[0] && slot.resolutions[0].values[0] ? slot.resolutions[0].values[0].id : undefined;
     },
 
     /**
@@ -15,6 +15,6 @@ module.exports = {
      */
     getIntensity: function(slot) {
         // Intensities are formatted from '##_MG' to '## mg' 
-        return this.getSlotId(slot).toLowerCase().split('_').join(' ');
+        return this.getSlotId(slot) ? this.getSlotId(slot).toLowerCase().split('_').join(' ') : undefined;
     },
 }

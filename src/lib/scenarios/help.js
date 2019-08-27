@@ -10,7 +10,7 @@ const Constants = require('./../../Constants');
  */
 module.exports = function (request, response) {
     return new Promise( function (resolve, reject) {
-        let msg = 'Puedes crear un calendario de medicación. Di por ejemplo “Nueva medicación” \n ';
+        let msg = 'Puedes crear un calendario de medicación. Di por ejemplo “Tengo que tomar medicación” \n ';
         msg += 'Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?” \n';
         msg += 'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” \n';
         msg += 'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”';
