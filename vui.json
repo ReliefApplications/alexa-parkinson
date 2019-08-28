@@ -48,7 +48,6 @@
                     ],
                     "samples": [
                         "Qué medicamentos tengo que tomar {day} {momentOfDay}",
-                        "Qué medicamentos tengo que tomar {day}",
                         "que debe tomar {day} {momentOfDay}",
                         "que debe tomar {day}",
                         "que tengo que tomar {day} {momentOfDay}",
@@ -65,15 +64,6 @@
                     ],
                     "samples": [
                         "Cuantos {medicine} me quedan"
-                    ]
-                },
-                {
-                    "name": "Call",
-                    "slots": [],
-                    "samples": [
-                        "Sí quiero llamar la asociación",
-                        "Llamar a la Asociación",
-                        "Llamar"
                     ]
                 },
                 {

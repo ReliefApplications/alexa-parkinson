@@ -18,8 +18,6 @@ const skillName = 'MedicationInsertion';
  */
 module.exports = {
     insertion: function (request, response) {
-        console.log(request);
-
         let newTreatment = {
             medicine: request.slots.medicineName.value,
             frequency: Datetime.pipeFrequency( RequestHandler.getSlotId(request.slots.frequency) ),
@@ -61,20 +59,18 @@ module.exports = {
  */
 function tryAddTreatment(user, treatment, request, response) {
 
-    return MedicineService.getMedicineByCommercialName(`${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}`)
+    const completeMedicineName = `${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}`;
+
+    return MedicineService.getMedicineByCommercialName(completeMedicineName)
     .then(medicines => {
         let msg;
         if ( medicines.length > 1 ) {
-            msg = Locale.medicineMultipleFound(treatment.medicine + ' ' + (treatment.intensity ? treatment.intensity : ''), medicines);
+            msg = Locale.medicineMultipleFound(completeMedicineName, medicines);
             if ( Utils.supportsDisplay(request) ) {
                 response.directive( Utils.renderListTemplate(
                     Constants.images.welcomeImage,
-                    "Medication",
-                    [
-                        // TODO : Set Image urls and stardize it for all medications
-                        { imageUrl: '', text: 'alpha'},
-                        { imageUrl: '', text: 'beta'},
-                    ] 
+                    Locale.medicineMultipleTitle(completeMedicineName),
+                    medicines.map( medicine => { return { imageUrl: '', text: medicine.product}; })
                 ));
             }
             MemoryHandler.setMemory( new SkillMemory(skillName, msg, {treatment, medicines: medicines.length}) );
@@ -88,7 +84,7 @@ function tryAddTreatment(user, treatment, request, response) {
                 (req, res) => { return require('./alexa-stop')(req, res); }
             ));
         } else if ( medicines.length === 0 ) {
-            msg = Locale.medicineNotFound(treatment.medicine + ' ' + (treatment.intensity ? treatment.intensity : ''));
+            msg = Locale.medicineNotFound(completeMedicineName);
             MemoryHandler.setMemory( new SkillMemory(skillName, msg, {treatment}) );
         }
         response.say(msg);

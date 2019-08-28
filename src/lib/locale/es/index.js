@@ -43,20 +43,21 @@ exports.Call = {
 }
 
 exports.MedicationCalendar = {
-    momentMedication: function(moment, calendar) { return `Por la ${ Dictionary[moment] }, ${ synonyms.must() } tomar ${ calendar[moment] } . ` },
+    momentMedication: function(moment, calendar) { return `Por la ${ Dictionary[moment] }, ${ synonyms.must() } tomar ${ calendar[moment] } . `.split('/').join(' barra '); },
     noMedicationOnMoment: function(moment) { return `No ${ synonyms.must() } tomar ${ synonyms.medicament() } esta ${ Dictionary[moment] } . ` },
     noMedicationOnDay: function() { return `No ${ synonyms.must() } tomar ${ synonyms.medicament() } este día . ` },
     error: function() { return 'No puedo leer tu calendario. Te puedo ayudar de alguna otra manera ?' }
 }
 
 exports.MedicationInsertion = {
-    doSearch: function(medicineName) { return `Quires que hace una búsqueda sobre "${medicineName}" ? `},
+    doSearch: function(medicineName) { return `Quires que hace una búsqueda sobre "${medicineName.trim()}" ? `},
     addedToCalendar: function() { return `Medicamento añadido a tu calendario . `},
+    medicineMultipleTitle: function(medicineName) { return `Medicationes que corresponden a "${medicineName.trim()}"`},
     medicineMultipleFound: function(medicine, exemples) { 
-        return `Tengo mas de un medicamento que se llaman "${ medicine }". Puede ser mas specifico ? ` +
+        return `Tengo mas de un medicamento que se llaman "${ medicine }" . Puede ser mas specifico ? ` +
         `Por ejamplo, conozco el ${exemples[0].product}, o el ${exemples[1].product}.`.split('/').join(' barra ');
     },
-    medicineNotFound: function(medicine) { return `Después de buscar, no pude encontrar un medicamento que se llama "${ medicine }". Dime el nombre de la medication, por favor.`}
+    medicineNotFound: function(medicine) { return `Después de buscar, no pude encontrar un medicamento que se llama "${ medicine }" . Dime el nombre de la medication, por favor.`}
 }
 
 exports.MedicationMenu = {

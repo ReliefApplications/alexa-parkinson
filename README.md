@@ -123,7 +123,7 @@ It's important to know that with a text index it is possible to easily get a que
     - ```models/``` : interfaces for standard objects
     - ```scenarios/``` : executes user's intents and say result. Each file correspond to one intent or one purpose
     - ```services/``` : other miscellneous services
-- ```src/asset/``` : contains resources used for display
+- ```src/assets/``` : contains resources used for display
 
 ## How this skill handle a request ? (Exemple of process)
 

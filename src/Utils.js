@@ -226,13 +226,13 @@ exports.Utils = {
         let template = {
             type: "Display.RenderTemplate",
             template: {
-                type: "ListTemplate2",
+                type: "ListTemplate1",
                 backButton: "HIDDEN",
                 backgroundImage: {
                     contentDescription: "",
                     sources: [{
                         url: imageUrl,
-                        size: "MEDIUM"
+                        size: "SMALL"
                     }]
                 },
                 title: title,
@@ -242,7 +242,7 @@ exports.Utils = {
                         contentDescription: "",
                         sources: [{
                             url: item.imageUrl,
-                            size: "MEDIUM"
+                            size: "SMALL"
                         }]
                     },
                     textContent: {
