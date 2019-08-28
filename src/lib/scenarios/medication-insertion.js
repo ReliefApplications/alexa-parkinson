@@ -6,6 +6,8 @@ const UserService = require('./../database/userdata');
 const Datetime = require('./../services/datetime');
 const Locale = require('../locale/es').MedicationInsertion;
 const LocaleGeneral = require('../locale/es').General;
+const Utils = require('./../../Utils').Utils;
+const Constants = require('./../../Constants');
 
 const skillName = 'MedicationInsertion';
 
@@ -16,6 +18,8 @@ const skillName = 'MedicationInsertion';
  */
 module.exports = {
     insertion: function (request, response) {
+        console.log(request);
+
         let newTreatment = {
             medicine: request.slots.medicineName.value,
             frequency: Datetime.pipeFrequency( RequestHandler.getSlotId(request.slots.frequency) ),
@@ -23,7 +27,7 @@ module.exports = {
             quantity: parseInt(request.slots.pillNumber.value, 10),
             intensity:RequestHandler.getIntensity(request.slots.intensity),
         }
-        return tryAddTreatment(request.currentUser, newTreatment, response);
+        return tryAddTreatment(request.currentUser, newTreatment, request, response);
     },
     confirmation: function(request, response) {
         // Check that the hot memory is about a medication insertion. Else, this intent should not be handled here
@@ -44,22 +48,35 @@ module.exports = {
         newTreatment.intensity = RequestHandler.getIntensity(request.slots.intensity);
         newTreatment.medicine = request.slots.medicineName.value;
         // Try to add the treatment in the schedule
-        return tryAddTreatment(request.currentUser, newTreatment, response);
+        return tryAddTreatment(request.currentUser, newTreatment, request, response);
     }
 }
 
 /**
  * Try to add a new treatment into user's calendar
- * @param {*} treatment 
+ * @param {*} user 
+ * @param {*} treatment
+ * @param {*} request
  * @param {*} response 
  */
-function tryAddTreatment(user, treatment, response) {
+function tryAddTreatment(user, treatment, request, response) {
 
     return MedicineService.getMedicineByCommercialName(`${treatment.medicine} ${treatment.intensity ? treatment.intensity : ''}`)
     .then(medicines => {
         let msg;
         if ( medicines.length > 1 ) {
             msg = Locale.medicineMultipleFound(treatment.medicine + ' ' + (treatment.intensity ? treatment.intensity : ''), medicines);
+            if ( Utils.supportsDisplay(request) ) {
+                response.directive( Utils.renderListTemplate(
+                    Constants.images.welcomeImage,
+                    "Medication",
+                    [
+                        // TODO : Set Image urls and stardize it for all medications
+                        { imageUrl: '', text: 'alpha'},
+                        { imageUrl: '', text: 'beta'},
+                    ] 
+                ));
+            }
             MemoryHandler.setMemory( new SkillMemory(skillName, msg, {treatment, medicines: medicines.length}) );
         } else if ( medicines.length === 1 ) {
             treatment.medicine = medicines[0];

@@ -216,16 +216,44 @@ exports.Utils = {
         };
         return template;
     },
-    renderListTemplate(url, title, listTexts) {
+    /**
+     * Render on the user's screen a list of text with images
+     * @param { string } imageUrl 
+     * @param { string } title 
+     * @param { Array<{ imageUrl: string, text: string }> } listItems 
+     */
+    renderListTemplate(imageUrl, title, listItems) {
         let template = {
-            type: "ListTemplate1",
-            token: "string",
-            backButton: "HIDDEN",
-            backgroundImage: url,
-            title: title,
-            listItems: listTexts.map( text => { return { "token": "string", "textContent": text }; })
+            type: "Display.RenderTemplate",
+            template: {
+                type: "ListTemplate2",
+                backButton: "HIDDEN",
+                backgroundImage: {
+                    contentDescription: "",
+                    sources: [{
+                        url: imageUrl,
+                        size: "MEDIUM"
+                    }]
+                },
+                title: title,
+                listItems: listItems.map( item => { return { 
+                    token: "string",
+                    image: {
+                        contentDescription: "",
+                        sources: [{
+                            url: item.imageUrl,
+                            size: "MEDIUM"
+                        }]
+                    },
+                    textContent: {
+                        primaryText: {
+                            text: item.text,
+                            type: "PlainText"
+                        }
+                    }
+                }})
+            }
         };
-        console.log(template);
         return template;
     }
 };

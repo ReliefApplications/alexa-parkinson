@@ -110,8 +110,9 @@ db.medicine.createIndex({ formatted_name: "text", product: "text", active_princi
 
 It's important to know that with a text index it is possible to easily get a query that searches among all the columns and get a "score" for each document that indicates how much that document matches the query (see getMedicineByFormattedName function for an example).
 
+# Code structuration and patterns
 
-## Source code structure
+## Project structure
 
 - ```src/lib/``` : contains applications' code
     - ```database/``` : services used to perform requests to the database
@@ -136,8 +137,8 @@ It's important to know that with a text index it is possible to easily get a que
 8. The scenario ends by running ```response.shouldEndSession(false)``` to not close this skill when the request ends.
 
 # Upcoming features
+- Display images on Alexa's screen
 - Different possible sentences (said randomly) to not be repetitive
 - (POSSIBLE) dashboard webapp for the caregiver
 - Call to the association or the neurologist
 - Take an appointment with association/neurologist (there are centers with proper API)
-
