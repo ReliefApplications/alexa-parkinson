@@ -23,11 +23,11 @@ module.exports = function (request, response) {
     // Get medecines from and say result
     return UserService.getUserMedicines(request.currentUser, day)
     .then( function(calendar) {
-        Object.keys(calendar).forEach( moment => {
-            calendar[moment] = calendar[moment].map( t => t.quantity + ' ' + t.medicine.product );
-            const lastMedicine = calendar[moment].pop();
-            calendar[moment] = calendar[moment].join(', ');
-            calendar[moment] = calendar[moment] !== '' ? [calendar[moment], lastMedicine].join(', y ') : lastMedicine;
+        Object.keys(calendar).forEach( m => {
+            calendar[m] = calendar[m].map( treatment => treatment.quantity + ' ' + treatment.medicine.product );
+            const lastMedicine = calendar[m].pop();
+            calendar[m] = calendar[m].join(', ');
+            calendar[m] = calendar[m] !== '' ? [calendar[m], lastMedicine].join(`, ${ LocaleGeneral.and() } `) : lastMedicine;
         });
 
         let message = '';
@@ -36,7 +36,7 @@ module.exports = function (request, response) {
             if ( calendar[moment] ) message += Locale.momentMedication(moment, calendar);
             else message += Locale.noMedicationOnMoment(moment);
         } else {
-            ['morning', 'afternoon', 'night'].forEach( m => {
+            Object.keys(calendar).forEach( m => {
                 if ( calendar[m] ) message += Locale.momentMedication(m, calendar);
             });
             if ( message === '' ) message += Locale.noMedicationOnDay();

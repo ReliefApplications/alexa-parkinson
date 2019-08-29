@@ -6,6 +6,7 @@ const Dictionary = require('./dictionary');
 // =============================================
 
 exports.General = {
+    and: function() { return 'y'; },
     continue: function() {
         return pickAnswerAtRandom(['Qué quieres hacer más ? ', 'Quires hacer algo más ? ', 'Algo más ? ', 'Puedo ayudarte en otra cosa ? ']);
     },
