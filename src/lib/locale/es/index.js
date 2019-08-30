@@ -7,6 +7,7 @@ const Dictionary = require('./dictionary');
 
 exports.General = {
     and: function() { return 'y'; },
+    momentOfDay: function(moment) { return Dictionary[moment]; },
     continue: function() {
         return pickAnswerAtRandom(['Qué quieres hacer más ? ', 'Quires hacer algo más ? ', 'Algo más ? ', 'Puedo ayudarte en otra cosa ? ']);
     },
@@ -44,7 +45,40 @@ exports.Call = {
 }
 
 exports.MedicationCalendar = {
-    momentMedication: function(moment, calendar) { return `Por la ${ Dictionary[moment] }, ${ synonyms.must() } tomar ${ calendar[moment] } . `.split('/').join(' barra '); },
+    momentMedication: {
+        title: function(day, moment) { return `Tu medicación para ${ Dictionary[day] } ${ Dictionary[moment] }`; },
+        say: function(moment, treatment) {
+            treatment = treatment.map( t => t.quantity + ' ' + t.medicine.product );
+            saidTreament = treatment.slice(0, treatment.length - 1).join(', ');
+            saidTreament = saidTreament !== '' ?
+                [saidTreament, treatment[ treatment.length - 1 ]].join(`, y `) :
+                treatment[ treatment.length - 1 ];
+            return `Por la ${ Dictionary[moment] }, ${ synonyms.must() } tomar ${ saidTreament } . `.split('/').join(' barra ');
+        },
+        text : function(moment, treatment) {
+            treatment = treatment.map( t => t.quantity + ' ' + t.medicine.product );
+            return `${ Dictionary[moment] } : ${ treatment.join(', ') }.`
+        }
+    },
+    dayMedication: {
+        title: function(day) {
+            return `Tu medicación para ${ Dictionary[day] }`;
+        },
+        say: function(calendar) { 
+            let text = '';
+            Object.keys(calendar).forEach( m => {
+                text += exports.MedicationCalendar.momentMedication.say(m, calendar[m]);
+            });
+            return text;
+        },
+        text : function(calendar) {
+            let text = '';
+            Object.keys(calendar).forEach( m => {
+                text += exports.MedicationCalendar.momentMedication.text(m, calendar[m]);
+            });
+            return text;
+        }
+    },
     noMedicationOnMoment: function(moment) { return `No ${ synonyms.must() } tomar ${ synonyms.medicament() } esta ${ Dictionary[moment] } . ` },
     noMedicationOnDay: function() { return `No ${ synonyms.must() } tomar ${ synonyms.medicament() } este día . ` },
     error: function() { return 'No puedo leer tu calendario. Te puedo ayudar de alguna otra manera ?' }
@@ -53,7 +87,7 @@ exports.MedicationCalendar = {
 exports.MedicationInsertion = {
     doSearch: function(medicineName) { return `Quires que hace una búsqueda sobre "${medicineName.trim()}" ? `},
     addedToCalendar: function() { return `Medicamento añadido a tu calendario . `},
-    medicineMultipleTitle: function(medicineName) { return `Medicationes que corresponden a "${medicineName.trim()}"`},
+    medicineMultipleTitle: function(medicineName) { return `Medicaciones que corresponden a "${medicineName.trim()}"`},
     medicineMultipleFound: function(medicine, exemples) { 
         return `Tengo mas de un medicamento que se llaman "${ medicine }" . Puede ser mas specifico ? ` +
         `Por ejamplo, conozco el ${exemples[0].product}, o el ${exemples[1].product}.`.split('/').join(' barra ');

@@ -5,6 +5,8 @@ const MemoryHandler = require('./../services/memory-handler');
 const Datetime = require('../services/datetime');
 const Locale = require('../locale/es').MedicationCalendar;
 const LocaleGeneral = require('../locale/es').General;
+const Utils = require('./../../Utils').Utils;
+const Constants = require('./../../Constants');
 
 const skillName = 'MedecineCalendar';
 
@@ -23,23 +25,48 @@ module.exports = function (request, response) {
     // Get medecines from and say result
     return UserService.getUserMedicines(request.currentUser, day)
     .then( function(calendar) {
-        Object.keys(calendar).forEach( m => {
-            calendar[m] = calendar[m].map( treatment => treatment.quantity + ' ' + treatment.medicine.product );
-            const lastMedicine = calendar[m].pop();
-            calendar[m] = calendar[m].join(', ');
-            calendar[m] = calendar[m] !== '' ? [calendar[m], lastMedicine].join(`, ${ LocaleGeneral.and() } `) : lastMedicine;
-        });
-
         let message = '';
 
         if ( moment ) {
-            if ( calendar[moment] ) message += Locale.momentMedication(moment, calendar);
-            else message += Locale.noMedicationOnMoment(moment);
+            if ( calendar[moment] ) {
+                message += Locale.momentMedication.say( moment, calendar[moment] );
+                if ( Utils.supportsDisplay(request) ) {
+                    response.directive( Utils.renderBodyTemplate(
+                        Constants.images.welcomeImage,
+                        Locale.momentMedication.title(day, moment),
+                        Locale.momentMedication.text(calendar)
+                    ));
+                }
+            }
+            else { 
+                message += Locale.noMedicationOnMoment(moment);
+                if ( Utils.supportsDisplay(request) ) {
+                    response.directive( Utils.renderBodyTemplate(
+                        Constants.images.welcomeImage,
+                        Locale.momentMedication.title(day, moment),
+                        message
+                    ));
+                }
+            }
         } else {
-            Object.keys(calendar).forEach( m => {
-                if ( calendar[m] ) message += Locale.momentMedication(m, calendar);
-            });
-            if ( message === '' ) message += Locale.noMedicationOnDay();
+            message = Locale.dayMedication.say(calendar);
+            if ( message !== '' && Utils.supportsDisplay(request) ) {
+                response.directive( Utils.renderBodyTemplate(
+                    Constants.images.welcomeImage,
+                    Locale.dayMedication.title(day),
+                    Locale.dayMedication.text(calendar)
+                ));
+            }
+            if ( message === '' ) {
+                message += Locale.noMedicationOnDay();
+                if ( Utils.supportsDisplay(request) ) {
+                    response.directive( Utils.renderBodyTemplate(
+                        Constants.images.welcomeImage,
+                        Locale.dayMedication.title(day),
+                        message
+                    ));
+                }
+            }
         }
 
         message += LocaleGeneral.continue();
