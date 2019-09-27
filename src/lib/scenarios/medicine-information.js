@@ -2,6 +2,8 @@ const MedicineService = require('./../database/medicinedata');
 const RequestHandler = require('./../services/request-handler');
 const Locale = require('../locale/es').MedicineInformation;
 const LocaleGeneral = require('../locale/es').General;
+const Constants = require('./../../Constants');
+const Utils = require('./../../Utils').Utils;
 
 /**
  * Return informations about a medicine
@@ -21,16 +23,25 @@ module.exports = function (request, response) {
         if ( ['INFO','ACTIVE_PRINCIPLE'].includes( RequestHandler.getSlotId(request.slots.medicineInformation) ) ) {
             const msg = sayPrincipiosActivos(request.slots.medicineBrandName.value, medicines[0].active_principle);
             if ( msg ) { response.say(msg); }
+            if ( Utils.supportsDisplay(request) ) {
+                response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+            }
         }
 
         if ( ['INFO','EFFECT'].includes( RequestHandler.getSlotId(request.slots.medicineInformation) ) ) {
             const msg = saySideEffects(request.slots.medicineBrandName.value, medicines[0].side_effects);
             if ( msg ) { response.say(msg); }
+            if ( Utils.supportsDisplay(request) ) {
+                response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+            }
         }
 
         if ( ['INFO','FORM','COLOR'].includes( RequestHandler.getSlotId(request.slots.medicineInformation) ) ) {
             const msg = sayPillShape(request.slots.medicineBrandName.value, medicines);
             if ( msg ) { response.say(msg); }
+            if ( Utils.supportsDisplay(request) ) {
+                response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+            }
         }
 
         response.say( LocaleGeneral.continue() );

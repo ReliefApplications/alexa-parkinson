@@ -9,7 +9,7 @@ exports.General = {
     and: function() { return 'y'; },
     momentOfDay: function(moment) { return Dictionary[moment]; },
     continue: function() {
-        return pickAnswerAtRandom(['Qué quieres hacer más ? ', 'Quires hacer algo más ? ', 'Algo más ? ', 'Puedo ayudarte en otra cosa ? ']);
+        return pickAnswerAtRandom(['Qué quieres hacer más ? ', 'Quieres hacer algo más ? ', 'Algo más ? ', 'Puedo ayudarte en otra cosa ? ']);
     },
     workInProgress: function() {
         return 'Este functionalidad no es lista . Quieres hacer otra cosa ?';
@@ -22,7 +22,8 @@ exports.AlexaCancel = {
 
 exports.AlexaLaunch = {
     title: function() { return 'Bienvenido a la skill de Asistencia Parkinson.'; },
-    text: function() { return 'Queremos ofrecerte toda la información sobre tu medicación además de darte la posibilidad de consultar tus dudas con la Asociación Parkinson Madrid. \nDi “Mi Medicación” o “Llamar”'; },
+    text: function() { return 'Di “Mi Medicación” o “Llamar”'; },
+    say: function() { return 'Queremos ofrecerte toda la información sobre tu medicación. Di “Mi Medicación” o “Llamar”'; },
     reprompt: function() { return 'Di “Mi Medicación”, “Llamar” o pregúntame “¿Qué puedo hacer?”'; }
 }
 
@@ -31,7 +32,20 @@ exports.AlexaStop = {
 }
 
 exports.AlexaHelp = {
-    help: function() { 
+    title: function() { return 'Ayuda'; },
+    text: function() { return '¿Qué quieres hacer? Di "¿Qué puedo hacer?" para ver todas las opciones. '; },
+    help: function() { return '¿Qué quieres hacer? Di "¿Qué puedo hacer?" para ver todas las opciones. '; },
+    reprompt: function() { return 'Dime lo que quieres hacer'; }
+}
+
+
+exports.ParkinsonOptions = {
+    title: function() { return 'Puedes por ejemplo'; },
+    text: function() { return 'Crear un calendario de medicación. Di “Tengo que tomar medicación”. ' + 
+    'Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”. ' +
+    'También puedes obtener información sobre ti medicación Di “Efectos secundarios del Sinemet”. ' +
+    'Llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.'; },
+    options: function() { 
         return 'Puedes crear un calendario de medicación. Di por ejemplo “Tengo que tomar medicación” . ' +
             'Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?” . ' +
             'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” . ' +
@@ -39,6 +53,7 @@ exports.AlexaHelp = {
     },
     reprompt: function() { return 'Dime lo que quieres hacer'; }
 }
+
 
 exports.Call = {
 
@@ -85,7 +100,7 @@ exports.MedicationCalendar = {
 }
 
 exports.MedicationInsertion = {
-    doSearch: function(medicineName) { return `Quires que hace una búsqueda sobre "${medicineName.trim()}" ? `},
+    doSearch: function(medicineName) { return `Quieres que hace una búsqueda sobre "${medicineName}" ? `},
     addedToCalendar: function() { return `Medicamento añadido a tu calendario . `},
     medicineMultipleTitle: function(medicineName) { return `Medicaciones que corresponden a "${medicineName.trim()}"`},
     medicineMultipleFound: function(medicine, exemples) { 
@@ -102,6 +117,7 @@ exports.MedicationMenu = {
 }
 
 exports.MedicineInformation = {
+    title: function() { return 'Información de la medicación'; },
     error: function() { return 'No puedo leer las informationes. Te puedo ayudar de alguna otra manera ?'; },
     noMedicationFound: function() { return 'No conozco medication con este nombre. Te puedo ayudar de alguna otra manera ?'; },
     /**

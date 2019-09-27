@@ -19,7 +19,6 @@
                 {
                     "name": "AMAZON.HelpIntent",
                     "samples": [
-                        "Qué puedo hacer",
                         "ayudame",
                         "ayúdame"
                     ]
@@ -47,7 +46,8 @@
                         }
                     ],
                     "samples": [
-                        "Qué medicamentos tengo que tomar {day} {momentOfDay}",
+                        "Qué medicacion tengo que tomar {day} {momentOfDay}",
+                        "Qué medicación tengo que tomar {day} {momentOfDay}",
                         "que debe tomar {day} {momentOfDay}",
                         "que debe tomar {day}",
                         "que tengo que tomar {day} {momentOfDay}",
@@ -213,9 +213,9 @@
                         }
                     ],
                     "samples": [
-                        "Tengo que tomar una nueva medication",
-                        "Quiero incluir una nueva medication",
-                        "Quiero añadir una nueva medication",
+                        "Quiero añadir una nueva medicacion",
+                        "Quiero incluir una nueva medicacion",
+                        "Tengo que tomar una nueva medicacion",
                         "Quiero incluir {medicineName} a mi calendario",
                         "Quiero ańadir {medicineName} a mi calendario",
                         "Para {name}  quiero ańadir {medicineName}",
@@ -249,7 +249,23 @@
                         }
                     ],
                     "samples": [
+                        "{intensity}",
                         "{medicineName}  {intensity}"
+                    ]
+                },
+                {
+                    "name": "Call",
+                    "slots": [],
+                    "samples": [
+                        "Llamar"
+                    ]
+                },
+                {
+                    "name": "ParkinsonOptions",
+                    "slots": [],
+                    "samples": [
+                        "Qué puedo hacer",
+                        "Que puedo hacer"
                     ]
                 }
             ],
@@ -284,6 +300,10 @@
                             "name": {
                                 "value": "mañana",
                                 "synonyms": [
+                                    "por la manana",
+                                    "durante la manana",
+                                    "en la manana",
+                                    "manana",
                                     "en la mañana",
                                     "durante la mañana",
                                     "por la mañana"
@@ -332,7 +352,7 @@
                             }
                         },
                         {
-                            "id": "THRUSDAY",
+                            "id": "THURSDAY",
                             "name": {
                                 "value": "jueves"
                             }
@@ -394,6 +414,7 @@
                             "name": {
                                 "value": "medicamento",
                                 "synonyms": [
+                                    "medicamentos",
                                     "medicinas",
                                     "medicina",
                                     "medicacion",
@@ -484,7 +505,10 @@
                             "name": {
                                 "value": "efecto",
                                 "synonyms": [
-                                    "efecto secundario"
+                                    "efecto secundario",
+                                    "efectos secundarios",
+                                    "efecto secundarios",
+                                    "efectos secundario"
                                 ]
                             }
                         }
@@ -496,7 +520,7 @@
                         {
                             "id": "EACH_SUNDAY",
                             "name": {
-                                "value": "cada domindo",
+                                "value": "cada domingo",
                                 "synonyms": [
                                     "el domingo",
                                     "todos los domingos"
@@ -1021,7 +1045,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Sólo conozco sus efectos sucundarios, su forma o su color. Pues... dime."
+                        "value": "Sólo conozco sus efectos secundarios, su forma o su color. Pues... dime."
                     }
                 ]
             },

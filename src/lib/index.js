@@ -14,5 +14,6 @@ module.exports = {
     },
     medicine: {
         information: require('./scenarios/medicine-information')
-    }
+    },
+    parkinsonOptions: require('./scenarios/parkinsonOptions')
 }

@@ -11,7 +11,7 @@ const Locale = require('../locale/es').AlexaLaunch;
  */
 module.exports = function (request, response) {
 	return new Promise( function (resolve, reject) {;
-		response.say( Locale.title() + ' ' + Locale.text() );
+		response.say( Locale.title() + ' ' + Locale.say() );
 		response.reprompt( Locale.reprompt() );
 
 		if ( Utils.supportsDisplay(request) ) {

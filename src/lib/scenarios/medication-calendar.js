@@ -11,7 +11,7 @@ const Constants = require('./../../Constants');
 const skillName = 'MedecineCalendar';
 
 /**
- * Retrun entries in the calendar
+ * Return entries in the calendar
  * @param {*} request
  * @param {*} response
  */
