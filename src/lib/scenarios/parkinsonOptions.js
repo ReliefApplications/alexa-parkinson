@@ -15,9 +15,7 @@ module.exports = function (request, response) {
         if ( Utils.supportsDisplay(request) ) {
             response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), Locale.text() ));
         }
-
         MemoryHandler.setMemory(new SkillMemory('Help', Locale.options(), {}, undefined, undefined));
-
         response.say( Locale.options() );
         response.reprompt( Locale.reprompt() );
         response.send();
