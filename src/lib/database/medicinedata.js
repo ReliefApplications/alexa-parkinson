@@ -25,8 +25,6 @@ module.exports = {
 
     getMedicineByFormattedName: async function (searchInput) {
         const connection = await databaseConnection.openDatabase();
-        let searchRegex = searchInput;
-        // let searchRegex = searchInput.replace(' ', '\\s');
         let data = await connection.db(configuration.database.dbname)
             .collection(configuration.database.schemas.medicine)
             .find({ 'formatted_name': { '$regex': `${searchInput}`, '$options': 'i' } })

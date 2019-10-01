@@ -23,7 +23,14 @@ module.exports = {
     //--- ParkinsonOptions ---
     parkinsonOptions: {
       title: ["Opciones"],
-      text: ["Crear un calendario de medicación. Di “Tengo que tomar medicación”. Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”. También puedes obtener información sobre ti medicación Di “Efectos secundarios del Sinemet”. Llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.”"],
+      text: ["Crear un calendario de medicación. Di “Tengo que tomar medicación”. Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”."],
+      reprompt: []
+    },
+
+    //--- ParkinsonMoreOptions ---
+    parkinsonMoreOptions: {
+      title: ["Opciones"],
+      text: ["También puedes obtener información sobre ti medicación Di “Efectos secundarios del Sinemet”. Llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.”"],
       reprompt: []
     },
 
@@ -96,5 +103,14 @@ module.exports = {
   images: {
     welcomeImage: "https://i.ytimg.com/vi/PUOun9RImC8/maxresdefault.jpg",
     defaultImage: "https://i.ytimg.com/vi/PUOun9RImC8/maxresdefault.jpg"
-  }
+  },
+  medicineImage: {
+    permax: "https://i.imgur.com/hFjrmEF.png",
+    sinemet: "https://i.imgur.com/Xu2NgAB.png",
+    carbidopa: "https://i.imgur.com/67TmcPG.png",
+    requip: "https://i.imgur.com/bUVtEqb.png",
+    parlodel: "https://i.imgur.com/MpCSIiw.png", 
+    stalevo: "https://i.imgur.com/pVvBXwg.png",
+    mirapex: "https://i.imgur.com/c6k6M9C.png",
+  },
 };

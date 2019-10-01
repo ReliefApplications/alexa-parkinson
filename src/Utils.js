@@ -216,6 +216,33 @@ exports.Utils = {
         };
         return template;
     },
+    renderBodyTemplateImage(title, img) {
+        let template = {
+            "type": "Display.RenderTemplate",
+            "template": {
+                "type": "BodyTemplate7",
+                "backButton": "HIDDEN",
+                // "backgroundImage": {
+                //     "contentDescription": "",
+                //     "sources": [{
+                //         "url": url,
+                //         "size": "MEDIUM"
+                //     }
+                //     ]
+                // },
+                "title": title,
+                "image": {
+                    "contentDescription": "",
+                    "sources": [
+                      {
+                        "url": img,
+                      }
+                    ]
+                  },
+            }
+        };
+        return template;
+    },
     /**
      * Render on the user's screen a list of text with images
      * @param { string } imageUrl 

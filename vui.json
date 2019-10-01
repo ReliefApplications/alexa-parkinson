@@ -19,6 +19,8 @@
                 {
                     "name": "AMAZON.HelpIntent",
                     "samples": [
+                        "sí",
+                        "si",
                         "ayudame",
                         "ayúdame"
                     ]
@@ -92,10 +94,7 @@
                 {
                     "name": "AMAZON.YesIntent",
                     "samples": [
-                        "vale",
-                        "sí",
-                        "sì",
-                        "si"
+                        "vale"
                     ]
                 },
                 {
@@ -264,8 +263,16 @@
                     "name": "ParkinsonOptions",
                     "slots": [],
                     "samples": [
+                        "opciones",
                         "Qué puedo hacer",
                         "Que puedo hacer"
+                    ]
+                },
+                {
+                    "name": "ParkinsonMoreOptions",
+                    "slots": [],
+                    "samples": [
+                        "Quiero ver mas opciones"
                     ]
                 }
             ],
@@ -457,6 +464,8 @@
                             "name": {
                                 "value": "Carbidopa/Levodopa",
                                 "synonyms": [
+                                    "levodopa",
+                                    "carbidopa",
                                     "Carbidopa Levodopa Genérica"
                                 ]
                             }
@@ -474,7 +483,12 @@
                         {
                             "id": "ACTIVE_PRINCIPLE",
                             "name": {
-                                "value": "principios activos"
+                                "value": "principios activos",
+                                "synonyms": [
+                                    "principio activos",
+                                    "principios activo",
+                                    "principio activo"
+                                ]
                             }
                         },
                         {

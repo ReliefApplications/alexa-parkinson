@@ -40,6 +40,10 @@ module.exports = function (request, response) {
             const msg = sayPillShape(request.slots.medicineBrandName.value, medicines);
             if ( msg ) { response.say(msg); }
             if ( Utils.supportsDisplay(request) ) {
+                const img = Locale.medicineImage(request.slots.medicineBrandName.value);
+                if (img) {
+                    response.directive(Utils.renderBodyTemplateImage(Locale.title(), img));
+                }
                 response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
             }
         }
@@ -63,6 +67,10 @@ module.exports = function (request, response) {
  */
 function sayPrincipiosActivos(medicineName, principios) {
     return Locale.activePrinciples(medicineName.trim(), principios.toLowerCase().split('/'));
+}
+
+function sayMedicineImage(medicineName) {
+    return Locale.medicineImage(medicineName);
 }
 
 /**

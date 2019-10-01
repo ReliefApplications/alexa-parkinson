@@ -1,4 +1,5 @@
 const Dictionary = require('./dictionary');
+const Constants = require('./../../../Constants');
 
 // =============================================
 // Translation objects that construct sentences.
@@ -9,7 +10,7 @@ exports.General = {
     and: function() { return 'y'; },
     momentOfDay: function(moment) { return Dictionary[moment]; },
     continue: function() {
-        return pickAnswerAtRandom(['Qué quieres hacer más ? ', 'Quieres hacer algo más ? ', 'Algo más ? ', 'Puedo ayudarte en otra cosa ? ']);
+        return pickAnswerAtRandom(['¿Quieres hacer algo más?', '¿Puedo ayudarte en otra cosa?', '¿Necesitas algo más?']);
     },
     workInProgress: function() {
         return 'Este functionalidad no es lista . Quieres hacer otra cosa ?';
@@ -42,14 +43,24 @@ exports.AlexaHelp = {
 exports.ParkinsonOptions = {
     title: function() { return 'Puedes por ejemplo'; },
     text: function() { return 'Crear un calendario de medicación. Di “Tengo que tomar medicación”. ' + 
-    'Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”. ' +
-    'También puedes obtener información sobre ti medicación Di “Efectos secundarios del Sinemet”. ' +
-    'Llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.'; },
+    'Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”. '; },
     options: function() { 
         return 'Puedes crear un calendario de medicación. Di por ejemplo “Tengo que tomar medicación” . ' +
             'Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?” . ' +
-            'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” . ' +
-            'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación” .';
+            'Di "Quiero ver mas opciones" para màs información';
+    },
+    reprompt: function() { return 'Dime lo que quieres hacer'; }
+}
+
+
+exports.ParkinsonMoreOptions = {
+    title: function() { return 'Puedes por ejemplo'; },
+    text: function() { return 'También puedes obtener información sobre ti medicación Di “Efectos secundarios del Sinemet”. ' +
+    'Llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.'; },
+    options: function() { 
+        return 'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” . ' +
+            'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación” .' + 
+            'Di "opciones" para volver a escucharlas';
     },
     reprompt: function() { return 'Dime lo que quieres hacer'; }
 }
@@ -159,6 +170,29 @@ exports.MedicineInformation = {
             msg = `No tiene efecto secundario.`;
         }
         return msg;
+    },
+    /**
+     * Return an url of the medicine's image
+     * @param {string} medicineName
+     */
+    medicineImage: function(medicineName) {
+        let img = undefined;
+        if (medicineName == 'permax' ) {
+            img = Constants.medicineImage.permax
+        } else if (medicineName == 'sinemet') {
+            img = Constants.medicineImage.sinemet
+        } else if (medicineName == 'stalevo') {
+            img = Constants.medicineImage.stalevo
+        } else if (medicineName == 'requip') {
+            img = Constants.medicineImage.requip
+        } else if (medicineName == 'mirapex') {
+            img = Constants.medicineImage.mirapex
+        } else if (medicineName == 'parlodel') {
+            img = Constants.medicineImage.parlodel
+        } else if (medicineName == 'carbidopa') {
+            img = Constants.medicineImage.carbidopa
+        }
+        return img;
     },
     /**
      * return a message list medicine shape and color
