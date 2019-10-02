@@ -76,6 +76,10 @@ exports.handler = function (alexaApp) {
         return SkillDictionary.medication.insertion.confirmation(request, response);
     });
 
+    alexaApp.intent('AlexaConfirmation', function (request, response) {
+        return SkillDictionary.confirmation(request, response);
+    });
+
     alexaApp.intent('MedicationCalendar', function (request, response) {
         return SkillDictionary.medication.calendar(request, response);
     });

@@ -32,6 +32,10 @@ exports.AlexaStop = {
     stop: function() { return 'Vale. Detengo la Skill.'}
 }
 
+exports.AlexaConfirmation = {
+    confirmation: function() { return '¿Quieres cerrar la skill de medicación?'}
+}
+
 exports.AlexaHelp = {
     title: function() { return 'Ayuda'; },
     text: function() { return '¿Qué quieres hacer? Di "¿Qué puedo hacer?" para ver todas las opciones. '; },
@@ -42,12 +46,12 @@ exports.AlexaHelp = {
 
 exports.ParkinsonOptions = {
     title: function() { return 'Puedes por ejemplo'; },
-    text: function() { return 'Crear un calendario de medicación. Di “Tengo que tomar medicación”. ' + 
+    text: function() { return 'Crear un calendario de medicación. Di “Tengo que tomar una nueva medicación”. ' + 
     'Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”. '; },
     options: function() { 
-        return 'Puedes crear un calendario de medicación. Di por ejemplo “Tengo que tomar medicación” . ' +
-            'Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?” . ' +
-            'Di "Quiero ver mas opciones" para màs información';
+        return 'Puedes crear un calendario de medicación. Di por ejemplo “Tengo que tomar una nueva medicación” . ' +
+            'O bien puedes preguntar qué medicación tienes ya en tu calendario. Diciendo por ejemplo “¿Qué medicamentos tengo que tomar hoy?” . ' +
+            '¿Quieres ver más opciones?';
     },
     reprompt: function() { return 'Dime lo que quieres hacer'; }
 }
@@ -55,12 +59,14 @@ exports.ParkinsonOptions = {
 
 exports.ParkinsonMoreOptions = {
     title: function() { return 'Puedes por ejemplo'; },
-    text: function() { return 'También puedes obtener información sobre ti medicación Di “Efectos secundarios del Sinemet”. ' +
-    'Llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.'; },
+    text: function() { 
+        return  'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” . ' +
+                'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación” .' + 
+                'Di "opciones" para volver a escucharlas'; },
     options: function() { 
         return 'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” . ' +
             'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación” .' + 
-            'Di "opciones" para volver a escucharlas';
+            '¿Quieres volver a escuchar las opciones?';
     },
     reprompt: function() { return 'Dime lo que quieres hacer'; }
 }

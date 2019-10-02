@@ -74,7 +74,7 @@ module.exports = function (request, response) {
         MemoryHandler.setMemory(new SkillMemory(
             skillName, message, {},
             (req, res) => { return require('./help')(req, res); },
-            (req, res) => { return require('./alexa-stop')(req, res); }
+            (req, res) => { return require('./alexa-confirmation')(req, res); }
         ));
 
         response.say( message );
@@ -89,7 +89,7 @@ module.exports = function (request, response) {
         MemoryHandler.setMemory(new SkillMemory(
             skillName, msg, {},
             (req, res) => { return require('./help')(req, res); },
-            (req, res) => { return require('./alexa-stop')(req, res); }
+            (req, res) => { return require('./alexa-confirmation')(req, res); }
         ));
 
         response.reprompt( LocaleGeneral.continue() );

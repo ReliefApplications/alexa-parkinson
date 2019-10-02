@@ -13,7 +13,7 @@ module.exports = function (request, response) {
     response.send();
     MemoryHandler.setMemory(new SkillMemory('Call', LocaleGeneral.workInProgress(), {}, 
         (req, res) => { return require('./help')(req, res); },
-        (req, res) => { return require('./alexa-stop')(req, res); }
+        (req, res) => { return require('./alexa-confirmation')(req, res); }
     ));
     return response.shouldEndSession(false);
 }

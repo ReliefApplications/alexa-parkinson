@@ -4,6 +4,9 @@ const Locale = require('../locale/es').MedicineInformation;
 const LocaleGeneral = require('../locale/es').General;
 const Constants = require('./../../Constants');
 const Utils = require('./../../Utils').Utils;
+const SkillMemory = require('./../models/skill-memory');
+const MemoryHandler = require('./../services/memory-handler');
+const skillName = 'MedecineCalendar';
 
 /**
  * Return informations about a medicine
@@ -23,16 +26,20 @@ module.exports = function (request, response) {
         if ( ['INFO','ACTIVE_PRINCIPLE'].includes( RequestHandler.getSlotId(request.slots.medicineInformation) ) ) {
             const msg = sayPrincipiosActivos(request.slots.medicineBrandName.value, medicines[0].active_principle);
             if ( msg ) { response.say(msg); }
-            if ( Utils.supportsDisplay(request) ) {
-                response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+            if (!['INFO'].includes( RequestHandler.getSlotId(request.slots.medicineInformation))) {
+                if ( Utils.supportsDisplay(request) ) {
+                    response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+                }
             }
         }
 
         if ( ['INFO','EFFECT'].includes( RequestHandler.getSlotId(request.slots.medicineInformation) ) ) {
             const msg = saySideEffects(request.slots.medicineBrandName.value, medicines[0].side_effects);
             if ( msg ) { response.say(msg); }
-            if ( Utils.supportsDisplay(request) ) {
-                response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+            if (!['INFO'].includes( RequestHandler.getSlotId(request.slots.medicineInformation))) {
+                if ( Utils.supportsDisplay(request) ) {
+                    response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+                }
             }
         }
 
@@ -47,6 +54,12 @@ module.exports = function (request, response) {
                 response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
             }
         }
+
+        MemoryHandler.setMemory(new SkillMemory(
+            skillName, LocaleGeneral.continue(), {},
+            (req, res) => { return require('./help')(req, res); },
+            (req, res) => { return require('./alexa-confirmation')(req, res); }
+        ));
 
         response.say( LocaleGeneral.continue() );
         response.send();

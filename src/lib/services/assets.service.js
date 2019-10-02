@@ -1,7 +1,7 @@
 /**
  * Paths to images contained in the asset folder
  */
-module.Images = {
+module.exports = {
     /**
      * URL of images in the ```assets/images``` folder
      */
@@ -23,7 +23,7 @@ module.Images = {
         }
     },
     /**
-     * Wrap a given url to resirect to the assets folder
+     * Wrap a given url to redirect to the assets folder
      * @param {string} url
      * @returns {string} wrapped url 
      */

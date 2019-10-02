@@ -23,7 +23,7 @@ module.exports = {
     //--- ParkinsonOptions ---
     parkinsonOptions: {
       title: ["Opciones"],
-      text: ["Crear un calendario de medicación. Di “Tengo que tomar medicación”. Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”."],
+      text: ["Crear un calendario de medicación. Di “Tengo que tomar una nueva medicación”. Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”."],
       reprompt: []
     },
 
@@ -54,6 +54,14 @@ module.exports = {
       speech: [],
       title: ["Que puede hacer"],
       text: ["Puedes crear un calendario de medicación. Di por ejemplo “Quiero añadir sinemet”. Puedes preguntar qué medicación tienes en tu calendario. Di por ejemplo “¿Qué medicamentos tengo que tomar hoy?”. También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemed”. Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”."],
+      reprompt: [],
+    },
+
+    //--- Confirmation ---
+    confirmation: {
+      speech: [],
+      title: ["Que puede hacer"],
+      text: ["¿Quieres cerrar la skill de medicación?"],
       reprompt: [],
     },
 
@@ -106,11 +114,12 @@ module.exports = {
   },
   medicineImage: {
     permax: "https://i.imgur.com/hFjrmEF.png",
-    sinemet: "https://i.imgur.com/Xu2NgAB.png",
+    // sinemet: "https://i.imgur.com/Xu2NgAB.png",
     carbidopa: "https://i.imgur.com/67TmcPG.png",
     requip: "https://i.imgur.com/bUVtEqb.png",
     parlodel: "https://i.imgur.com/MpCSIiw.png", 
     stalevo: "https://i.imgur.com/pVvBXwg.png",
     mirapex: "https://i.imgur.com/c6k6M9C.png",
+    sinemet: "/assets/images/medication/sinemet/sinemet_10_100_mg.jpg"
   },
 };

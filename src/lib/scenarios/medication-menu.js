@@ -22,7 +22,7 @@ module.exports = function (request, response) {
 
         MemoryHandler.setMemory(new SkillMemory('MiMedication', Locale.text(), {}, 
             (req, res) => { return require('./help')(req, res); },
-            (req, res) => { return require('./alexa-stop')(req, res); }
+            (req, res) => { return require('./alexa-confirmation')(req, res); }
         ));
 
         response.shouldEndSession(false);

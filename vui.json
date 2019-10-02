@@ -19,17 +19,13 @@
                 {
                     "name": "AMAZON.HelpIntent",
                     "samples": [
-                        "sí",
-                        "si",
                         "ayudame",
                         "ayúdame"
                     ]
                 },
                 {
                     "name": "AMAZON.StopIntent",
-                    "samples": [
-                        "Cierra la Skill"
-                    ]
+                    "samples": []
                 },
                 {
                     "name": "AMAZON.NavigateHomeIntent",
@@ -94,6 +90,8 @@
                 {
                     "name": "AMAZON.YesIntent",
                     "samples": [
+                        " sí",
+                        "si",
                         "vale"
                     ]
                 },
@@ -212,6 +210,7 @@
                         }
                     ],
                     "samples": [
+                        "nueva medicacion",
                         "Quiero añadir una nueva medicacion",
                         "Quiero incluir una nueva medicacion",
                         "Tengo que tomar una nueva medicacion",
@@ -272,7 +271,17 @@
                     "name": "ParkinsonMoreOptions",
                     "slots": [],
                     "samples": [
+                        "ver mas opciones",
+                        "mas opciones",
                         "Quiero ver mas opciones"
+                    ]
+                },
+                {
+                    "name": "AlexaConfirmation",
+                    "slots": [],
+                    "samples": [
+                        "Cierra parkinson",
+                        "Cierra la skill"
                     ]
                 }
             ],
