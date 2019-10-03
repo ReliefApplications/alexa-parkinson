@@ -5,7 +5,6 @@ module.exports = {
         launch: require('./scenarios/alexa-launch'),
         stop: require('./scenarios/alexa-stop'),
         cancel: require('./scenarios/alexa-cancel'),
-        confirmation: require('./scenarios/alexa-confirmation')
     },
     medication: {
         calendar: require('./scenarios/medication-calendar'),
@@ -18,4 +17,5 @@ module.exports = {
     },
     parkinsonOptions: require('./scenarios/parkinsonOptions'),
     parkinsonMoreOptions: require('./scenarios/parkinsonMoreOptions'),
+    confirmation: require('./scenarios/confirmation')
 }

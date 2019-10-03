@@ -32,7 +32,7 @@ exports.AlexaStop = {
     stop: function() { return 'Vale. Detengo la Skill.'}
 }
 
-exports.AlexaConfirmation = {
+exports.Confirmation = {
     confirmation: function() { return '¿Quieres cerrar la skill de medicación?'}
 }
 
