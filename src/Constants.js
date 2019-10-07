@@ -96,9 +96,6 @@ module.exports = {
     //--- Unhandled MedicationSchedule ---
     unhandledMedicationScheduleText:"a definir",
 
-    //--- Unhandled MedicationLeft ---
-    unhandledMedicationLeftText:"a definir",
-
     //--- Unhandled Call ---
     unhandledCallText:"a definir",
     

@@ -14,7 +14,8 @@ const skillName = 'MedecineCalendar';
  * @param {*} response
  */
 module.exports = function (request, response) {
-    return MedicineService.getMedicineByFormattedName(request.slots.medicineBrandName.value)
+    const medicineName = request.slots.medicineBrandName.value;
+    return MedicineService.getMedicineByFormattedName(medicineName)
     .then( function(medicines) {
 
         if ( !medicines ) { 
@@ -24,7 +25,7 @@ module.exports = function (request, response) {
         }
 
         if ( ['INFO','ACTIVE_PRINCIPLE'].includes( RequestHandler.getSlotId(request.slots.medicineInformation) ) ) {
-            const msg = sayPrincipiosActivos(request.slots.medicineBrandName.value, medicines[0].active_principle);
+            let msg = sayPrincipiosActivos(medicineName, medicines[0].active_principle);
             if ( msg ) { response.say(msg); }
             if (!['INFO'].includes( RequestHandler.getSlotId(request.slots.medicineInformation))) {
                 if ( Utils.supportsDisplay(request) ) {
@@ -34,7 +35,7 @@ module.exports = function (request, response) {
         }
 
         if ( ['INFO','EFFECT'].includes( RequestHandler.getSlotId(request.slots.medicineInformation) ) ) {
-            const msg = saySideEffects(request.slots.medicineBrandName.value, medicines[0].side_effects);
+            const msg = saySideEffects(medicineName, medicines[0].side_effects);
             if ( msg ) { response.say(msg); }
             if (!['INFO'].includes( RequestHandler.getSlotId(request.slots.medicineInformation))) {
                 if ( Utils.supportsDisplay(request) ) {
@@ -44,14 +45,29 @@ module.exports = function (request, response) {
         }
 
         if ( ['INFO','FORM','COLOR'].includes( RequestHandler.getSlotId(request.slots.medicineInformation) ) ) {
-            const msg = sayPillShape(request.slots.medicineBrandName.value, medicines);
+            const msg = sayPillShape(medicineName, medicines);
             if ( msg ) { response.say(msg); }
             if ( Utils.supportsDisplay(request) ) {
-                const img = Locale.medicineImage(request.slots.medicineBrandName.value);
+                const img = Locale.medicineImage(medicineName);
                 if (img) {
                     response.directive(Utils.renderBodyTemplateImage(Locale.title(), img));
                 }
                 response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+            }
+        }
+
+        if ( ['INFO','AMOUNT'].includes( RequestHandler.getSlotId(request.slots.medicineInformation))) {
+            const msgAmount = Utils.getSpecificAmount(medicineName);
+            if (msgAmount !== null) {
+                msg = 'Aún tienes ' + Utils.getSpecificAmount(medicineName) + ' del ' + medicineName; 
+                response.say(msg); 
+                if (!['INFO'].includes( RequestHandler.getSlotId(request.slots.medicineInformation))) {
+                    if ( Utils.supportsDisplay(request) ) {
+                        response.directive(Utils.renderBodyTemplate(Constants.images.welcomeImage, Locale.title(), msg ));
+                    }
+                }
+            } else {
+                response.say(Locale.noInformationFound());
             }
         }
 
@@ -61,7 +77,7 @@ module.exports = function (request, response) {
             (req, res) => { return require('./alexa-confirmation')(req, res); }
         ));
 
-        response.say( LocaleGeneral.continue() );
+        response.say(LocaleGeneral.continue() );
         response.send();
         return response.shouldEndSession(false);
     })

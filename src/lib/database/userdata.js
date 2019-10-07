@@ -38,9 +38,9 @@ module.exports = {
                     _id: askId,
                     calendar: {
                         monday: {
-                            // noche: [] // medicines array
                             // manana: []
                             // tarde: []
+                            // noche: [] // medicines array
                         },
                         tuesday: {},
                         wednesday: {},

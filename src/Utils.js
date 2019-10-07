@@ -129,54 +129,54 @@ exports.Utils = {
         return amount.stock;
     },
     /**
-     * This function is used to get the current amount of the medicine
-     * @param medecine string, Medicine specified
-     */
-    getSpecificAmount: function (medicine) {
-        stock = amount.stock;
-        let rawData = stock.filter(
-            function (stock) { return stock.medicine == medicine }
-        );
-        let result = null;
-        if (rawData.length > 0) {
-            result = this.getSingleAmount(rawData[0]);
-        }
-        return result;
-    },
-    /**
-     * This function is used to get a single medicine amount
-     * @param medecine string, Medicine specified
-     */
-    getSingleAmount: function (medicine) {
+    * This function is used to get the current amount of the medicine
+    * @param medecine string, Medicine specified
+    */
+   getSpecificAmount: function (medicine) {
+       stock = amount.stock;
+       let rawData = stock.filter(
+           function (stock) { return stock.medicine == medicine }
+       );
+       let result = null;
+       if (rawData.length > 0) {
+           result = this.getSingleAmount(rawData[0]);
+       }
+       return result;
+   },
+   /**
+    * This function is used to get a single medicine amount
+    * @param medecine string, Medicine specified
+    */
+   getSingleAmount: function (medicine) {
 
-        let cantidad = Number(medicine.cantidad);
-        let tipo = medicine.tipo;
-        let result = null;
+       let cantidad = Number(medicine.cantidad);
+       let tipo = medicine.tipo;
+       let result = null;
 
-        if (cantidad == 0) {
-            result = `${cantidad} ${tipo}`;
-        } else {
-            switch (tipo) {
-                case 'píldora':
-                    result = `${cantidad} píldora`;
-                    break;
-                case 'gramo':
-                    if (cantidad < 1) {
-                        cantidad *= 100;
-                        result = `${cantidad} miligramo`;
-                    } else {
-                        result = `${cantidad} gramo`;
-                    }
-                    break;
-                default:
-                    result = `${cantidad} ${tipo}`;
-            }
-            if (cantidad >= 2) {
-                result += `s`;
-            }
-        }
-        return result;
-    },
+       if (cantidad == 0) {
+           result = `${cantidad} ${tipo}`;
+       } else {
+           switch (tipo) {
+               case 'píldora':
+                   result = `${cantidad} píldora`;
+                   break;
+               case 'gramo':
+                   if (cantidad < 1) {
+                       cantidad *= 100;
+                       result = `${cantidad} miligramo`;
+                   } else {
+                       result = `${cantidad} gramo`;
+                   }
+                   break;
+               default:
+                   result = `${cantidad} ${tipo}`;
+           }
+           if (cantidad >= 2) {
+               result += `s`;
+           }
+       }
+       return result;
+   },
     setDialogState(request, state) {
         let session = request.getSession();
         session.set('dialogState', state);

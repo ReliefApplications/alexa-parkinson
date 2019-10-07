@@ -53,18 +53,6 @@
                     ]
                 },
                 {
-                    "name": "MedicationLeft",
-                    "slots": [
-                        {
-                            "name": "medicine",
-                            "type": "MEDICINE_ACTIVE_PRINCIPLE"
-                        }
-                    ],
-                    "samples": [
-                        "Cuantos {medicine} me quedan"
-                    ]
-                },
-                {
                     "name": "MyMedication",
                     "slots": [],
                     "samples": [
@@ -154,6 +142,8 @@
                         }
                     ],
                     "samples": [
+                        "{medicineInformation} {medicineBrandName} me quedan",
+                        "{medicineInformation} {medicineBrandName}",
                         "{medicineInformation} sobre {medicineBrandName}",
                         "Qué {medicineInformation} sabes sobre {medicineBrandName}",
                         "De qué {medicineInformation} es el {medicineBrandName}",
@@ -290,6 +280,21 @@
                     "name": "TIMEOFDAY",
                     "values": [
                         {
+                            "id": "MORNING",
+                            "name": {
+                                "value": "mañana",
+                                "synonyms": [
+                                    "por la manana",
+                                    "durante la manana",
+                                    "en la manana",
+                                    "manana",
+                                    "en la mañana",
+                                    "durante la mañana",
+                                    "por la mañana"
+                                ]
+                            }
+                        },
+                        {
                             "id": "AFTERNOON",
                             "name": {
                                 "value": "tarde",
@@ -308,21 +313,6 @@
                                     "en al noche",
                                     "durante la noche",
                                     "por la noche"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "MORNING",
-                            "name": {
-                                "value": "mañana",
-                                "synonyms": [
-                                    "por la manana",
-                                    "durante la manana",
-                                    "en la manana",
-                                    "manana",
-                                    "en la mañana",
-                                    "durante la mañana",
-                                    "por la mañana"
                                 ]
                             }
                         }
@@ -489,6 +479,16 @@
                 {
                     "name": "MEDICINE_INFORMATION",
                     "values": [
+                        {
+                            "id": "AMOUNT",
+                            "name": {
+                                "value": "cuantos",
+                                "synonyms": [
+                                    "cantidad",
+                                    "cuanto"
+                                ]
+                            }
+                        },
                         {
                             "id": "ACTIVE_PRINCIPLE",
                             "name": {
@@ -806,20 +806,6 @@
                                     "prompt": "Slot.Validation.139223907227.832446630205.1507105436992"
                                 }
                             ]
-                        }
-                    ]
-                },
-                {
-                    "name": "MedicationLeft",
-                    "confirmationRequired": false,
-                    "prompts": {},
-                    "slots": [
-                        {
-                            "name": "medicine",
-                            "type": "MEDICINE_ACTIVE_PRINCIPLE",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
                         }
                     ]
                 },
@@ -1224,6 +1210,19 @@
                     {
                         "type": "PlainText",
                         "value": "En qué día ?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.138791897927.1184626161517",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Cuales medicamente "
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Cuales medicacion"
                     }
                 ]
             }

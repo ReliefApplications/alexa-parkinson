@@ -84,10 +84,6 @@ exports.handler = function (alexaApp) {
         return SkillDictionary.medication.calendar(request, response);
     });
 
-    alexaApp.intent('MedicationLeft', function (request, response) {
-        return SkillDictionary.medication.inventory(request, response);
-    });
-
     alexaApp.intent('AMAZON.FallbackIntent', function (request, response) {
         response.say("fall back intent");
         response.shouldEndSession(false);

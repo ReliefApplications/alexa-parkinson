@@ -1,5 +1,6 @@
 const Dictionary = require('./dictionary');
 const Constants = require('./../../../Constants');
+const Utils = require('./../../../Utils').Utils;
 
 // =============================================
 // Translation objects that construct sentences.
@@ -136,7 +137,8 @@ exports.MedicationMenu = {
 exports.MedicineInformation = {
     title: function() { return 'Información de la medicación'; },
     error: function() { return 'No puedo leer las informationes. Te puedo ayudar de alguna otra manera ?'; },
-    noMedicationFound: function() { return 'No conozco medication con este nombre. Te puedo ayudar de alguna otra manera ?'; },
+    noMedicationFound: function() { return 'No conozco medication con este nombre.'; },
+    noInformationFound: function() { return 'No tengo información sobre este medicamento.'; },
     /**
      * Return a sentence saying medicine's active principles
      * @param {string} medicineName 
