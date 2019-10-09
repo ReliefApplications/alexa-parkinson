@@ -181,6 +181,11 @@ exports.Utils = {
         let session = request.getSession();
         session.set('dialogState', state);
     },
+    getDialogState(request) {
+        let session = request.getSession();
+        dialogState = session.get('dialogState');
+        return dialogState;
+    },
     supportsDisplay(request) {
         let hasDisplay =
             request.context &&

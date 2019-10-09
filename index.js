@@ -97,10 +97,6 @@ exports.handler = function (alexaApp) {
         return SkillDictionary.parkinsonOptions(request, response);
     });
 
-    alexaApp.intent('ParkinsonMoreOptions', function (request, response) {
-        return SkillDictionary.parkinsonMoreOptions(request, response);
-    });
-
     alexaApp.intent('AMAZON.CancelIntent', function (request, response) {
         return SkillDictionary.alexa.cancel(request, response);
     });

@@ -11,67 +11,48 @@ exports.General = {
     and: function() { return 'y'; },
     momentOfDay: function(moment) { return Dictionary[moment]; },
     continue: function() {
-        return pickAnswerAtRandom(['¿Quieres hacer algo más?', '¿Puedo ayudarte en otra cosa?', '¿Necesitas algo más?']);
+        return pickAnswerAtRandom(['¿Quieres hacer algo más?', '¿Puedo ayudarte en otra cosa?', '¿Necesitas algo más? ']);
     },
     workInProgress: function() {
-        return 'Este functionalidad no es lista . Quieres hacer otra cosa ?';
+        return 'Este functionalidad no es lista . ¿Quieres hacer otra cosa? ';
     }
 }
 
 exports.AlexaCancel = {
-    cancel: function() { return 'Vale. Qué quieres más ?'}
+    cancel: function() { return 'Vale. ¿Qué quieres más? '}
 }
 
 exports.AlexaLaunch = {
-    title: function() { return 'Bienvenido a la skill de Asistencia Parkinson.'; },
-    text: function() { return 'Di “Mi Medicación” o “Llamar”'; },
-    say: function() { return 'Queremos ofrecerte toda la información sobre tu medicación. Di “Mi Medicación” o “Llamar”'; },
-    reprompt: function() { return 'Di “Mi Medicación”, “Llamar” o pregúntame “¿Qué puedo hacer?”'; }
+    title: function() { return 'Bienvenido a la skill de Asistencia Parkinson. '; },
+    text: function() { return 'Di “Mi Medicación” o “Llamar” '; },
+    say: function() { return 'Queremos ofrecerte toda la información sobre tu medicación. Di “Mi Medicación” o “Llamar” '; },
+    reprompt: function() { return 'Di “Mi Medicación”, “Llamar” o pregúntame “¿Qué puedo hacer?” '; }
 }
 
 exports.AlexaStop = {
-    stop: function() { return 'Vale. Detengo la Skill.'}
+    stop: function() { return 'Vale. Detengo la Skill. '}
 }
 
 exports.Confirmation = {
-    confirmation: function() { return '¿Quieres cerrar la skill de medicación?'}
+    confirmation: function() { return '¿Quieres cerrar la skill de medicación? '}
 }
 
 exports.AlexaHelp = {
     title: function() { return 'Ayuda'; },
     text: function() { return '¿Qué quieres hacer? Di "¿Qué puedo hacer?" para ver todas las opciones. '; },
     help: function() { return '¿Qué quieres hacer? Di "¿Qué puedo hacer?" para ver todas las opciones. '; },
-    reprompt: function() { return 'Dime lo que quieres hacer'; }
+    reprompt: function() { return 'Dime lo que quieres hacer. '; }
 }
 
 
 exports.ParkinsonOptions = {
     title: function() { return 'Puedes por ejemplo'; },
-    text: function() { return 'Crear un calendario de medicación. Di “Tengo que tomar una nueva medicación”. ' + 
-    'Solicita tu calendario. Di “¿Qué medicamentos tengo que tomar hoy?”. '; },
-    options: function() { 
-        return 'Puedes crear un calendario de medicación. Di por ejemplo “Tengo que tomar una nueva medicación” . ' +
-            'O bien puedes preguntar qué medicación tienes ya en tu calendario. Diciendo por ejemplo “¿Qué medicamentos tengo que tomar hoy?” . ' +
-            '¿Quieres ver más opciones?';
-    },
-    reprompt: function() { return 'Dime lo que quieres hacer'; }
+    calendar: function() { return 'Puedes crear un calendario de medicación. Di por ejemplo “Tengo que tomar una nueva medicación”. '; },
+    medication: function() { return 'Puedes preguntar qué medicación tienes ya en tu calendario. Diciendo por ejemplo “¿Qué medicamentos tengo que tomar hoy?”. '; },
+    information: function() { return 'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet”. '; },
+    call: function() { return 'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”. '; },
+    reprompt: function() { return 'Di "Más opciones" para saber más. '; },
 }
-
-
-exports.ParkinsonMoreOptions = {
-    title: function() { return 'Puedes por ejemplo'; },
-    text: function() { 
-        return  'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” . ' +
-                'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación” .' + 
-                'Di "opciones" para volver a escucharlas'; },
-    options: function() { 
-        return 'También puedes obtener información sobre cualquier medicación relacionada con el Parkinson. Di por ejemplo: “Efectos secundarios del Sinemet” . ' +
-            'Además puedes llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación” .' + 
-            '¿Quieres volver a escuchar las opciones?';
-    },
-    reprompt: function() { return 'Dime lo que quieres hacer'; }
-}
-
 
 exports.Call = {
 
@@ -114,7 +95,7 @@ exports.MedicationCalendar = {
     },
     noMedicationOnMoment: function(moment) { return `No ${ synonyms.must() } tomar ${ synonyms.medicament() } esta ${ Dictionary[moment] } . ` },
     noMedicationOnDay: function() { return `No ${ synonyms.must() } tomar ${ synonyms.medicament() } este día . ` },
-    error: function() { return 'No puedo leer tu calendario. Te puedo ayudar de alguna otra manera ?' }
+    error: function() { return 'No puedo leer tu calendario. ¿Te puedo ayudar de alguna otra manera ? ' }
 }
 
 exports.MedicationInsertion = {
@@ -131,13 +112,13 @@ exports.MedicationInsertion = {
 exports.MedicationMenu = {
     title: function() { return "Mi medicación"; },
     text: function() { return "Ok, pregúntame por tu medicación programada. Por ejemplo di: ¿Qué medicación tengo que tomar hoy? O pregúntame “¿Qué puedo hacer?”"; },
-    reprompt: function() { return "Disculpa ¿Quieres información sobre tu medicación de hoy?" },
+    reprompt: function() { return "Disculpa ¿Quieres información sobre tu medicación de hoy? " },
 }
 
 exports.MedicineInformation = {
-    title: function() { return 'Información de la medicación'; },
-    error: function() { return 'No puedo leer las informationes. Te puedo ayudar de alguna otra manera ?'; },
-    noMedicationFound: function() { return 'No conozco medication con este nombre.'; },
+    title: function() { return 'Información de la medicación '; },
+    error: function() { return 'No puedo leer las informationes. ¿Te puedo ayudar de alguna otra manera ? '; },
+    noMedicationFound: function() { return 'No conozco medication con este nombre. '; },
     noInformationFound: function() { return 'No tengo información sobre este medicamento.'; },
     /**
      * Return a sentence saying medicine's active principles

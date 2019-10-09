@@ -27,13 +27,6 @@ module.exports = {
       reprompt: []
     },
 
-    //--- ParkinsonMoreOptions ---
-    parkinsonMoreOptions: {
-      title: ["Opciones"],
-      text: ["También puedes obtener información sobre ti medicación Di “Efectos secundarios del Sinemet”. Llamar a la asociación Parkinson Madrid, Di “Llamar a la Asociación”.”"],
-      reprompt: []
-    },
-
     //--- Call ---
     call: {
       title: ["Llamada"],

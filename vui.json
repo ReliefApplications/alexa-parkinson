@@ -99,7 +99,9 @@
                 },
                 {
                     "name": "AMAZON.NextIntent",
-                    "samples": []
+                    "samples": [
+                        "siguiente"
+                    ]
                 },
                 {
                     "name": "AMAZON.PageUpIntent",
@@ -196,7 +198,10 @@
                         },
                         {
                             "name": "intensity",
-                            "type": "MEDICINE_INTENCITY"
+                            "type": "MEDICINE_INTENCITY",
+                            "samples": [
+                                "{intensity}"
+                            ]
                         }
                     ],
                     "samples": [
@@ -242,28 +247,17 @@
                     ]
                 },
                 {
-                    "name": "Call",
-                    "slots": [],
-                    "samples": [
-                        "Llamar"
-                    ]
-                },
-                {
                     "name": "ParkinsonOptions",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "helpOptions",
+                            "type": "HELP_OPTIONS"
+                        }
+                    ],
                     "samples": [
-                        "opciones",
+                        "{helpOptions}",
                         "Qué puedo hacer",
                         "Que puedo hacer"
-                    ]
-                },
-                {
-                    "name": "ParkinsonMoreOptions",
-                    "slots": [],
-                    "samples": [
-                        "ver mas opciones",
-                        "mas opciones",
-                        "Quiero ver mas opciones"
                     ]
                 },
                 {
@@ -769,6 +763,66 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "HELP_OPTIONS",
+                    "values": [
+                        {
+                            "id": "MORE",
+                            "name": {
+                                "value": "Más opciones",
+                                "synonyms": [
+                                    "Mas opciones"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "CALL",
+                            "name": {
+                                "value": "Llamar",
+                                "synonyms": [
+                                    " Más sobre llamar",
+                                    "mas sobre llamar",
+                                    " Mas sobre la llamada",
+                                    " Más sobre la llamada"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "INFORMATION",
+                            "name": {
+                                "value": "informaciones",
+                                "synonyms": [
+                                    "information",
+                                    "todo",
+                                    "dato"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "MEDICATION",
+                            "name": {
+                                "value": "medicamentos",
+                                "synonyms": [
+                                    " Más sobre medicación",
+                                    " Más sobre medicamentos",
+                                    " Más sobre medicacion",
+                                    "que medicamentos"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "CALENDAR",
+                            "name": {
+                                "value": "calendario",
+                                "synonyms": [
+                                    "Más sobre calendario",
+                                    "Más sobre el calendario",
+                                    "nueva calendario"
+                                ]
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -923,8 +977,10 @@
                             "name": "intensity",
                             "type": "MEDICINE_INTENCITY",
                             "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.620655070126.445321323820"
+                            }
                         }
                     ]
                 },
@@ -964,6 +1020,20 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "name": "ParkinsonOptions",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "helpOptions",
+                            "type": "HELP_OPTIONS",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -992,7 +1062,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Cuale medicamento?"
+                        "value": "¿Cuale medicamento?"
                     }
                 ]
             },
@@ -1001,11 +1071,11 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Con qué frecuencia debe tomar tu medicación ?"
+                        "value": "¿Con qué frecuencia debe tomar tu medicación ?"
                     },
                     {
                         "type": "PlainText",
-                        "value": "Con qué frecuencia debe tomar este medicamento ?"
+                        "value": "¿Con qué frecuencia debe tomar este medicamento ?"
                     }
                 ]
             },
@@ -1014,11 +1084,11 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Manana, tarde o noche?"
+                        "value": "¿Manana, tarde o noche?"
                     },
                     {
                         "type": "PlainText",
-                        "value": "En cuale momento del dia?"
+                        "value": "¿En cuale momento del dia?"
                     }
                 ]
             },
@@ -1027,7 +1097,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Cuantes pildoras cada vez?"
+                        "value": "¿Cuantes pildoras cada vez?"
                     }
                 ]
             },
@@ -1045,7 +1115,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Qué quires saber exactamente ?"
+                        "value": "¿Qué quires saber exactamente ?"
                     }
                 ]
             },
@@ -1063,11 +1133,11 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Sobre que medicamento ?"
+                        "value": "¿Sobre que medicamento ?"
                     },
                     {
                         "type": "PlainText",
-                        "value": "Sobre que medicina ?"
+                        "value": "¿Sobre que medicina ?"
                     }
                 ]
             },
@@ -1174,7 +1244,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Cuál es la intensidad del medicamento ?"
+                        "value": "¿Cuál es la intensidad del medicamento?"
                     }
                 ]
             },
@@ -1183,7 +1253,7 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Cual medication ?"
+                        "value": "¿Cual mediction?"
                     }
                 ]
             },
@@ -1205,11 +1275,11 @@
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "En qué día de la semana ?"
+                        "value": "¿En qué día de la semana ?"
                     },
                     {
                         "type": "PlainText",
-                        "value": "En qué día ?"
+                        "value": "¿En qué día ?"
                     }
                 ]
             },
@@ -1223,6 +1293,24 @@
                     {
                         "type": "PlainText",
                         "value": "Cuales medicacion"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1134574616802.412118056902",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "¿Con qué tema necesitas ayuda?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.620655070126.445321323820",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "¿Cuál es la intensidad del medicamento?"
                     }
                 ]
             }
