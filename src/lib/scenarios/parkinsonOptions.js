@@ -80,7 +80,9 @@ module.exports = function (request, response) {
                     session.set('dialogState', 'calendar');
                     break;
                 default:
-                    session.set('dialogState', 'default');
+                    localmsg = Locale.calendar();
+                    sayOptions(localmsg);
+                    session.set('dialogState', 'calendar');
             }
         } 
         
