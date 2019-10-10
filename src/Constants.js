@@ -42,6 +42,13 @@ module.exports = {
     },
     insertionText: "Medicamento añadido a tu calendario ¿Quieres añadir otro?",
 
+    //--- DeleteCalendar ---
+    deleteCalendar: {
+      title: ["Eliminar el calendario"],
+      text: ["Calendario eliminado"],
+      reprompt: [],
+    },
+
     //--- Help ---
     help: {
       speech: [],

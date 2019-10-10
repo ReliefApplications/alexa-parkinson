@@ -53,7 +53,47 @@ module.exports = {
             );
 
         connection.close();
+        return result;
+    },
 
+    /**
+     * Save the user's stock into the database
+     * @param {string} askId - ASK Id of the user
+     * @param {string} name - The name provided by the 'Registration' intent
+     */
+    addNewUserStock: async function (askId) {
+        const connection = await generalDatabase.openDatabase();
+
+        let result = await connection.db(configuration.database.dbname)
+            .collection(configuration.database.schemas.amount).insertOne(
+                {
+                    _id: askId,
+                    stock: [
+                        {
+                            medicine: {},
+                            cantidad: {},
+                            tipo: {}
+                        }
+                    ]
+                }
+            );
+
+        connection.close();
+
+        return result;
+    },
+
+    /**
+     * Deletele the user's scheme
+     * @param {string} askId - ASK Id of the user
+     * @param {string} name - The name provided by the 'Registration' intent
+     */
+    deleteCalendar: async function (askId) {
+        const connection = await generalDatabase.openDatabase();
+
+        let result = await connection.db(configuration.database.dbname).collection(configuration.database.schemas.user).remove({ "_id": askId});
+        connection.close();
+        
         return result;
     },
 

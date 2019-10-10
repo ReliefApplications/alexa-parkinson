@@ -23,7 +23,7 @@ module.exports = {
             frequency: Datetime.pipeFrequency( RequestHandler.getSlotId(request.slots.frequency) ),
             momentOfDay: Datetime.pipeMomentOfDay( RequestHandler.getSlotId(request.slots.momentOfDay) ),
             quantity: parseInt(request.slots.pillNumber.value, 10),
-            intensity:RequestHandler.getIntensity(request.slots.intensity),
+            intensity: RequestHandler.getIntensity(request.slots.intensity),
         }
         return tryAddTreatment(request.currentUser, newTreatment, request, response);
     },
@@ -89,12 +89,17 @@ function tryAddTreatment(user, treatment, request, response) {
         }
         response.say(msg);
         response.send();
+        MemoryHandler.setMemory( new SkillMemory(
+            skillName, msg, {treatment},
+            (req, res) => { return require('./help')(req, res); },
+            (req, res) => { return require('./alexa-confirmation')(req, res); }
+        ));
         return response.shouldEndSession(false);
     });
 }
 
 /**
- * Build a proper treatment object to add it in tha database
+ * Build a proper treatment object to add it in the database
  * @param {*} user 
  * @param {*} treatment to add to schedule
  */

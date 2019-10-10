@@ -16,5 +16,6 @@ module.exports = {
         information: require('./scenarios/medicine-information')
     },
     parkinsonOptions: require('./scenarios/parkinsonOptions'),
-    confirmation: require('./scenarios/confirmation')
+    confirmation: require('./scenarios/confirmation'),
+    deleteCalendar: require('./scenarios/deleteCalendar')
 }

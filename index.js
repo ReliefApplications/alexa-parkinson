@@ -47,6 +47,10 @@ exports.handler = function (alexaApp) {
     alexaApp.launch(function (request, response) {
         if (!request.currentUser) {
             let userId = request.context.System.user.userId;
+            database.addNewUserStock(userId)
+            .then(value =>  {
+                response.shouldEndSession(false);
+            });
             database.addNewUser(userId)
             .then(value => {
                 response.shouldEndSession(false);
@@ -74,6 +78,10 @@ exports.handler = function (alexaApp) {
 
     alexaApp.intent('MedicineConfirmation', function (request, response) {
         return SkillDictionary.medication.insertion.confirmation(request, response);
+    });
+
+    alexaApp.intent('DeleteCalendar', function (request, response) {
+        return SkillDictionary.deleteCalendar(request, response);
     });
 
     alexaApp.intent('Confirmation', function (request, response) {

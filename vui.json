@@ -198,10 +198,7 @@
                         },
                         {
                             "name": "intensity",
-                            "type": "MEDICINE_INTENCITY",
-                            "samples": [
-                                "{intensity}"
-                            ]
+                            "type": "MEDICINE_INTENCITY"
                         }
                     ],
                     "samples": [
@@ -238,11 +235,13 @@
                         },
                         {
                             "name": "intensity",
-                            "type": "MEDICINE_INTENCITY"
+                            "type": "MEDICINE_INTENCITY",
+                            "samples": [
+                                "{intensity}"
+                            ]
                         }
                     ],
                     "samples": [
-                        "{intensity}",
                         "{medicineName}  {intensity}"
                     ]
                 },
@@ -266,6 +265,13 @@
                     "samples": [
                         "Cierra parkinson",
                         "Cierra la skill"
+                    ]
+                },
+                {
+                    "name": "DeleteCalendar",
+                    "slots": [],
+                    "samples": [
+                        "Quiero borrar mi calendario"
                     ]
                 }
             ],
@@ -977,10 +983,8 @@
                             "name": "intensity",
                             "type": "MEDICINE_INTENCITY",
                             "confirmationRequired": false,
-                            "elicitationRequired": true,
-                            "prompts": {
-                                "elicitation": "Elicit.Slot.620655070126.445321323820"
-                            }
+                            "elicitationRequired": false,
+                            "prompts": {}
                         }
                     ]
                 },
@@ -1034,6 +1038,12 @@
                             "prompts": {}
                         }
                     ]
+                },
+                {
+                    "name": "DeleteCalendar",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": []
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -1311,6 +1321,28 @@
                     {
                         "type": "PlainText",
                         "value": "¿Cuál es la intensidad del medicamento?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.615612693302.1005767344834",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "¿Manana, tarde o noche?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "¿En cuale momento del dia?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Intent.190034358819",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "¿Está seguro de que desea eliminar su calendario de medicamentos?"
                     }
                 ]
             }

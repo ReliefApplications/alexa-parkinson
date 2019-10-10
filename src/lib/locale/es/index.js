@@ -44,6 +44,10 @@ exports.AlexaHelp = {
     reprompt: function() { return 'Dime lo que quieres hacer. '; }
 }
 
+exports.deleteCalendar = {
+    title: function() { return 'Eliminar un calendario'; },
+    deleteConfirmation: function() { return 'Calendario eliminado. Di “Tengo que tomar una nueva medicación” para crear un nuevo calendario. '; },
+}
 
 exports.ParkinsonOptions = {
     title: function() { return 'Puedes por ejemplo'; },
@@ -67,7 +71,7 @@ exports.MedicationCalendar = {
             saidTreament = saidTreament !== '' ?
                 [saidTreament, treatment[ treatment.length - 1 ]].join(`, y `) :
                 treatment[ treatment.length - 1 ];
-            return `Por la ${ Dictionary[moment] }, ${ synonyms.must() } tomar ${ saidTreament } . `.split('/').join(' barra ');
+            return `Por la ${ Dictionary[moment] }, ${ synonyms.must() } tomar ${ saidTreament }. `.split('/').join(' barra ');
         },
         text : function(moment, treatment) {
             treatment = treatment.map( t => t.quantity + ' ' + t.medicine.product );
@@ -95,7 +99,7 @@ exports.MedicationCalendar = {
     },
     noMedicationOnMoment: function(moment) { return `No ${ synonyms.must() } tomar ${ synonyms.medicament() } esta ${ Dictionary[moment] } . ` },
     noMedicationOnDay: function() { return `No ${ synonyms.must() } tomar ${ synonyms.medicament() } este día . ` },
-    error: function() { return 'No puedo leer tu calendario. ¿Te puedo ayudar de alguna otra manera ? ' }
+    error: function() { return 'No puedo leer tu calendario. Di “Tengo que tomar una nueva medicación” para crear un calendario. ¿Te puedo ayudar de alguna otra manera ? ' }
 }
 
 exports.MedicationInsertion = {
