@@ -14,7 +14,7 @@
     },
     "main": "index.js",
     "devDependencies": {
-        "gulp": "^3.9.1",
+        "gulp": "^4.0.2",
         "gulp-shell": "latest",
         "webpack-cli": "^3.3.5",
         "webpack-node-externals": "^1.7.2"
