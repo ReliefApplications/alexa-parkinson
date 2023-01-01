@@ -16,7 +16,7 @@
     "devDependencies": {
         "gulp": "^3.9.1",
         "gulp-shell": "latest",
-        "webpack-cli": "^3.3.5",
+        "webpack-cli": "^5.0.1",
         "webpack-node-externals": "^1.7.2"
     },
     "scripts": {
